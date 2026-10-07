@@ -145,7 +145,7 @@ class PartnerCategory(models.Model):
     _rec_name = 'y_full_name'
     _order = 'y_full_name'
 
-    y_name = fields.Char(string='Name',index=True,tracking=True)
+    y_name = fields.Char(string='Name',index=True)
     y_full_name = fields.Char(string='Category Name',store=True,compute='_compute_complete_name')
     y_zparent = fields.Many2one('partner.category',string='Parent',tracking=True)
     y_active_id = fields.Boolean(string='Release',tracking=True)

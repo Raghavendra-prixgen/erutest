@@ -119,6 +119,31 @@ class LotSerialNumber(models.Model):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
    
@@ -129,6 +154,7 @@ class AccountMove(models.Model):
                 if not record.attachment_ids:
                     raise ValidationError("Attachments are required for this record.")
         return super(AccountMove,self).action_post()
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"

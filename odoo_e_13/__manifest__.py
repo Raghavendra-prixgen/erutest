@@ -13,7 +13,7 @@
     'origin': "Project Specific",
     'company': "Prixgen Tech Solutions Pvt. Ltd.",
 
-    'version': '17.0.1.4',
+    'version': '17.0.1.2',
     'license': 'LGPL-3',
     'depends': ['base','account','web','l10n_in_edi','odoo_e_11'],
 

@@ -101,11 +101,6 @@ class StockPicking(models.Model):
     y_account_move_id = fields.Many2one('account.move')
     y_btb_picking_out_id = fields.Many2one('stock.picking',string="Btb Picking Out")
     y_btb_picking_in_id = fields.Many2one('stock.picking',string="Btb Picking In")
-   
-
-    company_id = fields.Many2one(
-        'res.company', string='Company', related=False,
-        readonly=True, store=True, index=True,default=lambda self: self.env.company.id)     
 
     def _prepare_grn(self):
         stock_transfer_operation = self.env['stock.picking.type'].search([('y_is_branch_to_branch_operation','=',True)])

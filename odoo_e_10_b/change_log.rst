@@ -47,8 +47,3 @@ added domain for vendor and customer
 17.0.0.4------>17.0.0.5 (03-10-2024) **$@g@r
 ======================================================
 added logs for partner category
-
-
-17.0.0.5------>17.0.0.6 (25-03-2025) **$@g@r
-======================================================
-added logs for name field in  partner category

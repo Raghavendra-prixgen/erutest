@@ -19,7 +19,7 @@
     'module_type':'official',
 
     'category': 'Sale',
-    'version': '17.0.0.4',
+    'version': '17.0.0.5',
     'license': 'LGPL-3',
     'App origin':"Base",
 

@@ -1,7 +1,7 @@
 
 {
     'name': 'Odooe48',
-    'version': '17.0.1.2',
+    'version': '17.0.1.3',
     'summary': 'This App contains few mandatory fields',
     'description': """
         This App contains few mandatory fields

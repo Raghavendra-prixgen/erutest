@@ -40,7 +40,3 @@ access_request_type,request.type,model_request_type,,1,1,1,0
 
 access_purchase_short_close_wizard,purchase_short_close_wizard,model_purchase_short_close_wizard,base.group_user,1,1,1,1
 access_product_groups,product_groups,model_product_groups,base.group_user,1,1,1,1
-
-
-
-access_purchase_request_reason_wizard,purchase.request.reason.wizard,model_purchase_request_reason_wizard,base.group_user,1,1,1,1

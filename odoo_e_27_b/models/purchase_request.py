@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError,ValidationError
+from odoo.exceptions import UserError
 
 _STATES = [
     ("draft", "Draft"),
@@ -180,18 +180,6 @@ class PurchaseRequest(models.Model):
         store=True,
     )
     request_type_id = fields.Many2one('request.type',string="Request Type",copy=False,tracking=True)
-    
-    y_cancel_reason = fields.Text(
-    string="Cancellation Reason",
-    copy=False,
-    tracking=True,
-    )
-
-    y_reject_reason = fields.Text(
-        string="Rejection Reason",
-        copy=False,
-        tracking=True,
-    )
 
     @api.depends('line_ids.line_status')
     def compute_is_all_lines_done(self):
@@ -202,8 +190,6 @@ class PurchaseRequest(models.Model):
                     data.state='done'
                 if any(line.line_status == 'partial' for line in data.line_ids):
                     data.state = 'partial'
-
-
 
 
     @api.onchange('request_type_id')
@@ -332,15 +318,6 @@ class PurchaseRequest(models.Model):
         return self.write({"state": "draft"})
 
     def button_to_approve(self):
-        for rec in self:
-            attachment_count = self.env['ir.attachment'].search_count([
-                ('res_model', '=', 'purchase.request'),
-                ('res_id', '=', rec.id),
-            ])
-            if attachment_count == 0:
-                raise ValidationError(_(
-                    "Please attach a document before submitting for approval."
-                ))
         self.to_approve_allowed_check()
         for line in self.line_ids:
             line._validate_analytic_distribution()
@@ -355,32 +332,15 @@ class PurchaseRequest(models.Model):
         else:
             return self.write({"state": "approved"})
 
-    
+
+
     def button_rejected(self):
-        return self._open_reason_wizard("reject")
+        self.mapped("line_ids").do_cancel()
+        return self.write({"state": "rejected"})
 
     def button_cancel(self):
-        return self._open_reason_wizard("cancel")
-
-    def _open_reason_wizard(self, action_type):
-        self.ensure_one()
-        title = (
-            _("Reason for Cancellation")
-            if action_type == "cancel"
-            else _("Reason for Rejection")
-        )
-        return {
-            "name": title,
-            "type": "ir.actions.act_window",
-            "res_model": "purchase.request.reason.wizard",
-            "view_mode": "form",
-            "target": "new",
-            "context": {
-                "default_y_request_id": self.id,
-                "default_y_action_type": action_type,
-            },
-        }
-
+        for request in self:
+            request.write({'state':'cancel'})
 
     def button_done(self):
         return self.write({"state": "done"})

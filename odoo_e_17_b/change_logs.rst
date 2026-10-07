@@ -37,9 +37,3 @@
 17.0.0.1 (13-03-2024) **Prakruthi C
 ==================================================
 app converted from inventory_base-17.0.0.7 to odoo_e_17_b.
-
-17.0.0.1 --> 17.0.0.2(13-11-2024) **Prakruthi C
-==================================================
-app converted from inventory_base-17.0.2.0 to odoo_e_17_b. - 17.0.0.2
-
-

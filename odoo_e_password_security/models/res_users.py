@@ -8,6 +8,40 @@ import pytz
 from odoo import _, api, fields, models, tools, http
 from odoo.exceptions import UserError, ValidationError
 from odoo.addons.auth_signup.models.res_partner import SignupError, now
+import logging
+from os import utime
+from os.path import getmtime
+from time import time
+
+from odoo import api, http, models
+from odoo.http import SessionExpiredException
+
+_logger = logging.getLogger(__name__)
+
+
+
+
+from odoo import models, fields, api, _
+from odoo.exceptions import AccessDenied
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+from odoo import http
+
+
+
+
+from odoo import models, fields, api, exceptions, _
+from datetime import datetime, timedelta
+from odoo.exceptions import AccessDenied, UserError
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+    
 
 
 def delta_now(**kwargs):
@@ -26,9 +60,241 @@ class ResUsers(models.Model):
         readonly=True,
     )
 
+
+    failed_login_attempts = fields.Integer(
+        string="Failed Login Attempts",
+        
+        help="Number of consecutive failed login attempts"
+    )
+    last_failed_login = fields.Datetime(
+        string="Last Failed Login",
+        help="Timestamp of the last failed login attempt"
+    )
+    account_locked = fields.Boolean(
+        string="Account Locked",
+        default=False,
+        help="Account is locked due to too many failed attempts"
+    )
+    locked_until = fields.Datetime(
+        string="Locked Until",
+        help="Account will be unlocked automatically at this time"
+    )
+    lockout_start_time = fields.Datetime(
+        string="Lockout Start Time",
+        help="When the current lockout period started"
+    )
+    is_locked = fields.Boolean()
+
+
+   
     @property
     def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + ['password_write_date', 'next_password_write_date']
+        return super().SELF_READABLE_FIELDS + ['password_write_date', 'next_password_write_date','failed_login_attempts']
+   
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS +  ['failed_login_attempts']
+
+
+ 
+    def action_unlock_user(self):
+        for user in self:
+            user.sudo().write({
+                    'failed_login_attempts': 0,
+                    'account_locked': False
+                })
+            message = f"{user.name} Account is Unlocked"
+            return {
+                'effect': {
+                    'fadeout': 'slow',
+                    'message': message,
+                    'type': 'rainbow_man',
+                }
+            }
+
+
+   
+  
+
+    def _get_lockout_config(self):
+        """Get lockout configuration from system parameters"""
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        max_attempts = int(ICPSudo.get_param('odoo_e_password_security.max_attempts', 5))
+        lockout_duration = int(ICPSudo.get_param('odoo_e_password_security.lockout_duration', 30))
+        reset_time = int(ICPSudo.get_param('odoo_e_password_security.reset_time', 60))  # Time to reset counter
+        return max_attempts, 30, 60
+
+
+
+    def _check_credentials(self, password, env):
+        """Override to implement account lockout logic"""
+        # First check if account is locked
+        if self.account_locked:
+            if self.locked_until and fields.Datetime.now() < self.locked_until:
+                raise AccessDenied(_("Your account has been temporarily locked due to multiple failed login attempts. Please try again later."))
+            else:
+                # Auto-unlock if lockout period has expired
+                self._unlock_user_account()
+
+        try:
+            # Call parent method to verify credentials
+            result = super(ResUsers, self)._check_credentials(password, env)
+            
+            # Reset failed attempts on successful login
+            if self.failed_login_attempts > 0:
+                self.sudo().write({
+                    'failed_login_attempts': 0,
+                    'last_failed_login': False
+                })
+                _logger.info(f"Successful login for user {self.login}, reset failed attempts counter")
+            
+            return result
+            
+        except AccessDenied as e:
+            # Handle failed login attempt
+            self._handle_failed_login()
+            raise e
+
+
+    def _handle_failed_login(self):
+        """Handle failed login attempt and implement lockout logic"""
+        max_attempts, lockout_duration, reset_time = self._get_lockout_config()
+        now = fields.Datetime.now()
+        
+        # Check if we should reset the counter (if last attempt was long ago)
+        if (self.last_failed_login and 
+            (now - self.last_failed_login).total_seconds() > (reset_time * 60)):
+            failed_attempts = 1
+        else:
+            failed_attempts = self.failed_login_attempts + 1
+        
+        vals = {
+            'failed_login_attempts': failed_attempts,
+            'last_failed_login': now
+        }
+        
+        # Lock account if max attempts reached
+        if failed_attempts >= max_attempts:
+            lockout_until = now + timedelta(minutes=lockout_duration)
+            vals.update({
+                'account_locked': True,
+                'locked_until': lockout_until,
+                'lockout_start_time': now
+            })
+            
+            _logger.warning(
+                f"Account locked for user '{self.login}' "
+                f"after {failed_attempts} failed login attempts. "
+                f"Locked until: {lockout_until}"
+            )
+            
+            # Optional: Send notification email
+        else:
+            remaining_attempts = max_attempts - failed_attempts
+            _logger.info(
+                f"Failed login attempt for user '{self.login}'. "
+                f"Attempts: {failed_attempts}/{max_attempts}. "
+                f"Remaining: {remaining_attempts}"
+            )
+        
+        self.sudo().write(vals)
+        self.env.cr.commit()
+
+
+    
+
+
+    #session timeout
+    @api.model
+    def _auth_timeout_get_ignored_urls(self):
+        """Pluggable method for calculating ignored urls
+        Defaults to stored config param
+        """
+        params = self.env["ir.config_parameter"]
+        return params._auth_timeout_get_parameter_ignored_urls()
+
+    @api.model
+    def _auth_timeout_deadline_calculate(self):
+        """Pluggable method for calculating timeout deadline
+        Defaults to current time minus delay using delay stored as config
+        param.
+        """
+        params = self.env["ir.config_parameter"]
+        delay = params._auth_timeout_get_parameter_delay()
+        if delay <= 0:
+            return False
+        return time() - delay
+
+    @api.model
+    def _auth_timeout_session_terminate(self, session):
+        """Pluggable method for terminating a timed-out session
+
+        This is a late stage where a session timeout can be aborted.
+        Useful if you want to do some heavy checking, as it won't be
+        called unless the session inactivity deadline has been reached.
+
+        Return:
+            True: session terminated
+            False: session timeout cancelled
+        """
+        if session.db and session.uid:
+            session.logout(keep_db=True)
+        return True
+
+    @api.model
+    def _auth_timeout_check(self):
+        """Perform session timeout validation and expire if needed."""
+
+        if not http.request:
+            return
+
+        session = http.request.session
+
+        # Calculate deadline
+        deadline = self._auth_timeout_deadline_calculate()
+
+        # Check if past deadline
+        expired = False
+        if deadline is not False:
+            path = http.root.session_store.get_session_filename(session.sid)
+            try:
+                expired = getmtime(path) < deadline
+            except OSError:
+                _logger.exception(
+                    "Exception reading session file modified time.",
+                )
+                # Force expire the session. Will be resolved with new session.
+                expired = True
+
+        # Try to terminate the session
+        terminated = False
+        if expired:
+            terminated = self._auth_timeout_session_terminate(session)
+
+        # If session terminated, all done
+        if terminated:
+            return SessionExpiredException("Session expired")
+
+        # Else, conditionally update session modified and access times
+        ignored_urls = self._auth_timeout_get_ignored_urls()
+
+        if http.request.httprequest.path not in ignored_urls:
+            if "path" not in locals():
+                path = http.root.session_store.get_session_filename(
+                    session.sid,
+                )
+            try:
+                utime(path, None)
+            except OSError:
+                _logger.exception(
+                    "Exception updating session file access/modified times.",
+                )
+
+    ###############################################################
+
+
+
+    
     
     def write(self, vals):
         if vals.get("password"):

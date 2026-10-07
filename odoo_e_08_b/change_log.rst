@@ -92,29 +92,3 @@ commented landed cost code
 17.0.2.1 ------> 17.0.2.2 (**18/10/2024**) **$@g@r**
 =============================================================
 added condition for spliting of lines in GRN
-
-17.0.2.2 ------> 17.0.2.3 (**7/9/2026**) **akshatha**
-=============================================================
-Access error while creating backorder
-
-17.0.2.3 ------> 17.0.2.4 (**17/9/2026**) **Pooja**
-=============================================================
-Updated BTB status calculation to mark the BTB as Complete when both delivery and receipt pickings are Done, 
-irrespective of the selected company
-- instead of search using existing id
-
-17.0.2.4 ------> 17.0.2.5 (**19/9/2026**) **Pooja**
-=============================================================
-Updated BTB status and ribbon calculation to reflect the correct transfer status across individual/both branches 
-and to handle partial deliveries with pending backorders
-
-
-17.0.2.5 ------> 17.0.2.6 (**22/9/2026**) **Pooja**
-=============================================================
-[IMP]: - Updated the BTB ribbon status to correctly show **Ready to Receive** after delivery.
-       - Updated the BTB ribbon status to correctly show **Partially Received** for partial receipt with pending backorder.
-
-
-17.0.2.6 ------> 17.0.2.7(**23/9/2026**) **Pooja**
-=============================================================
-[Fix]: Corrected loop structure in BTB status computation

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+
+
+
     <data noupdate="1">
+
+        <record id="inactive_session_time_out_delay" model="ir.config_parameter">
+            <field name="key">inactive_session_time_out_delay</field>
+            <field name="value">7200</field>
+        </record>
+        <record id="inactive_session_time_out_ignored_url" model="ir.config_parameter">
+            <field name="key">inactive_session_time_out_ignored_url</field>
+            <field name="value">/calendar/notify,/websocket</field>
+        </record>
+
+
+
+
+
         <record id="ir_cron_send_email_password_expire" model="ir.cron">
             <field name="name">Password security: Send reminder password expires</field>
             <field name="model_id" ref="model_res_users"/>

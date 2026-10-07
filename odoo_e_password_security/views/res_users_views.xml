@@ -11,5 +11,36 @@
             </xpath>
         </field>
     </record>
+
+
+    
+
+    <record id="res_users_view_form_lock" model="ir.ui.view">
+        <field name="name">res.users.list.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//div[hasclass('oe_title')]/group/field[@name='partner_id']" position="after">                
+                <field name="account_locked" force_save="1" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    
+
+
+    <record model="ir.actions.server" id="action_res_users_remove_lock">
+      <field name="name">Unlock Account</field>
+      <field name="model_id" ref="odoo_e_password_security.model_res_users"/>
+    <field name="groups_id" eval="[(4, ref('odoo_e_password_security.group_unlock_account'))]"/>
+      <field name="binding_model_id" ref="odoo_e_password_security.model_res_users"/>
+      <field name="binding_view_types">form</field>
+      <field name="state">code</field>
+      <field name="code">
+            if records:
+                action = records.action_unlock_user()
+      </field>
+    </record>
     
 </odoo>

@@ -204,14 +204,26 @@
             <button name="action_draft" position="attributes"> 
                 <attribute name="invisible">state not in ['cancel', 'reject']</attribute>
             </button>
+
+
+            <button name="action_confirm" position="attributes"> 
+                <attribute name="invisible">1</attribute>
+            </button>
+
+              <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="readonly">y_approver_visible == True</attribute>
             </xpath>
 
             <button name="action_draft" position="after" >
-                <button name="request_for_approve" type="object" class="oe_highlight" string="Request to Approve" invisible="state in ['sale', 'cancel' ,'reject'] or y_approver_visible == True or y_doc_type_id == False" context="{'validate_analytic': True}"/>
+                <button name="request_for_approve" type="object" class="oe_highlight" string="Request to Approve" invisible="state in ['sale', 'cancel' ,'reject'] or y_approver_visible == True or y_doc_type_id == False"/>
 
-                <button name="get_approval" type="object" class="oe_highlight"  invisible="state in ['sale', 'cancel' ,'reject'] and y_so_approval_method != 'False' or y_is_approved == False or y_approver_visible == False "  string="Approve" context="{'validate_analytic': True}"/>
+                <button name="get_approval" type="object" class="oe_highlight"  invisible="state in ['sale', 'cancel' ,'reject'] and y_so_approval_method != 'False' or y_is_approved == False or y_approver_visible == False "  string="Approve"/>
                 <field name="y_is_approved" invisible="1"/>
                 <field name="y_is_approval_req" invisible="1"/>
                 <button name="%(odoo_e_42.action_sale_approval_remarks)d" type="action" class="oe_highlight" string="Reject"  invisible="state in ['sale', 'cancel','reject'] and y_so_approval_method != 'False' or y_is_approved == False or y_approver_visible == False "/>
@@ -225,7 +237,7 @@
             </field>
 
             <notebook position="inside">
-                <page string="Approvals" invisible="y_so_approval_method == 'lvlsamt' or y_so_approval_method == False" >
+                <page string="Approvals" invisible="1" >
                     <field name='y_sale_approval_line' widget="section_and_note_one2many" readonly="1">
                         <tree>
                             <field name='y_user_ids' widget="many2many_tags"/>
@@ -239,7 +251,7 @@
                         </tree>
                     </field>
                 </page>
-                <page string="Approvals Level and Amount" invisible="y_so_approval_method != 'lvlsamt'" >
+                <page string="Approvals Level and Amount" invisible="1" >
                     <field name='y_sale_lvl_amt_approval_line' widget="section_and_note_one2many" readonly="1">
                         <tree>
                             <field name='y_approval_level'/>
@@ -274,7 +286,7 @@
         <field name="inherit_id" ref="sale.view_quotation_tree"/>
         <field name="arch" type="xml">
             <field name="state" position="before">
-                <field name="y_to_approve_states" widget="badge"/>
+                <field name="y_to_approve_states" widget="badge" column_invisible="1"/>
             </field>
         </field>
     </record>

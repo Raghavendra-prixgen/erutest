@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>        
+        <record  id="product_template_form_inherit_standard_price"  model="ir.ui.view"> 
+            <field name="name">product.template.form.inherit.standard.price</field>  
+            <field name="model">product.template</field>
+            <field name="inherit_id"  ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after"> 
+                    <field name="y_is_editable" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='standard_price_uom']/field[@name='standard_price']" position="attributes"> 
+                    <attribute name="readonly">y_is_editable != True</attribute> 
+                </xpath>
+            </field>
+        </record> 
+        <record  id="product_template_form_inherit_button_bom_cost"  model="ir.ui.view"> 
+            <field name="name">product.template.form.inherit.button.bom.cost</field>  
+            <field name="model">product.template</field>
+            <field name="inherit_id"  ref="mrp_account.product_product_ext_form_view2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='valuation']" position="after"> 
+                    <field name="y_is_editable" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='button_bom_cost']" position="attributes"> 
+                    <attribute name="invisible">y_is_editable != True</attribute> 
+                </xpath>
+            </field>
+        </record> 
+        <record  id="product_product_form_inherit_button_bom_cost"  model="ir.ui.view"> 
+            <field name="name">product.product.form.inherit.button.bom.cost</field>  
+            <field name="model">product.product</field>
+            <field name="inherit_id"  ref="mrp_account.product_product_view_form_normal_inherit_extended"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='valuation']" position="after"> 
+                    <field name="y_is_editable" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='button_bom_cost']" position="attributes"> 
+                    <attribute name="invisible">y_is_editable != True</attribute> 
+                </xpath>
+            </field>
+        </record> 
+
+        <record id="mrp_account.action_compute_price_bom_template" model="ir.actions.server">
+            <field name="groups_id" eval="[(4, ref('cost_edit_access_17.group_for_standard_price_access'))]"/>
+        </record>
+
+        <record id="mrp_account.action_compute_price_bom_product" model="ir.actions.server">
+            <field name="groups_id" eval="[(4, ref('cost_edit_access_17.group_for_standard_price_access'))]"/>
+        </record>
+        
+    </data>
+</odoo>        

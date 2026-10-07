@@ -18,10 +18,10 @@
     'category': 'Uncategorized',
     'App origin': 'Project Specific',
 
-    'version': '17.0.2.7',
+    'version': '17.0.2.2',
     'license': 'LGPL-3',
    
-    'depends': ['base','stock','account','stock_account','stock_landed_costs','l10n_in',],
+    'depends': ['base','stock','account','stock_account','stock_landed_costs'],
 
     'data': [
         'data/btb_sequence.xml',

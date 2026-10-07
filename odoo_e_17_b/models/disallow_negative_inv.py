@@ -55,23 +55,20 @@ class StockMove(models.Model):
         res = super(StockMove,self)._action_done(cancel_backorder)
         for move in self:
             if move.raw_material_production_id and move.location_id.is_subcontracting_location == True:
-                domain = [('location_id','=',move.location_id.id),('product_id','=',move.product_id.id)]
-                if move.lot_ids:
-                    domain = [('location_id','=',move.location_id.id),('product_id','=',move.product_id.id),('lot_id','in',move.lot_ids.ids)]
-                stock_quants = move.env['stock.quant'].search(domain)
-                for stock in stock_quants:
-                    if stock:
-                        quant_quantity = sum(stock.mapped('quantity'))
-                        p = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-                        if float_compare(quant_quantity, 0, precision_digits=p) == -1:
-                            msg_add = ''
-                            if stock.lot_id:
-                                msg_add = _(" lot '%s'") % stock.lot_id.name_get()[0][1]
-                            raise ValidationError(_(
-                                "You cannot validate this stock operation because the "
-                                "stock level of the product '%s'%s would become negative "
-                                "(%s) on the stock location '%s' and negative stock is "
-                                "not allowed for this product.") % (
-                                    stock.product_id.name, msg_add, stock.quantity,
-                                    stock.location_id.complete_name))
+                stock_quants = move.env['stock.quant'].search([('location_id','=',move.location_id.id),('product_id','=',move.product_id.id)])
+                if stock_quants:
+                    quant_quantity = sum(stock_quants.mapped('quantity'))
+                    p = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+                    if float_compare(quant_quantity, 0, precision_digits=p) == -1:
+                        msg_add = ''
+                        if stock_quants.lot_id:
+                            msg_add = _(" lot '%s'") % stock_quants.lot_id.name_get()[0][1]
+                        raise ValidationError(_(
+                            "You cannot validate this stock operation because the "
+                            "stock level of the product '%s'%s would become negative "
+                            "(%s) on the stock location '%s' and negative stock is "
+                            "not allowed for this product.") % (
+                                stock_quants.product_id.name, msg_add, stock_quants.quantity,
+                                stock_quants.location_id.complete_name))
+                    
         return res

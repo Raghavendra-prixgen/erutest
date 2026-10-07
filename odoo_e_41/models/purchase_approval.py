@@ -35,6 +35,7 @@ class PurchaseAppproval(models.Model):
     y_currency_id = fields.Many2one('res.currency', string='Currency', tracking=True,related='y_document_type_id.y_currency_id')
 
     y_approval_method = fields.Selection(selection=[
+            
             ('stages', 'Levels'),
             ('amount', 'Amount'),
             ('lvlsamt','Levels & Amount')
@@ -438,7 +439,9 @@ class PurchaseOrder(models.Model):
     
     
     def post_approval_message(self):
+        print("post_approval_message------------------------------",self.y_purchase_lvl_amt_approval_line)
         for rec in self.y_purchase_lvl_amt_approval_line:
+            # print(rec.y_to_approve_states,rec.y_approval_level,"IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
             if rec.y_approval_level in ['1stlvlapproval', '2ndlvlapproval', '3rdlvlapproval', '4thlvlapproval', '5thlvlapproval']:
                 level = rec.y_approval_level.split('lvl')[0]
                 msg = f"Request Sent To {level} Level Approval"
@@ -479,12 +482,24 @@ class PurchaseOrder(models.Model):
                             activity = self.env['mail.activity'].create(vals)
 
     def request_for_approve(self):
-        for rec in self:
-            rec.y_approver_visible = True
-            rec.state = 'to approve'
-            rec.y_to_approve_states = 'to_approve_state1'
-            rec.post_approval_message()
-            rec.order_line.with_context(validate_analytic=True)._validate_analytic_distribution()
+        current_model = self.env['ir.model']._get(self._name)
+        if not current_model:
+            raise UserError("Model not found in ir.model")
+        
+        global_model = self.env['global.model'].search([('model_id','=',current_model.id)], limit=1)
+        amount = self.amount_total
+        if float(amount) >= global_model.maximum_approval_limit :
+            raise ValidationError("There are no approvals configured for the value being quoted")
+        else:
+            for rec in self:
+                rec.y_approver_visible = True
+                rec.state = 'to approve'
+                rec.y_to_approve_states = 'to_approve_state1'
+                # print(rec.y_to_approve_states,"--------------------------------rec.y_to_approve_states")
+                value = rec.post_approval_message()
+                # print(value,"--------------------------------------------------------value")
+                # print("------------------------------rec.post_approval_message")
+        
 
     def get_set_draft(self):
         if self.state == 'reject':
@@ -564,10 +579,10 @@ class PurchaseOrder(models.Model):
                 if approval_ids.y_approval_method in ('stages','amount'):
                     if self.y_purchase_approval_line:
                             all_approvals = [x.y_is_approve for x in self.y_purchase_approval_line]
-                            if True in all_approvals:
-                                raise UserError (_("You cannot change the document type once approved, Kindly Discard the PO and create a new PO"))
-                            else:
-                                self.y_purchase_approval_line = False
+                            # if True in all_approvals:
+                            #     raise UserError (_("You cannot change the document type once approved, Kindly Discard the PO and create a new PO"))
+                            # else:
+                            self.y_purchase_approval_line = False
 
                     for each_line in approval_ids.y_approval_lines:
                         if approval_ids.y_approval_method == 'stages':
@@ -712,11 +727,11 @@ class PurchaseOrder(models.Model):
         if  self.y_doc_type_id.y_is_approval_required == True:
             self.y_is_approved = True
             approvalls = self.env['purchase.doc.type'].search([('id','=',self.y_doc_type_id.id)])
-            if not approvalls:
-                raise ValidationError("""Approvals Not Configured""")
+            # if not approvalls:
+            #     raise ValidationError("""Approvals Not Configured""")
             approval_ids = self.env['purchase.approval'].search([('y_document_type_id','=',self.y_doc_type_id.id)])
-            if not approval_ids:
-                raise ValidationError("""Approvals Not Configured""")
+            # if not approval_ids:
+            #     raise ValidationError("""Approvals Not Configured""")
             self.y_po_approval_method = approval_ids.y_approval_method
             self.y_to_approve_states = 'to_approve_state1'
         else:
@@ -732,7 +747,6 @@ class PurchaseOrder(models.Model):
 
     def button_approve(self):
         for rec in self:
-            rec.order_line.with_context(validate_analytic=True)._validate_analytic_distribution()
             if not rec.y_doc_type_id:
                 raise ValidationError(_("""Mapping Document type is required to confirm a Purchase Quotation"""))
             rec.y_quotation_number = rec.name
@@ -754,31 +768,35 @@ class PurchaseOrder(models.Model):
                 all_approvals = [x.y_is_approve for x in self.y_purchase_approval_line]
                 if any(all_approvals) or self.y_purchase_approval_line.filtered(lambda line : int(line.y_approval_amount_from) >= self.amount_total):
                     return self.button_approve()
-                else:
-                    raise UserError (_("Purchase Approval Pending"))
+                    # return super(PurchaseOrder, self).button_confirm()
+                # else:
+                #     raise UserError (_("Purchase Approval Pending"))
             elif self.y_approval_method == 'stages':
                 all_approvals = [x.y_is_approve for x in self.y_purchase_approval_line]
-                if False in all_approvals:
-                    raise UserError (_("Purchase Approval Pending"))
-                else:
-                    return self.button_approve()
+                # if False in all_approvals:
+                #     raise UserError (_("Purchase Approval Pending"))
+                # else:
+                return self.button_approve()
+                # return super(PurchaseOrder, self).button_confirm()
         elif self.y_purchase_lvl_amt_approval_line and self.y_doc_type_id.y_is_approval_required == True:
 
             approval_ids = self.env['purchase.approval'].search([('y_document_type_id','=',self.y_doc_type_id.id)])
 
             if approval_ids.y_approval_method == 'lvlsamt':
                 if self.amount_total < val_from[0] or self.amount_total > val_to[-1]:
-                    return self.button_approve()
+                   return self.button_approve()
+                    # return super(PurchaseOrder, self).button_confirm()
                 else:
                     all_approvals = [x.y_is_approval_completed for x in self.y_purchase_lvl_amt_approval_line]
-                    if False in all_approvals:
-                        raise UserError (_("Purchase Approval Pending"))
-                    else:
-                        return self.button_approve()
+                    # if False in all_approvals:
+                    #     raise UserError (_("Purchase Approval Pending"))
+                    # else:
+                    return self.button_approve()
+                    # return super(PurchaseOrder, self).button_confirm()
 
-        else:
+        # else:
             # if self.y_doc_type_id:
-            raise UserError (_("Purchase Approval Pending"))
+            # raise UserError (_("Purchase Approval Pending"))
             # else:
             #     return super(PurchaseOrder, self).button_confirm()
 
@@ -831,8 +849,8 @@ class PurchaseOrder(models.Model):
                                         }
                                         activity = self.env['mail.activity'].create(vals)
                                 
-                            else:
-                                raise UserError (_(" You can't approve the order"))
+                            # else:
+                            #     raise UserError (_(" You can't approve the order"))
                     
                     elif curr_method == 'amount':
                         if self.y_purchase_approval_line.filtered(lambda line : int(line.y_approval_amount_from) <= self.amount_total):
@@ -846,12 +864,12 @@ class PurchaseOrder(models.Model):
                                 self.y_approve_doc = True
                                 user_list[0].y_approved_date = datetime.now()
                                 self.button_confirm()
-                            else:
-                                raise UserError (_("You can't approve the order"))
+                            # else:
+                            #     raise UserError (_("You can't approve the order"))
                         else:
                             self.button_confirm()
-                else:
-                    raise UserError (_(" Create the purchase approval "))
+                # else:
+                #     raise UserError (_(" Create the purchase approval "))
             for rec in self.y_purchase_approval_line:
                 if rec.y_is_approve==False and rec.y_approvals=='1':
                     self.y_to_approve_states = 'to_approve_state2'
@@ -872,8 +890,7 @@ class PurchaseOrder(models.Model):
                     break
 
 
-                data = self.y_purchase_approval_line.mapped('y_is_approve')
-                print(data,'data')
+                data = self.y_purchase_approval_line.mapped('y_is_approve')  
                 if all(data) == True:
                     self.y_to_approve_states = 'approved'
                     self.button_confirm()
@@ -925,9 +942,9 @@ class PurchaseOrder(models.Model):
                            pending_state = get_selection_label(self,'purchase.order','y_to_approve_states',self.y_to_approve_states)
                            msg = " Second Approval Is Pending By: {}".format(', '.join(y_lvl_approval_lines.y_lvl2_user_ids.mapped('name')))
                            message_post = self.message_post(body=msg)   
-
-                    else:
-                        raise UserError(_("You can't approve the order"))
+ 
+                    # else:
+                    #     raise UserError(_("You can't approve the order"))
                 
                 if self.env.user.id in y_lvl_approval_lines.y_lvl2_user_ids.ids:
                     if y_lvl_approval_lines.y_is_1st_user_completed:
@@ -972,11 +989,11 @@ class PurchaseOrder(models.Model):
                                 message_post = self.message_post(body=msg)
 
                             
-                        else:
-                            raise UserError(_("You can't approve the order"))
+                    #     else:
+                    #         raise UserError(_("You can't approve the order"))
                         
-                    else:
-                            raise UserError(_("You can't approve the order"))
+                    # else:
+                    #         raise UserError(_("You can't approve the order"))
 
                 if self.env.user.id in y_lvl_approval_lines.y_lvl3_user_ids.ids:
                     if y_lvl_approval_lines.y_is_2nd_user_completed:
@@ -1019,11 +1036,11 @@ class PurchaseOrder(models.Model):
                                 msg = "fourth Approval Is Pending By: {}".format(', '.join(y_lvl_approval_lines.y_lvl4_user_ids.mapped('name')))
                                 message_post = self.message_post(body=msg)
 
-                        else:
-                            raise UserError(_("You can't approve the order"))
+                    #     else:
+                    #         raise UserError(_("You can't approve the order"))
                         
-                    else:
-                        raise UserError(_("You can't approve the order"))
+                    # else:
+                    #     raise UserError(_("You can't approve the order"))
                     
 
                 if self.env.user.id in y_lvl_approval_lines.y_lvl4_user_ids.ids:
@@ -1066,12 +1083,12 @@ class PurchaseOrder(models.Model):
                                 pending_state = get_selection_label(self,'purchase.order','y_to_approve_states',self.y_to_approve_states)
                                 msg = "Fifth Approval Is Pending By: {}".format(', '.join(y_lvl_approval_lines.y_lvl4_user_ids.mapped('name')))
                                 message_post = self.message_post(body=msg)
-                        else:
-                            raise UserError(_("You can't approve the order"))
+                    #     else:
+                    #         raise UserError(_("You can't approve the order"))
                         
 
-                    else:
-                        raise UserError(_("You can't approve the order"))
+                    # else:
+                    #     raise UserError(_("You can't approve the order"))
 
                 if self.env.user.id in y_lvl_approval_lines.y_lvl5_user_ids.ids:
                     if y_lvl_approval_lines.y_is_4th_user_completed:
@@ -1083,10 +1100,10 @@ class PurchaseOrder(models.Model):
                             self.message_post(body=fifth_approval_msg)
                             
                             
-                        else:
-                            raise UserError(_("You can't approve the order"))
-                    else:
-                            raise UserError(_("You can't approve the order"))
+                    #     else:
+                    #         raise UserError(_("You can't approve the order"))
+                    # else:
+                    #         raise UserError(_("You can't approve the order"))
 
 
             for rec in self.y_purchase_lvl_amt_approval_line:
@@ -1169,11 +1186,11 @@ class PurchaseOrder(models.Model):
 class onchangefuncforPOl(models.Model):
     _inherit = 'purchase.order.line'
 
-    # 
-#     @api.onchange('price_unit')
-#     def newonchange_POL_is_approval_req(self):
-        # self.env['purchase.order'].get_data()
-        # print("Im from Before Onchange_________________________________________________________","\n"*25)
-        # self.order_id.get_data()
-        # self.order_id.request_for_approve()
-        # print("Im from After Onchange_________________________________________________________","\n"*25)
+    
+    # @api.onchange('price_unit')
+    # def newonchange_POL_is_approval_req(self):
+    #     self.env['purchase.order'].get_data()
+    #     print("Im from Before Onchange_________________________________________________________","\n"*25)
+    #     self.order_id.get_data()
+    #     self.order_id.request_for_approve()
+    #     print("Im from After Onchange_________________________________________________________","\n"*25)

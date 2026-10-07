@@ -118,8 +118,7 @@
                                 </div>
                                 <div class="col-6"
                                     style="text-align:left;font-size:11px;width:60%;">
-                                    <!-- <span t-if="o.company_id.parent_id.name" t-field="o.company_id.parent_id.name" /> -->
-                                     <span t-if="o.location_id.company_id.name" t-field="o.location_id.company_id.name" />
+                                    <span t-if="o.company_id.parent_id.name" t-field="o.company_id.parent_id.name" />
                                     <br />
                                 </div>
                             </div>
@@ -149,7 +148,6 @@
                                     <br />
                                 </div>
                             </div>
-                            
                         </td>
                         <td style="font-size:11px;width:50%;font-family: Century Gothic;border-right:1px solid black;"
                             colspan="8">

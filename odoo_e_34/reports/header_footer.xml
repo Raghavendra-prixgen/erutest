@@ -427,8 +427,8 @@
                                 </b>
                                 </div>
                                 <div class="col-6"  style="text-align:left;width:60%;padding-left:20px">
-                                    <t t-if="o.partner_shipping_id.country_id">
-                                        <span t-field="o.partner_shipping_id.country_id" />
+                                    <t t-if="o.partner_shipping_id.vat">
+                                        <span t-field="o.partner_shipping_id.vat" />
                                     </t>
                                 </div>
                             </div>
@@ -484,8 +484,8 @@
                                     </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;padding-left:20px">
-                                    <t t-if="o.invoice_line_ids.sale_line_ids.order_id.warehouse_id.company_id.sudo().parent_id.name">
-                                    <span t-field="o.invoice_line_ids.sale_line_ids.order_id.warehouse_id.company_id.sudo().parent_id.name" />
+                                    <t t-if="o.invoice_line_ids.sale_line_ids.order_id.warehouse_id.company_id.parent_id.name">
+                                    <span t-field="o.invoice_line_ids.sale_line_ids.order_id.warehouse_id.company_id.parent_id.name" />
                                     </t> 
                                 </div>
                                 
@@ -551,8 +551,8 @@
                                 </b>
                                 </div>
                                 <div class="col-6"  style="text-align:left;width:60%;padding-left:20px">
-                                    <t t-if="sale_order.warehouse_id.partner_id.country_id">
-                                        <span t-field="sale_order.warehouse_id.partner_id.country_id" />
+                                    <t t-if="sale_order.warehouse_id.partner_id.vat">
+                                        <span t-field="sale_order.warehouse_id.partner_id.vat" />
                                     </t>
                                 </div>
                             </div>
@@ -572,22 +572,6 @@
                                     </t>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-3" style="text-align:left;width:30%;padding-left:2px;">
-                                   <b> <span>GSTIN</span></b>
-                                </div>
-                                <div class="col-1" style="text-align:left;width:10%">
-                                    <b>
-                                    <span>:</span>
-                                </b>
-                                </div>
-                                <div class="col-6" style="text-align:left;width:60%;padding-left:20px">
-                                    <t t-if="sale_order.warehouse_id.partner_id.vat">
-                                        <span t-field="sale_order.warehouse_id.partner_id.vat" />
-                                    </t>
-                                </div>
-                            </div>
-                            
                             <div class="row">
                                 <div class="col-3" style="text-align:left;width:30%;padding-left:2px;">
                                    <b> <span>Contact Person</span></b>

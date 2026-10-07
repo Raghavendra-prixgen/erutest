@@ -13,33 +13,6 @@ class AccountMoveCustomReport(models.Model):
         sale_order_ids = self.invoice_line_ids[0].sale_line_ids.order_id.id
         sale_id = self.env["sale.order"].browse(sale_order_ids)
         return sale_id
-    
-
-    def amount_in_words(self, amount):
-        formatted_amount = "{:,.2f}".format(amount)
-        amt = formatted_amount.split(".")
-        amt[0] = amt[0].replace(",", "")
-
-        if int(amt[1]) > 0:
-            second_part = "and " + num2words(int(amt[1]), lang='en_IN') + ' Paise Only'
-            remove_and_new = second_part.replace('.', ' and ')
-            remove_and_pro = remove_and_new.replace('-', ' ')
-        else:
-            second_part = 'Only'
-
-        first_part = num2words(int(amt[0]), lang='en_IN').replace(' and', ' ')
-        first_part_new = first_part.replace(',', '').replace('-', ' ')
-        first_part_pro = first_part_new + ' Rupees'
-
-        if int(amt[1]) == 0:
-            result = first_part_pro + ' ' + second_part
-        else:
-            result = first_part_pro + ' ' + remove_and_pro
-
-        results = ' '.join(word if word.lower() == 'and' else word.capitalize() for word in result.split())
-
-        return results
-
 
     def get_taxes_group_values(self):
         tax_name = []

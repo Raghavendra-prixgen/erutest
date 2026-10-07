@@ -30,327 +30,332 @@
     <template id='eruvaka_tax_invoice_report_without_lutt'>
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="odoo_e_39.external_layout_for_eruvaka_header_footer_without_lut">
+                <t
+                    t-call="odoo_e_39.external_layout_for_eruvaka_header_footer_without_lut">
                     <div class="page">
-
-
-                        <table colspan="12" class="table table-sm m-0 p-0 table-borderless" style="border:1px solid black;border-top:none;font-family: Century Gothic;width:100%;">
+                    
+                        
+                        <table colspan="12" class="table table-sm m-0 p-0 table-borderless"
+                            style="border:1px solid black;border-top:none;font-family: Century Gothic;width:100%;">
+                            
                             <thead>
 
-                                <tr style="border-bottom:1px solid black;">
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
-                                        Sl.No.</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Code</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Product</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">HSN
-                                        / SAC</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Quantity</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        UOM</th>
-
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Price</th>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Dis
-                                        %</th>
-                                    <t t-if="o.company_id.parent_id">
-                                        <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
-                                            <t t-set="is_greater" t-value="o.invoice_date > o.company_id.parent_id.partner_id.y_lut_valid_till" />
+                            <tr style="border-bottom:1px solid black;">
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;"> Sl.No.</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Code</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Product</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">HSN / SAC</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Quantity</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">UOM</th>
+                               
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Price</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Dis %</th>
+                                <t t-if="o.company_id.parent_id">
+                                    
+                                    
+                                    
+                                    <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
+                                        <t t-set="is_greater" t-value="o.invoice_date > o.company_id.parent_id.partner_id.y_lut_valid_till" />
                                             <t t-if="is_greater">
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Taxable
-                                                    Value</th>
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax
-                                                    Rate</th>
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax
-                                                    Amount</th>
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Taxable Value</th>
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Rate</th>
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Amount</th>
+                                                </t>
+                                            </t>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
+                                        <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
+                                            <t t-if="is_greater">                                                    
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Taxable Value</th>
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Rate</th>
+                                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Amount</th>
+                                                </t>
                                             </t>
                                         </t>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
-                                            <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
-                                            <t t-if="is_greater">
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Taxable
-                                                    Value</th>
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax
-                                                    Rate</th>
-                                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax
-                                                    Amount</th>
-                                            </t>
-                                        </t>
-                                    </t>
-                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Total</th>
-                                </tr>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Total</th>
+                            </tr>
                             </thead>
                             <tbody>
                                 <t t-set="sl" t-value="1" />
                                 <t t-set="taxes_dict" t-value="o.tax_calculation()" />
-
+                               
                                 <t t-foreach="o.invoice_line_ids" t-as="line">
                                     <tr style="border-bottom:1px solid black;border-top:none;page-break-inside:avoid;">
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
                                             <span t-esc="sl" />
                                             <t t-set="sl" t-value="sl+1" />
                                         </td>
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                            <span t-if="line.product_id.default_code" t-field="line.product_id.default_code" />
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                            <span t-if="line.product_id.default_code"
+                                                t-field="line.product_id.default_code" />
 
                                         </td>
-                                        <td colspan="1" rowspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;word-wrap: break-word; max-width:85px;">
-                                            <span t-if="line.product_id.name" t-field="line.product_id.name" />
+                                        <td colspan="1" rowspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;word-wrap: break-word; max-width:85px;">
+                                            <span t-if="line.product_id.name"
+                                                t-field="line.product_id.name" />
                                         </td>
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                            <span t-if="line.product_id.l10n_in_hsn_code" t-field="line.product_id.l10n_in_hsn_code" />
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                            <span t-if="line.product_id.l10n_in_hsn_code"
+                                                t-field="line.product_id.l10n_in_hsn_code" />
 
                                         </td>
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                            <span t-if="line.quantity" t-field="line.quantity" t-options="{'widget': 'float', 'precision': 2}" />
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                            <span t-if="line.quantity"
+                                                t-field="line.quantity"
+                                                t-options="{'widget': 'float', 'precision': 2}" />
                                         </td>
 
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                            <span t-if="line.product_id.uom_id" t-field="line.product_id.uom_id" />
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                            <span t-if="line.product_id.uom_id"
+                                                t-field="line.product_id.uom_id" />
 
                                         </td>
 
-                                        <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
                                             <t t-if="o.currency_id.name == 'INR'">
-                                                <span t-if="line.price_unit" t-field="line.price_unit" t-options="{'widget': 'float', 'precision': 2}" />
+                                                <span t-if="line.price_unit" t-field="line.price_unit" t-options="{'widget': 'float', 'precision': 2}"/>
                                             </t>
                                             <t t-else="">
-
-
-                                                <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                <t t-set="price" t-value="line.price_unit * conversion_factor" />
-
-                                                <span t-esc="price" t-options="{'widget': 'float', 'precision': 2}" />
+                                                <t t-if="o.state == 'posted'">
+                                                    <t t-set="price" t-value="line.price_unit * o.y_exchange_rate"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                    <t t-set="price" t-value="line.price_unit * conversion_factor"/>
+                                                </t>
+                                                <span t-esc="price" t-options="{'widget': 'float', 'precision': 2}"/>
                                             </t>
                                         </td>
 
-                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
                                             <span t-field="line.discount" />
 
                                         </td>
                                         <t t-if="o.company_id.parent_id">
-
-
+                                            
+                                            
+                                            
                                             <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
                                                 <t t-set="is_greater" t-value="o.invoice_date > o.company_id.parent_id.partner_id.y_lut_valid_till" />
-                                                <t t-if="is_greater">
-                                                    <td colspan="1" style="border:parent_id1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-if="o.currency_id.name == 'INR'">
-                                                            <span t-field="o.currency_id.symbol" />
-                                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                        <t t-else="">
-                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                            <t t-set="price_subtotal" t-value="line.price_subtotal * conversion_factor" />
-
-                                                            <t t-esc="'₹'" />
-                                                            <span t-esc="price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                    </td>
-                                                    <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-foreach="taxes_dict[line.id]['taxes']" t-as="tax">
-                                                            <span t-esc="tax['name']" />
-                                                            <br />
-                                                        </t>
-                                                    </td>
-                                                    <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-if="o.currency_id.name == 'INR'">
-                                                            <span t-field="o.currency_id.symbol" />
-                                                            <span t-esc="taxes_dict[line.id]['total_amount']" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                        <t t-else="">
-
-
-                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                            <t t-esc="'₹'" />
-                                                            <span t-esc="taxes_dict[line.id]['total_amount'] * conversion_factor" t-options="{'widget': 'float', 'precision': 2}" />
-
-
-                                                        </t>
-                                                    </td>
+                                                        <t t-if="is_greater">
+                                                        <td colspan="1"
+                                                            style="border:parent_id1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                            <t t-if="o.currency_id.name == 'INR'">
+                                                                <span  t-field="o.currency_id.symbol"/>
+                                                                <span t-if="line.price_subtotal" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <t t-if="o.state == 'posted'">
+                                                                    <t t-set="price_subtotal" t-value="line.price_subtotal * o.y_exchange_rate"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                                    <t t-set="price_subtotal" t-value="line.price_subtotal * conversion_factor"/>
+                                                                </t>
+                                                                <t t-esc="'₹'"/><span t-esc="price_subtotal" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                            </t>
+                                                        </td>
+                                                        <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                            <t t-foreach="taxes_dict[line.id]['taxes']" t-as="tax">
+                                                                <span t-esc="tax['name']"/>
+                                                                <br/>
+                                                            </t>
+                                                        </td>
+                                                        <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                            <t t-if="o.currency_id.name == 'INR'">
+                                                                <span t-field="o.currency_id.symbol"/>
+                                                                <span t-esc="taxes_dict[line.id]['total_amount']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <t t-if="o.state == 'posted'">
+                                                                    <t t-esc="'₹'"/><span t-esc="taxes_dict[line.id]['total_amount'] * o.y_exchange_rate" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                                    <t t-esc="'₹'"/><span t-esc="taxes_dict[line.id]['total_amount'] * conversion_factor" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                    </t>
                                                 </t>
-                                            </t>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
-                                                <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
-                                                <t t-if="is_greater">
-                                                    <td colspan="1" style="border:parent_id1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-if="o.currency_id.name == 'INR'">
-                                                            <span t-field="o.currency_id.symbol" />
-                                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                        <t t-else="">
-
-
-                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                            <t t-set="price_subtotal" t-value="line.price_subtotal * conversion_factor" />
-
-                                                            <t t-esc="'₹'" />
-                                                            <span t-esc="price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                    </td>
-                                                    <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-foreach="taxes_dict[line.id]['taxes']" t-as="tax">
-                                                            <span t-esc="tax['name']" />
-                                                            <br />
-                                                        </t>
-                                                    </td>
-                                                    <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                                        <t t-if="o.currency_id.name == 'INR'">
-                                                            <span t-field="o.currency_id.symbol" />
-                                                            <span t-esc="taxes_dict[line.id]['total_amount']" t-options="{'widget': 'float', 'precision': 2}" />
-
-
-                                                        </t>
-                                                        <t t-else="">
-
-
-                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                            <t t-esc="'₹'" />
-                                                            <span t-esc="taxes_dict[line.id]['total_amount'] * conversion_factor" t-options="{'widget': 'float', 'precision': 2}" />
-
-                                                        </t>
-                                                    </td>
-                                                </t>
-                                            </t>
-                                        </t>
-                                        <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
-                                            <t t-if="o.currency_id.name == 'INR'">
-                                                <t t-esc="o.currency_id.symbol" />
-                                                <span t-if="line.price_total" t-field="line.price_total" t-options="{'widget': 'float', 'precision': 2}" />
                                             </t>
                                             <t t-else="">
-
-
-                                                <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
-                                                <t t-set="price_total" t-value="line.price_total * conversion_factor" />
-
-                                                <t t-esc="'₹'" />
-                                                <span t-esc="price_total" t-options="{'widget': 'float', 'precision': 2}" />
+                                                <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
+                                                    <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
+                                                    <t t-if="is_greater">
+                                                <td colspan="1"
+                                                    style="border:parent_id1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                    <t t-if="o.currency_id.name == 'INR'">
+                                                        <span  t-field="o.currency_id.symbol"/>
+                                                        <span t-if="line.price_subtotal" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-if="o.state == 'posted'">
+                                                            <t t-set="price_subtotal" t-value="line.price_subtotal * o.y_exchange_rate"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                            <t t-set="price_subtotal" t-value="line.price_subtotal * conversion_factor"/>
+                                                        </t>
+                                                        <t t-esc="'₹'"/><span t-esc="price_subtotal" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    </t>
+                                                </td>
+                                                <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                    <t t-foreach="taxes_dict[line.id]['taxes']" t-as="tax">
+                                                        <span t-esc="tax['name']"/>
+                                                        <br/>
+                                                    </t>
+                                                </td>
+                                                <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                                    <t t-if="o.currency_id.name == 'INR'">
+                                                        <span t-field="o.currency_id.symbol"/>
+                                                        <span t-esc="taxes_dict[line.id]['total_amount']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-if="o.state == 'posted'">
+                                                            <t t-esc="'₹'"/><span t-esc="taxes_dict[line.id]['total_amount'] * o.y_exchange_rate" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                            <t t-esc="'₹'"/><span t-esc="taxes_dict[line.id]['total_amount'] * conversion_factor" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                        </t>
+                                                    </t>
+                                                </td>
+                                            </t>
+                                        </t>
+                                    </t>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;font-family: Century Gothic;border-right:1px solid black;border-bottom:none;border-top:none;">
+                                            <t t-if="o.currency_id.name == 'INR'">
+                                                <t t-esc="o.currency_id.symbol"/> 
+                                                <span t-if="line.price_total" t-field="line.price_total" t-options="{'widget': 'float', 'precision': 2}"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="o.state == 'posted'">
+                                                    <t t-set="price_total" t-value="line.price_total * o.y_exchange_rate"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                                    <t t-set="price_total" t-value="line.price_total * conversion_factor"/>
+                                                </t>
+                                                <t t-esc="'₹'"/> <span t-esc="price_total" t-options="{'widget': 'float', 'precision': 2}"/>
                                             </t>
                                         </td>
                                     </tr>
                                 </t>
                                 <tr style="border-bottom:1px solid black;page-break-inside:avoid;">
                                     <th colspan="8" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                        Grand Total(in INR)
-                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                        
-                                        <span>
-                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate" />
- Exchange Rate: <t t-esc="conversion_factor" t-options="{'widget': 'float', 'precision': 2}" />
+                                        Grand Total(in INR) &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        <span t-if="o.state == 'posted'">
+                                            Exchange Rate: <t t-esc="o.y_exchange_rate" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </span>
+                                        <span t-else="">
+                                            <t t-set="conversion_factor" t-value="1 / line.currency_rate"/>
+                                            Exchange Rate: <t t-esc="conversion_factor" t-options="{'widget': 'float', 'precision': 2}"/>
                                         </span>
                                     </th>
                                     <t t-if="o.company_id.parent_id">
                                         <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
                                             <t t-set="is_greater" t-value="o.invoice_date > o.company_id.parent_id.partner_id.y_lut_valid_till" />
                                             <t t-if="is_greater">
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                                    <t t-if="o.currency_id.name == 'INR'">
-                                                        <t t-esc="o.currency_id.symbol" />
-                                                        <span t-if="o.amount_untaxed" t-field="o.amount_untaxed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                    </t>
-                                                    <t t-else="">
-
-                                                        <span>
-                                                            <t t-esc="'₹'" />
-&#160;<span t-esc="o.amount_untaxed_signed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                        </span>
-                                                    </t>
-                                                </td>
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-
-                                                </td>
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-
-                                                    <t t-if="o.currency_id.name == 'INR'">
-                                                        <t t-esc="o.currency_id.symbol" />
-                                                        <span t-if="o.amount_tax" t-field="o.amount_tax" t-options="{'widget': 'float', 'precision': 2}" />
-                                                    </t>
-                                                    <t t-else="">
-
-                                                        <span>
-                                                            <t t-esc="'₹'" />
-&#160;<span t-esc="o.amount_tax_signed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                        </span>
-                                                    </t>
-                                                </td>
-                                            </t>
-                                        </t>
-                                    </t>
-
-
-                                    <t t-else="">
-                                        <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
-                                            <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
-                                            <t t-if="is_greater">
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-                                                    <t t-if="o.currency_id.name == 'INR'">
-                                                        <t t-esc="o.currency_id.symbol" />
-                                                        <span t-if="o.amount_untaxed" t-field="o.amount_untaxed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                    </t>
-                                                    <t t-else="">
-
-                                                        <span>
-                                                            <t t-esc="'₹'" />
-&#160;<span t-esc="o.amount_untaxed_signed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                        </span>
-                                                    </t>
-                                                </td>
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-
-                                                </td>
-                                                <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
-
-                                                    <t t-if="o.currency_id.name == 'INR'">
-                                                        <t t-esc="o.currency_id.symbol" />
-                                                        <span t-if="o.amount_tax" t-field="o.amount_tax" t-options="{'widget': 'float', 'precision': 2}" />
-                                                    </t>
-                                                    <t t-else="">
-
-                                                        <span>
-                                                            <t t-esc="'₹'" />
-&#160;<span t-esc="o.amount_tax_signed" t-options="{'widget': 'float', 'precision': 2}" />
-                                                        </span>
-                                                    </t>
-                                                </td>
-                                            </t>
-                                        </t>
-                                    </t>
-                                    <td colspan="1" style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <td colspan="1"
+                                        style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
                                         <t t-if="o.currency_id.name == 'INR'">
-                                            <t t-esc="o.currency_id.symbol" />
-                                            <span t-if="o.amount_total" t-field="o.amount_total" t-options="{'widget': 'float', 'precision': 2}" />
+                                            <t t-esc="o.currency_id.symbol"/> 
+                                            <span t-if="o.amount_untaxed" t-field="o.amount_untaxed" t-options="{'widget': 'float', 'precision': 2}"/>
                                         </t>
                                         <t t-else="">
-
-                                            <span>
-                                                <t t-esc="'₹'" />
-&#160;<span t-esc="o.amount_total_signed" t-options="{'widget': 'float', 'precision': 2}" />
-                                            </span>
+                                            
+                                            <span><t t-esc="'₹'"/>&#160;<span t-esc="o.amount_untaxed_signed" t-options="{'widget': 'float', 'precision': 2}"/></span>
                                         </t>
+                                        </td>
+                                        <td colspan="1"
+                                        style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        
+                                        </td>
+                                        <td colspan="1"
+                                        style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        
+                                        <t t-if="o.currency_id.name == 'INR'">
+                                            <t t-esc="o.currency_id.symbol"/> 
+                                            <span t-if="o.amount_tax" t-field="o.amount_tax" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                        <t t-else="">
+                                            
+                                            <span><t t-esc="'₹'"/>&#160;<span t-esc="o.amount_tax_signed" t-options="{'widget': 'float', 'precision': 2}"/></span>
+                                        </t>
+                                        </td>
+                                        </t>
+                                    </t>
+                                    </t>
+                                   
+                                    
+                                    
+                                <t t-else="">
+                                    <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
+                                        <t t-set="is_greater" t-value="o.invoice_date > o.company_id.partner_id.y_lut_valid_till" />
+                                    <t t-if="is_greater">
+                                <td colspan="1"
+                                style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                <t t-if="o.currency_id.name == 'INR'">
+                                    <t t-esc="o.currency_id.symbol"/> 
+                                    <span t-if="o.amount_untaxed" t-field="o.amount_untaxed" t-options="{'widget': 'float', 'precision': 2}"/>
+                                </t>
+                                <t t-else="">
+                                    
+                                    <span><t t-esc="'₹'"/>&#160;<span t-esc="o.amount_untaxed_signed" t-options="{'widget': 'float', 'precision': 2}"/></span>
+                                </t>
+                                </td>
+                                <td colspan="1"
+                                style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                                </td>
+                                <td colspan="1"
+                                style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                                <t t-if="o.currency_id.name == 'INR'">
+                                    <t t-esc="o.currency_id.symbol"/> 
+                                    <span t-if="o.amount_tax" t-field="o.amount_tax" t-options="{'widget': 'float', 'precision': 2}"/>
+                                </t>
+                                <t t-else="">
+                                    
+                                    <span><t t-esc="'₹'"/>&#160;<span t-esc="o.amount_tax_signed" t-options="{'widget': 'float', 'precision': 2}"/></span>
+                                </t>
+                                </td>
+                                </t>
+                            </t>
+                            </t>
+                                    <td colspan="1"
+                                    style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-if="o.currency_id.name == 'INR'">
+                                        <t t-esc="o.currency_id.symbol"/> 
+                                        <span t-if="o.amount_total" t-field="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </t>
+                                    <t t-else="">
+                                        
+                                        <span><t t-esc="'₹'"/>&#160;<span t-esc="o.amount_total_signed" t-options="{'widget': 'float', 'precision': 2}"/></span>
+                                    </t>
                                     </td>
                                 </tr>
                                 <tr style="border-bottom:1px solid black;">
-                                    <td colspan="12" style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                    <td colspan="12"
+                                    style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
                                         <span>
                                             <strong>Total Invoice Value in Words : </strong>
                                         </span>
-
-                                        <t t-set="amount_in_words" t-value="o.amount_in_words_acc_move()" />
-                                        <span t-esc="amount_in_words" />
-                                    </td>
+                                        
+                                            <t t-set="amount_in_words" t-value="o.amount_in_words_acc_move()"/>
+                                            <span  t-esc="amount_in_words"/>
+                                     </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -359,175 +364,134 @@
                         <table class="table-borderless table-sm" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;" />
+                                    <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr style="width:100%;border-bottom:1px solid black;">
-
+                                    
                                     <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
 
-                                        <span style="text-align:left;font-size:12px;width:100%;">
-                                            <strong>T &amp; C :</strong>
-                                        </span>
-                                        <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.narration" />
+                                            <span  style="text-align:left;font-size:12px;width:100%;"><strong>T &amp; C :</strong></span>
+                                            <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.narration"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div style="page-break-after:always"></div>
                         <table style="font-size: 11px; width: 100%; border: 1px solid black; padding-left: 10px;">
-                            <t t-if="o.company_id.parent_id">
-                                <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
-                                    <t t-set="is_greater" t-value="o.company_id.parent_id.partner_id.y_lut_valid_till > o.invoice_date" />
-                                    <t t-if="is_greater">
-                                        <tr>
-                                            <td style="width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>LUT ARN NO </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.parent_id.partner_id.y_lut_no">
-                                                                <span t-field="o.company_id.parent_id.partner_id.y_lut_no"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>Register Date </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.parent_id.partner_id.y_reg_date">
-                                                                <span t-field="o.company_id.parent_id.partner_id.y_reg_date" t-options="{'widget': 'date'}"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>Valid Till </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.parent_id.partner_id.y_lut_valid_till">
-                                                                <span t-field="o.company_id.parent_id.partner_id.y_lut_valid_till"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
-                                                <span>E.&amp;O.E.</span>
-
-                                            </td>
-                                        </tr>
-                                    </t>
-                                </t>
-                            </t>
-
-                            <t t-else="">
-
-                                <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
-                                    <t t-set="is_greater" t-value="o.company_id.partner_id.y_lut_valid_till > o.invoice_date" />
-                                    <t t-if="is_greater">
-                                        <tr>
-                                            <td style="width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>LUT ARN NO </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.partner_id.y_lut_no">
-                                                                <span t-field="o.company_id.partner_id.y_lut_no"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>Register Date </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.partner_id.y_reg_date">
-                                                                <span t-field="o.company_id.partner_id.y_reg_date" t-options="{'widget': 'date'}"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span>
-                                                    <div class="row">
-                                                        <div style="width:37%;">
-                                                            <strong>
-                                                                <span>Valid Till </span>
-                                                            </strong>
-                                                        </div>
-                                                        <div style="width:3%;">:</div>
-                                                        <div style="width:60%;">
-                                                            <t t-if="o.company_id.partner_id.y_lut_valid_till">
-                                                                <span t-field="o.company_id.partner_id.y_lut_valid_till"></span>
-                                                            </t>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                            <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
-                                                <span>E.&amp;O.E.</span>
-
-                                            </td>
-                                        </tr>
-                                    </t>
-                                </t>
-                            </t>
+                        <t t-if="o.company_id.parent_id">
+                            <t t-if="o.invoice_date and o.company_id.parent_id.partner_id.y_lut_valid_till">
+                                <t t-set="is_greater" t-value="o.company_id.parent_id.partner_id.y_lut_valid_till > o.invoice_date" />
+                                <t t-if="is_greater">
                             <tr>
-                                <td rowspan="2" style="font-size: 11px;;width: 47%; border: 1px solid black;padding-left:3px;font-size:11px;">
-                                    <strong>Note :<br />
-                                    </strong>
-                                    <span style="padding-right:3px;padding-left:3px;word-wrap: break-word; max-width: 120px;" t-field="o.y_note">
+                                <td style="width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                                    <span>
+                                        <div class="row">
+                                            <div style="width:37%;">
+                                                <strong><span>LUT ARN NO </span></strong>
+                                            </div>
+                                            <div style="width:3%;">:</div>
+                                            <div style="width:60%;">
+                                                <t t-if="o.company_id.parent_id.partner_id.y_lut_no"><span t-field="o.company_id.parent_id.partner_id.y_lut_no"></span>
+                                                </t>
+                                            </div>
+                                        </div>
                                     </span>
+                                    <span>
+                                        <div class="row">
+                                            <div style="width:37%;">
+                                                <strong><span>Register Date </span></strong>
+                                            </div>
+                                            <div style="width:3%;">:</div>
+                                            <div style="width:60%;">
+                                                <t t-if="o.company_id.parent_id.partner_id.y_reg_date"><span t-field="o.company_id.parent_id.partner_id.y_reg_date"></span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span><div class="row"><div style="width:37%;"><strong><span>Valid Till </span></strong></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="o.company_id.parent_id.partner_id.y_lut_valid_till"><span t-field="o.company_id.parent_id.partner_id.y_lut_valid_till"></span></t></div></div></span>
+                                </td>
+                                <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
+                                    <span>E.&amp;O.E.</span>
+                                  
+                                </td>
+                            </tr>
+                            </t>
+                        </t>
+  
+                        </t>
+
+                        <t t-else="">
+                            
+                            <t t-if="o.invoice_date and o.company_id.partner_id.y_lut_valid_till">
+                                <t t-set="is_greater" t-value="o.company_id.partner_id.y_lut_valid_till > o.invoice_date" />
+                                <t t-if="is_greater">
+                            <tr>
+                                <td style="width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                                    <span>
+                                        <div class="row">
+                                            <div style="width:37%;">
+                                                <strong><span>LUT ARN NO </span></strong>
+                                            </div>
+                                            <div style="width:3%;">:</div>
+                                            <div style="width:60%;">
+                                                <t t-if="o.company_id.partner_id.y_lut_no"><span t-field="o.company_id.partner_id.y_lut_no"></span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span>
+                                        <div class="row">
+                                            <div style="width:37%;">
+                                                <strong><span>Register Date </span></strong>
+                                            </div>
+                                            <div style="width:3%;">:</div>
+                                            <div style="width:60%;">
+                                                <t t-if="o.company_id.partner_id.y_reg_date"><span t-field="o.company_id.partner_id.y_reg_date"></span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span><div class="row"><div style="width:37%;"><strong><span>Valid Till </span></strong></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="o.company_id.partner_id.y_lut_valid_till"><span t-field="o.company_id.partner_id.y_lut_valid_till"></span></t></div></div></span>
+                                </td>
+                                <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
+                                    <span>E.&amp;O.E.</span>
+                                  
+                                </td>
+                            </tr>
+                            </t>
+                        </t>
+                    </t>
+                            <tr>
+                    
+                            
+                                <td rowspan="2" style="font-size: 11px;;width: 47%; border: 1px solid black;padding-left:3px;font-size:11px;"> <strong>Note :<br /></strong>
+                                    <span style="padding-right:3px;padding-left:3px;word-wrap: break-word; max-width: 120px;" 
+                                    t-field="o.y_note">
+                                </span>
                                 </td>
                                 <!-- <t t-if="o.company_id.parent_id">
-                                    <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black;
-                                padding-left:3px;font-size:11px;">
+                                    <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
                                         <span><div class="row"><div style="width:37%;"><strong>Bank Details</strong></div></div></span>
                                         <span><div class="row"><div style="width:30%;">Name</div><div style="width:10%;">:</div><div style="width:60%;"> 
-                                            <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id" t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id"/>
+                                            <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id"
+                                                    t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id"/>
                                     </div></div></span>
                                         <span><div class="row"><div style="width:30%;">Account No</div><div style="width:10%;">:</div><div style="width:60%;">
-                                            <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].acc_number" t-field="o.company_id.parent_id.partner_id.bank_ids[0].acc_number" />
+                                            <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].acc_number"
+                                                    t-field="o.company_id.parent_id.partner_id.bank_ids[0].acc_number" />
                                         </div></div></span>
                                         <t t-if="o.currency_id.name == 'INR'">
                                             <span><div class="row"><div style="width:30%;">IFSC Code</div> <div style="width:10%;">:</div><div style="width:60%;">
-                                                <span t-if="o.company_id.parent_id.partner_id.bank_ids and
-                                o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"/>
+                                                <span t-if="o.company_id.parent_id.partner_id.bank_ids and o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"/>
 
                                             </div></div></span>
                                         </t>
                                         
                                         <t t-else="">
                                             <span><div class="row"><div style="width:30%;">SWIFT Code</div><div style="width:10%;">:</div><div style="width:60%;">
-                                                <span t-if="o.company_id.parent_id.partner_id.bank_ids and
-                                o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"/>
+                                                <span t-if="o.company_id.parent_id.partner_id.bank_ids and o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"/>
 
                                             </div></div></span>
                                         </t>
@@ -539,117 +503,85 @@
                                     </td>
                                 </t> -->
                                 <!-- <t t-else=""> -->
-                                <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
-                                    <span>
-                                        <div class="row">
-                                            <div style="width:37%;">
-                                                <strong>Bank Details</strong>
-                                            </div>
-                                        </div>
-                                    </span>
-                                    <span>
-                                        <div class="row">
-                                            <div style="width:30%;">Name</div>
-                                            <div style="width:10%;">:</div>
-                                            <div style="width:60%;">
+                                    <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                                        <span><div class="row"><div style="width:37%;"><strong>Bank Details</strong></div></div></span>
+                                    <span><div class="row"><div style="width:30%;">Name</div><div style="width:10%;">:</div><div style="width:60%;"> 
+                                        
+                                        <t t-if="o.y_bank_details.y_domestic_bank_id.name">
+                                            <span t-field="o.y_bank_details.y_domestic_bank_id.name"/>
+                                        </t>
+                                       
+                                        <t t-else="o.y_bank_details.y_export_bank_id.name">
+                                            <span t-field="o.y_bank_details.y_export_bank_id.name"/>
+    
+                                        </t>
 
-                                                <t t-if="o.y_bank_details.y_domestic_bank_id.name">
-                                                    <span t-field="o.y_bank_details.y_domestic_bank_id.name" />
-                                                </t>
-
-                                                <t t-else="o.y_bank_details.y_export_bank_id.name">
-                                                    <span t-field="o.y_bank_details.y_export_bank_id.name" />
-
-                                                </t>
-
-                                                <!-- <span t-if="o.company_id.partner_id.bank_ids[0].bank_id" t-field="o.company_id.partner_id.bank_ids[0].bank_id"/> -->
-                                            </div>
-                                        </div>
-                                    </span>
-                                    <span>
-                                        <div class="row">
-                                            <div style="width:30%;">Account No</div>
-                                            <div style="width:10%;">:</div>
-                                            <div style="width:60%;">
-                                                <t t-if="o.y_bank_details.y_domestic_acc_number">
-                                                    <span t-field="o.y_bank_details.y_domestic_acc_number" />
-                                                </t>
-
-                                                <t t-else="o.y_bank_details.y_export_acc_number">
-                                                    <span t-field="o.y_bank_details.y_export_acc_number" />
-
-                                                </t>
-
-                                                <!-- <span t-if="o.company_id.partner_id.bank_ids[0].acc_number" t-field="o.company_id.partner_id.bank_ids[0].acc_number" /> -->
-                                            </div>
-                                        </div>
-                                    </span>
+                                        <!-- <span t-if="o.company_id.partner_id.bank_ids[0].bank_id"
+                                        t-field="o.company_id.partner_id.bank_ids[0].bank_id"/> -->
+                                </div></div></span>
+                                    <span><div class="row"><div style="width:30%;">Account No</div><div style="width:10%;">:</div><div style="width:60%;">
+                                        <t t-if="o.y_bank_details.y_domestic_acc_number">
+                                            <span t-field="o.y_bank_details.y_domestic_acc_number"/>
+                                        </t>
+                                       
+                                        <t t-else="o.y_bank_details.y_export_acc_number">
+                                            <span t-field="o.y_bank_details.y_export_acc_number"/>
+    
+                                        </t>
+                                        
+                                        <!-- <span t-if="o.company_id.partner_id.bank_ids[0].acc_number"
+                                                t-field="o.company_id.partner_id.bank_ids[0].acc_number" /> -->
+                                    </div></div></span>
                                     <!-- <t t-if="o.currency_id.name == 'INR'"> -->
-                                    <t t-if="o.y_bank_details.y_domestic_bank_id.bic">
-                                        <span>
-                                            <div class="row">
-                                                <div style="width:30%;">IFSC Code</div>
-                                                <div style="width:10%;">:</div>
-                                                <div style="width:60%;">
-                                                    <!-- <span t-if="o.company_id.partner_id.bank_ids and
-                                                    o.company_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.partner_id.bank_ids[0].bank_id.bic"/> -->
-
-                                                    <span t-field="o.y_bank_details.y_domestic_bank_id.bic" />
-
-
-                                                </div>
-                                            </div>
-                                        </span>
-                                    </t>
-
-                                    <t t-if="o.y_bank_details.y_export_bank_id.bic">
-                                        <span>
-                                            <div class="row">
-                                                <div style="width:30%;">SWIFT Code</div>
-                                                <div style="width:10%;">:</div>
-                                                <div style="width:60%;">
-                                                    <!-- <span t-if="o.company_id.partner_id.bank_ids and
-                                                    o.company_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.partner_id.bank_ids[0].bank_id.bic"/> -->
-
-                                                    <span t-field="o.y_bank_details.y_export_bank_id.bic" />
-
-
-                                                </div>
-                                            </div>
-                                        </span>
-                                    </t>
-
+                                        <t t-if="o.y_bank_details.y_domestic_bank_id.bic">
+                                        <span><div class="row"><div style="width:30%;">IFSC Code</div> <div style="width:10%;">:</div><div style="width:60%;">
+                                            <!-- <span t-if="o.company_id.partner_id.bank_ids and o.company_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.partner_id.bank_ids[0].bank_id.bic"/> -->
+                                            
+                                                <span t-field="o.y_bank_details.y_domestic_bank_id.bic"/>
+                                            
+                                           
+                                           
+                                        </div></div></span></t>
+                                    <!-- </t> -->
+                                    
+                                    <!-- <t t-else=""> -->
+                                        <t t-if="o.y_bank_details.y_export_bank_id.bic">
+                                        <span><div class="row"><div style="width:30%;">SWIFT Code</div><div style="width:10%;">:</div><div style="width:60%;">
+                                            <!-- <span t-if="o.company_id.partner_id.bank_ids and o.company_id.partner_id.bank_ids[0].bank_id.bic" t-field="o.company_id.partner_id.bank_ids[0].bank_id.bic"/> -->
+                                            
+                                                <span t-field="o.y_bank_details.y_export_bank_id.bic"/>
+        
+                                            
+                                        </div></div></span></t>
+                                    <!-- </t> -->
+                                    
+                                    
                                 </td>
                                 <td style="width: 23%;padding-left:3px;height:90px;text-align: center;font-size:11px;">
-                                    <strong>
-                                        <span>For</span>
+                                    <strong><span>For</span><br />
+                                        <span t-field="o.company_id.name"></span></strong>
                                         <br />
-                                        <span t-field="o.company_id.name"></span>
-                                    </strong>
-                                    <br />
-                                </td>
-                            </tr>
+                                    </td>
+                                <!-- </t> -->
+                                </tr>
                             <tr>
                                 <td style="width: 23%; border-top:1px solid black;padding-left:3px;text-align: center;font-size:11px;">
-                                    <span>Authorized Signatory</span>
-                                    <br />
+                                    <span>Authorized Signatory</span><br />
                                 </td>
                             </tr>
-
-                        </table>
-                        <table class="table table-borderless m-0 p-0">
-                            <td style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-size:11px;font-family: Century Gothic;width:100%;">
+                       
+                    </table>
+                    <table class="table table-borderless m-0 p-0">
+                            <td style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-size:11px;font-family: Century Gothic;width:100%;" >
                                 <div class="text-left" style="width:100%;padding-left:2px;">
-                                    <span style="font-size:11px;font-family: Century Gothic;">* This
-                                        is a
+                                    <span style="font-size:11px;font-family: Century Gothic;">* This is a
                                         computer generated document and authenticated by Eruvaka
-                                        Technologies Pvt. Ltd.Hence, it can be considered valid even
-                                        if not signed
+                                        Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
                                         manually.</span>
                                 </div>
-
+                                    
                             </td>
-                        </table>
+                        </table> 
                     </div>
                 </t>
             </t>

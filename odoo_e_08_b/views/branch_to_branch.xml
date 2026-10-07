@@ -110,7 +110,6 @@
             </button>
           </div>
           <field name="y_status" invisible="1"/>
-
           <widget name="web_ribbon" text="Completed" bg_color="bg-success" invisible="y_status != 'done' or y_state in ('approval','open')"/>
           <widget name="web_ribbon" text="Ready to Ship" bg_color="bg-primary" invisible="y_status != 'delivready' or y_state in ('approval','open')"/>
           <widget name="web_ribbon" text="Partially Shipped" bg_color="bg-warning" invisible="y_status != 'delivpart' or y_state in ('approval','open')"/>

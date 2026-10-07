@@ -1,8 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
-import logging
+import math
 
-_logger = logging.getLogger(__name__)
 
 class BranchToBranchTransfer(models.Model):
     _name = 'branch.to.branch.transfer'
@@ -61,8 +60,6 @@ class BranchToBranchTransfer(models.Model):
         ('close','Short Closed')],compute='_compute_status',string="Status",copy=False)
 
     y_short_close_reason_id = fields.Many2one('barch.transfer.short.close.reason',string="Short Close Reason",copy=False)
-    
-    
 
     @api.depends('y_btb_line_ids','y_btb_line_ids.y_quantity','y_btb_line_ids.y_deliv_qty','y_btb_line_ids.y_rescv_qty')
     def _compute_totals(self):
@@ -71,112 +68,26 @@ class BranchToBranchTransfer(models.Model):
             rec.y_total_plan = sum(rec.y_btb_line_ids.mapped('y_quantity'))
             rec.y_total_deliv = sum(rec.y_btb_line_ids.mapped('y_deliv_qty'))
             rec.y_total_rescv = sum(rec.y_btb_line_ids.mapped('y_rescv_qty'))
-            
-            
-            
-    @api.depends(
-    'y_total_plan',
-    'y_total_deliv',
-    'y_total_rescv',
-    'y_picking_ids',
-    'y_picking_ids.state',
-    'y_picking_ids.y_btb_picking_in_id',
-    'y_picking_ids.y_btb_picking_out_id',
-    'y_picking_ids.backorder_ids',
-    'y_picking_ids.backorder_ids.state',
-    )
+    
+    @api.depends('y_total_plan','y_total_deliv','y_total_rescv')
     def _compute_status(self):
         for rec in self:
-
-            btb_pickings = rec.sudo().y_picking_ids
-
-            delivery_pickings = btb_pickings.filtered(
-                lambda picking: picking.y_btb_picking_in_id
-            )
-
-            receipt_pickings = btb_pickings.filtered(
-                lambda picking: picking.y_btb_picking_out_id
-            )
-
-            linked_delivery_pickings = receipt_pickings.mapped(
-                'y_btb_picking_out_id'
-            ).sudo()
-
-            linked_receipt_pickings = delivery_pickings.mapped(
-                'y_btb_picking_in_id'
-            ).sudo()
-
-            all_delivery_pickings = (
-                delivery_pickings | linked_delivery_pickings
-            )
-
-            all_receipt_pickings = (
-                receipt_pickings | linked_receipt_pickings
-            )
-
-            delivery_done = (
-                bool(all_delivery_pickings)
-                and all(
-                    picking.state == 'done'
-                    for picking in all_delivery_pickings
-                )
-            )
-
-            receipt_done = (
-                bool(all_receipt_pickings)
-                and all(
-                    picking.state == 'done'
-                    for picking in all_receipt_pickings
-                )
-            )
-
-            backorder_pickings = all_delivery_pickings.mapped(
-                'backorder_ids'
-            ).sudo()
-
-            pending_backorders = backorder_pickings.filtered(
-                lambda picking: picking.state not in ('done', 'cancel')
-            )
-
-            is_completed = (
-                delivery_done
-                and receipt_done
-                and not pending_backorders
-            )
-
             if rec.y_closed != True:
-
-                if is_completed:
-                    rec.y_status = 'done'
-
-                elif receipt_done and rec.y_total_rescv < rec.y_total_plan:
-                    rec.y_status = 'rescvpart'
-
-                elif delivery_done and not receipt_done:
-                    rec.y_status = 'rescvready'
-
-                elif pending_backorders:
-                    rec.y_status = 'delivpart'
-
-                elif rec.y_total_deliv == 0 and rec.y_total_rescv == 0:
+                if rec.y_total_deliv == 0:
                     rec.y_status = 'delivready'
-
+                elif rec.y_total_rescv == 0:
+                    rec.y_status = 'rescvready'
                 elif rec.y_total_deliv < rec.y_total_plan:
                     rec.y_status = 'delivpart'
-
                 elif rec.y_total_rescv < rec.y_total_deliv:
                     rec.y_status = 'rescvpart'
-
                 else:
                     rec.y_status = 'done'
-
+            elif rec.y_total_deliv == rec.y_total_rescv == rec.y_total_plan:
+                rec.y_status = 'done'
             else:
-                if rec.y_total_deliv == rec.y_total_rescv == rec.y_total_plan:
-                    rec.y_status = 'done'
-                else:
-                    rec.y_status = 'close'
+                rec.y_status = 'close'
 
-                
     @api.constrains('y_dispatch_date','y_delivery_date')
     def _check_dates(self):
         for rec in self:
@@ -287,6 +198,8 @@ class BranchToBranchTransfer(models.Model):
                 }))
         
         return move_lines
+
+
 
 
     def process_btb(self):
@@ -414,6 +327,7 @@ class BranchToBranchTransfer(models.Model):
 
 
 
+
 class BranchToBranchTransferLine(models.Model):
     _name = 'branch.to.branch.transfer.line'
     _description = 'Branch To Branch Transfer Line'
@@ -514,11 +428,9 @@ class BranchToBranchTransferLine(models.Model):
                 # rec.y_deliv_qty = sum(rec.y_btb_id.y_picking_ids.filtered(lambda pik : pik.y_btb_picking_in_id and pik.state == 'done' and pik.picking_type_id.id in stock_transfer_operation.ids).mapped('move_ids_without_package').filtered(lambda mov : mov.product_id.id == rec.y_product_id.id).mapped('quantity'))
                 order_line.y_rescv_qty = sum(order_line.y_btb_id.y_picking_ids.filtered(lambda pik : pik.y_btb_picking_out_id and pik.state == 'done' and pik.picking_type_id.id in stock_transfer_operation.ids).mapped('move_ids_without_package').filtered(lambda mov : mov.product_id.id == order_line.y_product_id.id).mapped('quantity'))
 
-         
-                
-                
             else:
                 stock_transfer_operation = order_line.env['stock.picking.type'].search([('y_is_branch_to_branch_operation','=',True)])
                 order_line.y_deliv_qty = sum(order_line.y_btb_id.y_picking_ids.filtered(lambda pik : pik.y_btb_picking_in_id and pik.state == 'done' and pik.picking_type_id.id in stock_transfer_operation.ids).mapped('move_ids_without_package').filtered(lambda mov : mov.product_id.id == order_line.y_product_id.id).mapped('quantity'))
                 order_line.y_rescv_qty = sum(order_line.y_btb_id.y_picking_ids.filtered(lambda pik : pik.y_btb_picking_out_id and pik.state == 'done' and pik.picking_type_id.id in stock_transfer_operation.ids).mapped('move_ids_without_package').filtered(lambda mov : mov.product_id.id == order_line.y_product_id.id).mapped('quantity'))
+
 

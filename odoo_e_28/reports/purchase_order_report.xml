@@ -36,8 +36,8 @@
 
 
 
-                        <t t-if="o.order_line.taxes_id">
-                            <t t-foreach="o.order_line.taxes_id[0]" t-as="tax">
+
+                        <t t-foreach="o.order_line.taxes_id[0]" t-as="tax">
 
 
                            <t t-if="tax.tax_group_id.name == 'GST'">
@@ -378,10 +378,9 @@
                            </t>
                             
                         </t>
-                        </t>
 
-                        <t t-if="o.order_line.taxes_id">
-                            <t t-foreach="o.order_line.taxes_id[0]" t-as="tax">
+
+                        <t t-foreach="o.order_line.taxes_id[0]" t-as="tax">
 
 
                             <t t-if="tax.tax_group_id.name == 'IGST'">
@@ -716,7 +715,6 @@
                             </t>
                              
                          </t>
-                        </t>
  
 
 

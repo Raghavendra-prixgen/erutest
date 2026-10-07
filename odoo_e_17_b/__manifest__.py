@@ -25,10 +25,10 @@
 
     'category': 'Customization',
     'origin': 'base',
-    'version': '17.0.0.2',
+    'version': '17.0.0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base','stock','product','sale','stock_landed_costs','mrp_landed_costs','mail','uom','delivery','stock_delivery','mrp_subcontracting','purchase'],
+    'depends': ['base','stock','product','sale','stock_landed_costs','mrp_landed_costs','mail','uom','delivery','stock_delivery','mrp_subcontracting'],
 
     'data': [
         # 'data/defualt_values.xml',

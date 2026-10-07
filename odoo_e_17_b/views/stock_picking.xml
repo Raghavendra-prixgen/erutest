@@ -23,18 +23,5 @@
                 </xpath>
             </field>
         </record>
-
-        <record id="product_uom_categ_form_view_inherit_y_weight_uom" model="ir.ui.view">
-            <field name="name">uom.category.form.view.inherit</field>
-            <field name="model">uom.category</field>
-            <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='uom_ids']/tree/field[@name='uom_type']" position="before">
-                    <field name="y_weight_uom"/>
-                </xpath>
-            </field>
-        </record>
-
-
     </data>
 </odoo>        

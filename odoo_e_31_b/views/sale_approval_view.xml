@@ -136,12 +136,12 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//header" position="before">
+            <!-- <xpath expr="//header" position="before">
                 <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': ['|','|',('state', 'in', ('sale', 'done','reject')),('is_approval_req','=',False),('so_approval_method','!=','lvlsamt')]}">
                   The SO total amount is out of the Approval Grid. <br/>
                    You can confirm the Sale Order.
                 </div>
-            </xpath>
+            </xpath -->>
 
             
             <button name="action_draft" position="attributes">

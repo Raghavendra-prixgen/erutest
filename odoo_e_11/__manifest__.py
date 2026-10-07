@@ -15,7 +15,7 @@
     'website': "https://www.prixgen.com",
 
     'category': '',
-    'version': '17.0.5.3',
+    'version': '17.0.4.8',
     'license': 'LGPL-3',
     'origin': "Project Specific",
     'module_type': 'official',

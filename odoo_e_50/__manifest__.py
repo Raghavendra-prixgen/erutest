@@ -16,7 +16,7 @@
     'App Origin': 'Base',
 
     'category': 'Inventory',
-    'version': '17.0.0.4',
+    'version': '17.0.0.2',
 
     'depends': ['base', 'mail'],
 

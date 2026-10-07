@@ -5,12 +5,12 @@
         <field name="default" eval="True" />
         <field name="format">A4</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">160</field>
+        <field name="margin_top">155</field>
         <field name="margin_bottom">5</field>
         <field name="margin_left">5</field>
         <field name="margin_right">5</field>
         <field name="header_line" eval="False" />
-        <field name="header_spacing">155</field>
+        <field name="header_spacing">150</field>
         <field name="dpi">90</field>
     </record>
 

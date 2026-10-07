@@ -97,8 +97,7 @@
                 <tree editable="bottom">
                     <field name="y_code" required="1"/>
                     <field name="y_name" string="Description" required="1"/>
-                    <field name="y_item_group" required="0" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
-                    <field name="y_product_category_id" required="0" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="y_product_category_id" required="1" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
                     <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" groups="base.group_multi_company"/>
                 </tree>
             </field>
@@ -192,9 +191,9 @@
 
         <!-- Group Master Menus -->
         <menuitem id="menu_product_group_root"
-                    name="Others"
+                    name="Product Groups"
                     parent="stock.menu_stock_config_settings"
-                    sequence="100"/>
+                    sequence="5"/>
                 
 
         <menuitem id="menu_item_group"

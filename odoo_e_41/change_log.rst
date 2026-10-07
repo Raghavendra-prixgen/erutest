@@ -69,23 +69,35 @@ bug fix
 reject state added in purchase order and after click on request for approval the state changed to to approve in purchase order 
 and while mail triggering issue is there that is resolved when po is rejected
 
-
-17.0.1.6 --------------->17.0.1.7(18-03-2025)  **@meen**
+17.0.1.6 --------------->17.0.1.7(30-10-2024)  **$@g@r
 ===============================================================
-Po Approve issue
+remove usererror and validation error for purchase approval
 
-17.0.1.7 --------------->17.0.1.8(18-03-2025)  **@meen**
+17.0.1.7 --------------->17.0.1.8(28-11-2024)  **$@g@r
 ===============================================================
-When the final approve is done the date added to confirmation date
+invisible get_approval button
 
-17.0.1.8 --------------->17.0.1.9(30-04-2025)  **$@g@r**
+17.0.1.7 --------------->17.0.1.9(06-04-2025)  **Navya shree R**
+===============================================================
+1. approve button visible for respective users [changes done as in eruvaka repo app odoo_e_41]
+2. when po is cancelled then recipt also need to cancelled
+3. when RFQ is created through purchase request if the created RFQ is cancelled then purchase request should alow to create other RFQ
+
+
+17.0.1.9 --------------->17.0.2.0(08-04-2025)  **$@g@r**
+===============================================================
+button approve added groups and hide get approval button 
+
+
+
+17.0.2.0 --------------->17.0.2.1(30-04-2025)  **$@g@r**
 ===============================================================
 removed po warning 
 
-17.0.1.9 ----> 17.0.2.0(03-Aug-2026)  **Anke**
-========================================================
-Added _validate_analytic_distribution() request approval
+17.0.2.1 --------------->17.0.2.2(11-07-2025)  **Navya shree**
+===============================================================
+commented the ir.rules of [rule_purchase_order_own_documents,rule_purchase_order_1st_lvl_approval,rule_purchase_order_2nd_lvl_approval,rule_purchase_order_3rd_lvl_approval,rule_purchase_order_4th_lvl_approval and rule_purchase_order_5th_lvl_approval]
 
-17.0.2.0 ---------> 17.0.2.1(05-10-2026) **Pooja**
-==================================================================
-Added to approve state in RFQ window action domain
+17.0.2.2 --------------->17.0.2.3(14-01-2026)  **Navya shree**
+===============================================================
+1. added validation in request_for_approve button if purchase.order amount is greater than maximum_approval_limit amount set in global.model

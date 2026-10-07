@@ -4,11 +4,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import AccessError, UserError, ValidationError
 
 
-class ProductTemplate(models.Model):
-    _inherit = 'product.product'
-
-    stock_lot_ids = fields.One2many('stock.lot','product_id')
-
 class StockQuantInherit(models.Model):
     _inherit = 'stock.quant'
 
@@ -21,41 +16,56 @@ class prixgen_stock_picking(models.Model):
     _inherit = 'sale.order.line'
 
     @api.onchange('product_id')
-    def sale_product_lot(self):
-        if self.product_id:
-            product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty > 0)
-            zero_product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty <= 0)
-            if product_lots_ids:
-                product_lots_ids.write({'y_show_lot':True})
-            if zero_product_lots_ids:
-                zero_product_lots_ids.write({'y_show_lot':False})
+    def _purchase_lot(self):
+        name = self._name
+        product_id = self.product_id.id
+
+        if name == 'sale.order.line':
+            purchase_lot = self.env['stock.lot'].search([('product_id','=',product_id)])
+            for product_lot in purchase_lot:
+                if product_lot.product_qty>0:
+                    product_lot.y_show_lot=True
+                else:
+                    product_lot.y_show_lot=False
+        else:
+            purchase_lot = self.env['stock.lot'].search([('product_id','=',product_id)])
+            for product_lot in purchase_lot:
+                product_lot.y_show_lot=True
 
 class prixgen_purchase_stock_picking(models.Model):
     _inherit = 'purchase.order.line'
 
     @api.onchange('product_id')
-    def purchase_product_lot(self):
-        if self.product_id:
-            product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty > 0)
-            zero_product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty <= 0)
-            if product_lots_ids:
-                product_lots_ids.write({'y_show_lot':True})
-            if zero_product_lots_ids:
-                zero_product_lots_ids.write({'y_show_lot':False})
+    def _purchase_lot(self):
+        name = self._name
+        product_id = self.product_id.id
+
+        if name == 'purchase.order.line':
+            purchase_lot = self.env['stock.lot'].search([('product_id','=',product_id)])
+            for product_lot in purchase_lot:
+                product_lot.y_show_lot=True
+
 
 
 class prixgen_stock_picking_move(models.Model):
     _inherit = 'stock.move.line'
 
     @api.onchange('product_id')
-    def stock_product_lot(self):
-        if self.product_id:
-            product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty > 0)
-            zero_product_lots_ids = self.product_id.stock_lot_ids.filtered(lambda x:x.product_qty <= 0)
-            if product_lots_ids:
-                product_lots_ids.write({'y_show_lot':True})
-            if zero_product_lots_ids:
-                zero_product_lots_ids.write({'y_show_lot':False})
+    def _purchase_lot(self):
+        name = self._name
+        product_id = self.product_id.id
+        
+        if name == 'stock.move.line':
+            purchase_lot = self.env['stock.lot'].search([('product_id','=',product_id)])
+            for product_lot in purchase_lot:
+                if product_lot.product_qty>0:
+                    product_lot.y_show_lot=True
+                else:
+                    product_lot.y_show_lot=False
+        else:
+            purchase_lot = self.env['stock.lot'].search([('product_id','=',product_id)])
+            for product_lot in purchase_lot:
+                product_lot.y_show_lot=True
 
     y_serial_no = fields.Char(string='#',compute="_compute_sl")
 
@@ -68,6 +78,9 @@ class prixgen_stock_picking_move(models.Model):
                 var += 1
             else:
                 rec.y_serial_no = False
+
+    
+
 
 class StockProductionLot(models.Model):
     _inherit="stock.lot"

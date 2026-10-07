@@ -113,6 +113,11 @@
 
                                 </tr>
                             </t>
+                           
+                            
+
+                           
+
                         </tbody>
 
 
@@ -159,12 +164,8 @@
                                         <strong>Total Amount In Words : </strong>
                                     </span>
 
-                                    <!-- <t t-set="amountwords" t-value="o.amount_in_words(o.tax_totals['amount_total'])" />
-                                    <span t-esc="amountwords" />  -->
-                                    <t t-set="amountwords"
-                                         t-value="o.amount_in_words(o.amount_total)" />
-                                    <span
-                                        t-esc="o.currency_id.amount_to_text(o.amount_total).replace('And', '').strip()" />
+                                    <t t-set="amountwords" t-value="o.amount_in_words(o.tax_totals['amount_total'])" />
+                                    <span t-esc="amountwords" /> 
                                 </td>
                             </tr>
                             <tr >

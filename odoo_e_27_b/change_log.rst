@@ -142,28 +142,19 @@ Fix the issue confirming the po without purchase request
 
 17.0.1.6 ---------> 17.0.1.7(10-03-2025) **$@g@r**
 ==========================================================
-added domain for rfq window action
+addded domain for rfq window action
 
 
-17.0.1.7 ---------> 17.0.1.8(13-03-2025) **@meen**
+17.0.1.7 ---------> 17.0.1.8(13-03-2025) **$@g@r**
 ==========================================================
 Fix the issue for loading the price unit
 
-17.0.1.8 ---------> 17.0.1.9(13-03-2025) **@meen**
-==========================================================
-1- Order Line unmerging issue fixed
-2- issue fixed create rfq after cancel the po
-
-17.0.1.9 ---------> 17.0.2.0(10-09-2026) **akshatha**
-==========================================================
-added a validation before purchase approval
+17.0.1.8 ------> 17.0.1.9(06/04/2025) ** Navya shree**
+================================================================
+changes quantity sum up when RFQ created through  multiple purchase.request.line for same product.
 
 
-17.0.2.0 ---------> 17.0.2.1(15-09-2026) **Pooja**
-==========================================================
-added mandatory reason wizard on PR cancel/reject
-
-
-17.0.2.1 ---------> 17.0.2.2(05-10-2026) **Pooja**
-==================================================================
-Changed Purchase Orders window action domain to purchase, done, cancel
+17.0.1.9 ------> 17.0.2.0(08/04/2025) **$@gar**
+================================================================
+addded domain for rfq and purchase window action
+ 

@@ -15,7 +15,7 @@
     'module_type':'official',
     'App origin': "Project Specific",
     'category': 'Purchase',
-    'version': '17.0.2.1',
+    'version': '17.0.2.3',
     'license': 'LGPL-3',
 
     'depends': ['base', 'purchase', 'product', 'stock', 'purchase_stock','odoo_e_27_b'],

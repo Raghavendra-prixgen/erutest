@@ -221,7 +221,7 @@
                                         <div style="width:80%;">
                                             <t t-if="doc.company_id.parent_id.partner_id.y_reg_date">
                                                 <span
-                                                    t-field="doc.company_id.parent_id.partner_id.y_reg_date"  t-options="{'widget': 'date'}"></span>
+                                                    t-field="doc.company_id.parent_id.partner_id.y_reg_date"></span>
                                             </t>
                                         </div>
                                     </div>

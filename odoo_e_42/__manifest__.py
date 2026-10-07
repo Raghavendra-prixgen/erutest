@@ -17,7 +17,7 @@
     'module_type':'official',
 
     'category': 'Sale',
-    'version': '17.0.0.8',
+    'version': '17.0.1.2',
     'license': 'LGPL-3',
     'App origin':"Base",
 

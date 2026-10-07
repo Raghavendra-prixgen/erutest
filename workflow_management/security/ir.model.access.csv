@@ -1,8 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_global_approval_rule_approver_settings,GlobalApprovalRule,workflow_management.model_global_approval_rule_approver,base.group_system,1,1,1,1
 access_global_approval_rule_settings,GlobalApprovalRule,workflow_management.model_global_approval_rule,base.group_system,1,1,1,1
 access_global_approval_entry_user,GlobalApprovalEntry,workflow_management.model_global_approval_entry,,1,1,1,1
 
 access_global_approval_request_settings,GlobalApprovalRequests,workflow_management.model_global_approval_request,,1,1,1,1
 
+access_global_approval_rule_delegate_settings,GlobalApprovalRequests,workflow_management.model_global_approval_rule_delegate,,1,1,1,1
 
+access_global_model,global.model,workflow_management.model_global_model,,1,1,1,1
 

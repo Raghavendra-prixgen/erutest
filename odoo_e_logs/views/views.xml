@@ -1,0 +1,324 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="product_uom_category_inherit_id">
+            <field name="name">uom.category.form.inherit.log</field>
+            <field name="model">uom.category</field>
+            <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="shipping_method_inherit_id">
+            <field name="name">shipping.method.form.inherit.log</field>
+            <field name="model">shipping.method</field>
+            <field name="inherit_id" ref="odoo_e_11.shipping_method_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="uom_uom_inherit_from_id">
+            <field name="name">uom.uom.form.inherit.log</field>
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="sale_document_notification_id">
+            <field name="name">sale.document.notification.form.inherit.log</field>
+            <field name="model">sale.document.notification</field>
+            <field name="inherit_id" ref="odoo_e_32.document_notification_sale_from_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+        
+       <record model="ir.ui.view" id="id_warehouse_conf_inherit">
+            <field name="name">stock.warehouse.form.inherit.log</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_stock_route_config_form_inherit">
+            <field name="name">stock.route.form.inherit.log</field>
+            <field name="model">stock.route</field>
+            <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_product_packaging_form_inherit">
+            <field name="name">product.packaging.form.inherit.log</field>
+            <field name="model">product.packaging</field>
+            <field name="inherit_id" ref="product.product_packaging_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="id_account_payment_term_form_inherit">
+            <field name="name">account.payment.term.form.inherit.log</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="id_res_currency_form_inherit">
+            <field name="name">res.currency.form.inherit.log</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        
+
+
+        <record model="ir.ui.view" id="id_account_followup_line_form_view_inherit">
+            <field name="name">account.followup.followup.line.form.inherit.log</field>
+            <field name="model">account_followup.followup.line</field>
+            <field name="inherit_id" ref="account_followup.view_account_followup_followup_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="id_account_fiscal_form_inherit">
+            <field name="name">account.fiscal.position.form.inherit.log</field>
+            <field name="model">account.fiscal.position</field>
+            <field name="inherit_id" ref="account.view_account_position_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_account_account_tags_form_inherit">
+            <field name="name">account.account.tags.form.inherit.log</field>
+            <field name="model">account.account.tag</field>
+            <field name="inherit_id" ref="account.account_tag_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_account_groups_form_inherit">
+            <field name="name">account.group.form.inherit.log</field>
+            <field name="model">account.group</field>
+            <field name="inherit_id" ref="account.view_account_group_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_hsn_san_list_form_inherit">
+            <field name="name">hsn.san.list.form.inherit.log</field>
+            <field name="model">hsn.san.list</field>
+            <field name="inherit_id" ref="odoo_e_16_b.view_hsn_san_list_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_payment_method_form_inherit">
+            <field name="name">payment.method.form.inherit.log</field>
+            <field name="model">payment.method</field>
+            <field name="inherit_id" ref="payment.payment_method_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="id_account_cash_rounding_form_inherit">
+            <field name="name">account.cash.rounding.form.inherit.log</field>
+            <field name="model">account.cash.rounding</field>
+            <field name="inherit_id" ref="account.rounding_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_account_budget_post_form_inherit">
+            <field name="name">account.budget.post.form.inherit.log</field>
+            <field name="model">account.budget.post</field>
+            <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="id_account_analytic_plan_form_inherit">
+            <field name="name">account.analytic.plan.form.inherit.log</field>
+            <field name="model">account.analytic.plan</field>
+            <field name="inherit_id" ref="analytic.account_analytic_plan_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="id_res_partner_category_form_inherit">
+            <field name="name">res.partner.category.form.inherit.log</field>
+            <field name="model">res.partner.category</field>
+            <field name="inherit_id" ref="base.view_partner_category_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="id_res_country_form_inherit">
+            <field name="name">res.country.form.inherit.log</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="id_res_country_group_form_inherit">
+            <field name="name">res.country.group.form.inherit.log</field>
+            <field name="model">res.country.group</field>
+            <field name="inherit_id" ref="base.view_country_group_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="id_res_bank_form_inherit">
+            <field name="name">res.bank.form.inherit.log</field>
+            <field name="model">res.bank</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="after">        
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        
+        
+        
+    </data>
+</odoo>

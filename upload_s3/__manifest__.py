@@ -1,7 +1,7 @@
 {
     'name': "Upload S3 Attachments",
     'category': 'Upload S3 Attachments',
-    'version': '17.1.9',
+    'version': '17.1.6',
     'author': "Prixgen Tech Solutions Pvt. Ltd.",
     'website': 'https://www.prixgen.com',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',

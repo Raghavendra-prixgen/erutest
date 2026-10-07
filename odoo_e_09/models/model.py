@@ -6,37 +6,9 @@ class CommercialInvoiceReport(models.Model):
     _inherit = ['account.move']
 
 
-
     def sale_order(self):
-        joined_names = ','.join(self.invoice_line_ids.sale_line_ids.order_id.mapped('name'))
-        return joined_names
-
-    def sale_order_date(self):
-        dates = []
-        for sale_date in self.invoice_line_ids.sale_line_ids.order_id.mapped('date_order'):
-            filter_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(sale_date))
-            date_str = filter_date.strftime('%d-%m-%Y %H:%M:%S')
-            dates.append(date_str)
-        return ', '.join(dates)
-
-
-    def sale_order_po_ref(self):
-        po_refs = self.invoice_line_ids.mapped('sale_line_ids.order_id.y_po_ref')
-        return ', '.join(ref for ref in po_refs if ref)
-    
-
-    def sale_order_po_date(self):
-        dates = []
-        for po_date in self.invoice_line_ids.mapped('sale_line_ids.order_id.y_po_date'):
-            if po_date:
-                filter_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(po_date))
-                date_str = filter_date.strftime('%d-%m-%Y %H:%M:%S')
-                dates.append(date_str)
-        return ', '.join(dates) if dates else None
-
-   
-
-        
+        var = self.env['sale.order'].search([('name','=',self.invoice_origin)],limit=1)
+        return var
     
     def amount_in_words(self, amount):
         formatted_amount = "{:,.2f}".format(amount)

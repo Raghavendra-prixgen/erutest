@@ -52,11 +52,3 @@ changed code for process button
 17.0.1.0 ----> 17.0.1.1 (14-03-2025) **Navya shree R
 ==============================================
 invisible process and close button material request when the purchase.request is in done state and internal transfer is in done state
-
-17.0.1.1 ----> 17.0.1.2 (09-09-2025) **akshatha
-==============================================
-y_avalilable_qty flow  based on source location quantity
-
-17.0.1.2 ----> 17.0.1.3 (10-09-2025) **akshatha
-==============================================
-added inventory_quantity_auto_apply instead of quantity

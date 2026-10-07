@@ -35,7 +35,6 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             "if the scheduled date matches as well."
         ),
     )
-
     @api.onchange('purchase_order_id')
     def onchange_purchase_order_id(self):
         for rec in self:
@@ -223,7 +222,6 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             ("product_uom", "=", vals["product_uom"]),
             ("analytic_distribution", "=?", item.line_id.analytic_distribution),
         ]
-        print('orderline data',order_line_data)
         if self.sync_data_planned:
             date_required = item.line_id.date_required
             order_line_data += [
@@ -274,7 +272,6 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             ]
             # domain = self._get_order_line_search_domain(purchase, item)
             available_po_lines = po_line_obj.search(domain)
-            print(available_po_lines,'avail')
             new_pr_line = True
             # If Unit of Measure is not set, update from wizard.
             if not line.product_uom_id:
@@ -285,6 +282,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             all_qty = 0.00
             if available_po_lines and not item.keep_description:
                 new_pr_line = False
+                print(available_po_lines,'available')
                 po_line = available_po_lines[0]
                 po_line.purchase_request_lines = [(4, line.id)]
                 po_line.move_dest_ids |= line.move_dest_ids
@@ -293,7 +291,8 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                 )
                 if wizard_uom != alloc_uom:
                     wizard_product_uom_qty = wizard_uom._compute_quantity(
-                        item.quantity, alloc_uom
+                        item.product_qty, alloc_uom
+                        # item.quantity, alloc_uom
                     )
                 else:
                     wizard_product_uom_qty = item.quantity
@@ -315,7 +314,6 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                     )
                 else:
                     wizard_product_uom_qty = item.quantity
-
                 all_qty = min(po_line_product_uom_qty, wizard_product_uom_qty)
                 self.create_allocation(po_line, line, all_qty, alloc_uom)
             # # TODO: Check propagate_uom compatibility:
@@ -332,6 +330,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                 date_required.year, date_required.month, date_required.day
             )
             res.append(purchase.id)
+
         return {
             "domain": [("id", "in", res)],
             "name": _("RFQ"),

@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_stock_picking_type,stock.picking.type,model_stock_picking_type,,1,1,1,1

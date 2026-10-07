@@ -588,7 +588,7 @@
                                     </b>
                                 </div>
                                 <div class="col-5 " style="text-align:left;width:50%;font-size:12px">
-                                    <span t-field="o.company_id.partner_id.name"></span>
+                                    <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.company_id.parent_id.name"></span>
                                 </div>
                                 
                             </div>
@@ -604,34 +604,18 @@
                                 
 
                                 <div class="col-6" style="text-align:left;width:60%;font-size:12px">
-                                    <span t-if="o.company_id.partner_id.street"
-                                        t-field="o.company_id.partner_id.street" />, 
+                                    <span t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.street"
+                                        t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.street" />, 
                                         <!-- <br/> -->
-                                        <span t-if="o.company_id.partner_id.street2"
-                                        t-field="o.company_id.partner_id.street2" />
+                                        <span t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.street2"
+                                        t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.street2" />
                                         <br />
                                         <span
-                                            t-if="o.company_id.partner_id.city" t-field="o.company_id.partner_id.city" />
+                                            t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.city" t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.city" />
                                         <span
-                                            t-if="o.company_id.partner_id.zip" t-field="o.company_id.partner_id.zip" />
+                                            t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.zip" t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.zip" />
                                         <br />
                                     </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3" style="font-size:12px;text-align:left;width:30%">
-                                    <b>
-                                    <span style="font-size:12px">GSTIN</span>
-                                </b>
-                                </div>
-                                <div class="col-1" style="text-align:left;width:10%;">
-                                    <b>
-                                        <span>:</span>
-                                    </b>
-                                </div>
-                                <div class="col-5 " style="text-align:left;width:50%;font-size:12px">
-                                    <span t-field="o.company_id.partner_id.vat"></span>
-                                </div>
-                                
                             </div>
 
                           
@@ -645,8 +629,8 @@
                                    </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%">
-                                    <t t-if="o.company_id.partner_id.state_id">
-                                        <span t-field="o.company_id.partner_id.state_id" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id" />
                                         <br />
                                     </t>
                                 </div>
@@ -665,8 +649,8 @@
                                 </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%">
-                                    <t t-if="o.company_id.partner_id.state_id.code">
-                                        <span t-field="o.company_id.partner_id.state_id.code" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id.code">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id.code" />
                                         <br />
                                     </t>
                                 </div>
@@ -682,8 +666,8 @@
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;font-size:12px">
                                         
-                                    <t t-if="o.company_id.partner_id.country_id">
-                                        <span t-field="o.company_id.partner_id.country_id" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.country_id">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.country_id" />
                                     </t>
                                 </div>
                             </div>
@@ -699,13 +683,14 @@
                                 </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;font-size:12px">
-                                    <t t-if="o.company_id.partner_id.email">
-                                        <span t-field="o.company_id.partner_id.email" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.email">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.email" />
                                         <br />
                                     </t>
                                 </div>
                             </div>
                             
+
 
                             <div class="row">
                                 <div class="col-3" style="text-align:left;width:30%;font-size:12px">
@@ -718,8 +703,8 @@
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;font-size:12px">
                                         
-                                    <t t-if="o.company_id.partner_id.state_id">
-                                        <span t-field="o.company_id.partner_id.state_id" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.state_id" />
                                     </t>
                                 </div>
                             </div>
@@ -733,8 +718,8 @@
                                 </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;font-size:12px">
-                                    <t t-if="o.company_id.partner_id.phone">
-                                        <span t-field="o.company_id.partner_id.phone" />
+                                    <t t-if="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.phone">
+                                        <span t-field="o.invoice_line_ids.purchase_order_id.y_warehouse_id.partner_id.phone" />
                                         <br />
                                     </t>
                                 </div>
@@ -747,7 +732,13 @@
                    
                 </table>
                 
-            </t>   
+            </t>
+
+
+
+
+
+               
             </div>
 
 

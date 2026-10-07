@@ -390,23 +390,7 @@ class MaterialRequestLine(models.Model):
     y_dest_location_id = fields.Many2one('stock.location',string="Destination Location")
     y_purchase_request_type_id = fields.Many2one('request.type',string="Purchase Request Type")
     y_product_id = fields.Many2one('product.product',string="Product")
-    y_available_qty = fields.Float(compute='_compute_available_qty', string="Available Qty")
-
-    @api.depends('y_product_id', 'y_source_location_id', 'y_material_request_id.y_source_location_id')
-    def _compute_available_qty(self):
-        for rec in self:
-            source_location = rec.y_source_location_id or rec.y_material_request_id.y_source_location_id
-            if rec.y_product_id and source_location:
-                quant = self.env['stock.quant'].search([
-                    ('product_id', '=', rec.y_product_id.id),
-                    ('location_id', '=', source_location.id),
-                ])
-                rec.y_available_qty = sum(quant.mapped('inventory_quantity_auto_apply'))
-            elif rec.y_product_id:
-                rec.y_available_qty = rec.y_product_id.qty_available
-            else:
-                rec.y_available_qty = 0.0
-
+    y_available_qty = fields.Float(related='y_product_id.qty_available',string="Available Qty")
     y_forcast_qty = fields.Float(related='y_product_id.virtual_available',string="Forcast Qty")
     y_planned_qty = fields.Float(string="Qty")
     y_requested_qty = fields.Float(readonly=True, string="Qty Shipped")

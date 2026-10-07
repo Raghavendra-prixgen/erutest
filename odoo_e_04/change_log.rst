@@ -39,7 +39,3 @@ Address flow has been change
 =========================================================================
 DC date fetched from effective date in picking[date_done]
 and for Dispatch From Warehouse added company address 
-
-17.0.1.0------> 17.0.1.1(**07/07/2025**) *Nikitha*
-=========================================================================
-Changed the name of Consignor

@@ -13,7 +13,7 @@
     'website': "https://www.prixgen.com",
     'company': "Prixgen Tech Solutions Pvt. Ltd.",
 
-    'version': '17.0.1.1',
+    'version': '17.0.1.0',
 
     'depends': ['base', 'sale', 'stock', 'odoo_e_11'],
 

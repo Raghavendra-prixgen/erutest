@@ -1,6 +1,6 @@
 {
     "name": "Password Security",
-    "version": "17.0.0.1",
+    "version": "17.0.0.3",
     "summary": "The Password Security module for Odoo helps you maintain strong password hygiene across your organization. Enforce password expiration, length, and character requirements. Track password history to prevent reuse and estimate password strength. Configure these settings centrally to ensure consistent security practices.",
     "description": """The Password Security module for Odoo enforces company-wide password policies, including expiration, length, character requirements, and history. It features password strength estimation and prevents the reuse of previous passwords. Administrators can configure these settings at the company level to ensure strong, secure password practices across the organization.""",
     "category": "Extra Tools",

@@ -24,10 +24,11 @@ class StockMove(models.Model):
 
     def update_valuation(self):
         for each in self:
-            valuation_ids = each.stock_valuation_layer_ids.filtered(lambda x:not x.stock_landed_cost_id)
-            if valuation_ids:
-                each.y_is_valuation = True
-                each.y_valuation_value = sum(valuation_ids.mapped('value'))
+            curr= self.env['stock.valuation.layer'].search([('stock_move_id','=',each.id)])
+            for each_line in each.stock_valuation_layer_ids:
+                if each_line.stock_move_id.id == each.id and not each_line.stock_landed_cost_id:
+                    each.y_is_valuation = True
+                    each.y_valuation_value = each_line.value
 
     def update_operation_type(self):
         for rec in self:

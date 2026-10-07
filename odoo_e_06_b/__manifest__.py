@@ -1,6 +1,6 @@
 {
     'name': 'odooe06b',
-    'version': '17.0.0.3',
+    'version': '17.0.0.2',
     'summary': 'Analytic Customization',
     'description': """
     Analytic Accounts auto flows covered-

@@ -205,7 +205,7 @@
 
     <record id="purchase.purchase_rfq" model="ir.actions.act_window">
         <field name="domain">[('state','in',('sent', 'draft','to approve','cancel','reject'))]</field>
-      </record>
+      z</record>
     <record id="action_purchase_approval" model="ir.actions.act_window">
         <field name="name">Purchase Approval</field>
         <field name="res_model">purchase.approval</field>

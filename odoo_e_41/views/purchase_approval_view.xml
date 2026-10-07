@@ -170,15 +170,12 @@
             </xpath>
             <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
                 <attribute name="invisible">"y_is_approved == False"</attribute>
-                <attribute name="context">{'validate_analytic': True}</attribute>
             </xpath>
-            <xpath expr="//button[@name='button_approve']" position="attributes">
-                <attribute name="invisible">1</attribute>
-                <attribute name="context">{'validate_analytic': True}</attribute>
+             <xpath expr="//button[@name='button_approve']" position="attributes">
+                <attribute name="invisible">state in ('purchase', 'done','reject','cancel') or y_approver_visible == False</attribute>
+                 <attribute name="groups">purchase.group_purchase_user</attribute>
+
             </xpath>
-<!--            <xpath expr="//button[@name='button_approve'][2]" position="attributes">-->
-<!--                <attribute name="invisible">1</attribute>-->
-<!--            </xpath>-->
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="readonly">y_approver_visible == True</attribute>
             </xpath>
@@ -187,10 +184,10 @@
                 <field name="y_exchange_rate"/>
                 
             </field>
-            <!-- <xpath expr="//header" position="before">
+           <!--  <xpath expr="//header" position="before">
                 <div class="alert alert-warning oe_edit_only" role="alert" invisible="state in ('purchase', 'done','reject') or y_show_po_warning == False ">
                     <field name="y_show_po_warning" />
-            
+               
                 </div>
             </xpath>
  -->
@@ -199,8 +196,12 @@
             </xpath>
 
             <xpath expr="//button[@name='button_draft']" position="after">
-                <button name="request_for_approve" type="object" class="oe_highlight" string="Request to Approve" invisible="state in ('purchase', 'done','reject','cancel') or y_approver_visible == True or y_doc_type_id == False" context="{'validate_analytic': True}"/>
-                <button name="get_approval" type="object" class="oe_highlight" string="Approve" invisible="state in ('purchase', 'done','reject','cancel') or y_is_approved == False or y_approver_visible == False "/>
+                <button name="request_for_approve" type="object" class="oe_highlight" string="Request to Approve" invisible="state in ('purchase', 'done','reject','cancel') or y_approver_visible == True or y_doc_type_id == False" />
+
+
+
+                <!-- <button name="button_approve" type="object" class="oe_highlight" string="Approve " invisible="state in ('purchase', 'done','reject','cancel') or y_is_approved == False or y_approver_visible == False "/> -->
+                 <button name="get_approval" type="object" class="oe_highlight" string="Approve" invisible="1"/>
                 <button name="get_set_draft" type="object" class="oe_highlight" string="Set to Draft" invisible="state not in ('reject')"/>
                 <field name="y_is_approved" invisible="1"/>
                 <field name="y_is_approval_req" invisible="1"/>
@@ -220,7 +221,8 @@
                 <field name="y_show_warning" invisible="1"/>
             </field>
             <notebook position="inside">
-                <page string="Approvals" invisible="y_po_approval_method == False or y_po_approval_method == 'lvlsamt' ">
+                <!-- <page string="Approvals" invisible="y_po_approval_method == False or y_po_approval_method == 'lvlsamt' "> -->
+                <page string="Approvals" invisible="1">
                     <field name='y_purchase_approval_line' widget="section_and_note_one2many" readonly="1">
                         <tree>
                             <field name='y_user_ids' widget="many2many_tags"/>
@@ -235,7 +237,9 @@
                         </tree>
                     </field>
                 </page>
-                <page string="Approvals" invisible="y_po_approval_method != 'lvlsamt' ">
+                <!-- <page string="Approvals" invisible="y_po_approval_method != 'lvlsamt' "> -->
+                <page string="Approvals" invisible="1">
+
                     <field name='y_purchase_lvl_amt_approval_line' widget="section_and_note_one2many" readonly="1">
                         <tree>
                             <field name='y_approval_level'/>
@@ -268,7 +272,7 @@
     </record>
 
     <record id="purchase.purchase_rfq" model="ir.actions.act_window">
-        <field name="domain">[('state','in',('sent','to approve','draft','cancel','reject'))]</field>
+        <field name="domain">[('state','in',('sent','to approve', 'draft','cancel','reject'))]</field>
       </record>
     <record id="action_purchase_approval" model="ir.actions.act_window">
         <field name="name">Purchase Approval</field>
@@ -298,16 +302,16 @@
     </record>
 
     
-    <record id="purchase_order_tree_view_new" model="ir.ui.view">
+    <!-- <record id="purchase_order_tree_view_new" model="ir.ui.view">
         <field name="name">purchase.order.tree.view</field>
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
         <field name="arch" type="xml">
             <field name="state" position="before">
-                <field name="y_to_approve_states" widget="badge"/>
+                <field name="y_to_approve_states" widget="badge" invisible="1"/>
             </field>
         </field>
-    </record>
+    </record> -->
     <record id="odoo_e_41_doc_type" model="ir.ui.view">
         <field name="name">purchase.approval17.doc.type.inherit</field>
         <field name="model">purchase.order</field>

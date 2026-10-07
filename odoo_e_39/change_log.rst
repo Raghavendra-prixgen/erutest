@@ -44,27 +44,3 @@ bank details as been fetched.
 17.0.1.0 ---------------------------> 17.0.1.1 (**05/06/2024**) **Preksha M**
 =========================================================================
 Added license and origin
-
-17.0.1.1 ---------------------------> 17.0.1.2 (**17/04/2025**) **Nikitha **
-=========================================================================
-Added Condition for the Heading
-
-
-17.0.1.2 ---------------------------> 17.0.1.3 (**26/06/2025**) **Prakruthi **
-=========================================================================
-Added buyer date.
-
-17.0.1.3 ---------------------------> 17.0.1.4 --->17.0.1.5 (**26/06/2025**) **Prakruthi **
-=========================================================================
-updated multiple sale order functionality.
-
-17.0.1.5 ---------------------------> 17.0.1.9  (**15/07/2025**) **Navya shree **
-=========================================================================
-1. Added GSTIN Field in Ship From Address in print out
-[taken the older version from git of 17.0.1.5 becasue 17.0.1.5 is correct after this, version changes are not needed so 17.0.1.5 version is taken and made changes]
-
-
-17.0.1.9 ---------------------------> 17.0.2.0  (**29/07/2025**) **Prakruthi**
-=========================================================================
-Main Issue is invoice need to make reset to draft and post then data is flowing proper.(fix with removed unneccessary conditions)
-while testing identified discount is not calculating, Added discount calculation.

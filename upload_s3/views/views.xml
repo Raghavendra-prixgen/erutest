@@ -22,7 +22,7 @@
 
 
 
-    <!--  <record id="action_attachment_to_s3_update" model="ir.actions.server">
+     <record id="action_attachment_to_s3_update" model="ir.actions.server">
         <field name="name">Update Atachment to S3</field>
         <field name="model_id" ref="upload_s3.model_ir_attachment" />
         <field name="binding_model_id" ref="upload_s3.model_ir_attachment" />
@@ -31,7 +31,7 @@
             if records:
             action = records.update_attachments_to_s3()
         </field>
-    </record> -->
+    </record>
 
     <!-- <record id="action_attachment_to_s3_delete" model="ir.actions.server">
         <field name="name">Delete Atachment to S3</field>
@@ -51,7 +51,7 @@
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//widget[@name='res_config_dev_tool']" position="before">
-              
+                <!-- <div class="app_settings_block" data-string="IRN" string="IRN" data-key="irn_api_settings"> -->
                     <div id="sap_database_api_settings">
                     <h2>S3 integration settings</h2>
                
@@ -75,6 +75,7 @@
                     </div>
                 </div>
             </div>
+            <!-- </div> -->
         </xpath>
     </field>
     </record>

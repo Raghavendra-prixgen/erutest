@@ -10,19 +10,12 @@ class Logforrulesproducttemplate(models.Model):
     detailed_type = fields.Selection(tracking=True)
     invoice_policy = fields.Selection(tracking=True)
     list_price = fields.Float(tracking=True)
+    tic_category_id = fields.Many2one(tracking=True)
     standard_price = fields.Float(tracking=True)
     default_code = fields.Char(tracking=True)
     l10n_in_hsn_description = fields.Char(tracking=True)
     barcode = fields.Char(tracking=True)
     categ_id = fields.Many2one(tracking=True)
-
-    @api.onchange('uom_id','uom_po_id')
-    def _onchange_y_uom_id(self):
-        if self.weight_uom_name == self.uom_id.y_weight_uom:
-            if self.uom_id.y_weight_uom == 'kg':
-                self.weight = 1.0
-            elif self.uom_id.y_weight_uom == 'lb':
-                self.weight = 1.0
     
 
 class Logforrulespricelist(models.Model):
@@ -59,11 +52,6 @@ class Logforrulesuom(models.Model):
     l10n_in_code = fields.Char(tracking=True)
     rounding = fields.Float(tracking=True)
     active = fields.Boolean(tracking=True)
-
-    y_weight_uom = fields.Selection([
-        ('kg', 'Kilograms'),
-        ('lb', 'Pounds'),
-        ], string='Weight Unit of Measure', default=False,company_dependent=True)
 
 
 class Logforrulesuomcategory(models.Model):

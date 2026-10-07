@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="res.groups" id="group_for_standard_price_access">
+        <field name="name">Cost Field Access</field>
+    </record>
+</odoo>

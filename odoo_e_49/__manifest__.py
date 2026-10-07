@@ -17,7 +17,7 @@
     'App Origin': 'Base',
 
     'category': 'Inventory',
-    'version': '17.0.0.3',
+    'version': '17.0.0.1',
 
     'depends': ['base','product','stock','stock_account','stock_landed_costs'],
 

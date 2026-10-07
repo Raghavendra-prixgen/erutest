@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="rule_purchase_order_own_documents" model="ir.rule">
+    <!-- <record id="rule_purchase_order_own_documents" model="ir.rule">
         <field name="name">Purchase Order: Own Documents</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
-    </record>
+    </record> -->
 
     <record id="rule_purchase_order_all_documents" model="ir.rule">
         <field name="name">Purchase Order: All Documents</field>
@@ -15,7 +15,7 @@
         <!-- <field name="groups" eval="[(4, ref('base.group_system'))]"/> -->
     </record>
     
-    <record id="rule_purchase_order_1st_lvl_approval" model="ir.rule">
+    <!-- <record id="rule_purchase_order_1st_lvl_approval" model="ir.rule">
         <field name="name">Purchase Order: 1st Lvl Approval</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[
@@ -29,11 +29,11 @@
             ('y_purchase_lvl_amt_approval_line.y_is_1st_user_completed', '=', True)
         ]</field>
         <field name="groups" eval="[(4, ref('odoo_e_41.1st_lvl_approve'))]"/>
-    </record>
+    </record> -->
     
     
     <!-- Record Rule for 2nd Level Approval -->
-    <record id="rule_purchase_order_2nd_lvl_approval" model="ir.rule">
+    <!-- <record id="rule_purchase_order_2nd_lvl_approval" model="ir.rule">
         <field name="name">Purchase Order: 2nd Lvl Approval</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[
@@ -49,10 +49,10 @@
             ('y_purchase_lvl_amt_approval_line.y_is_2nd_user_completed', '=', True),  
         ]</field>
         <field name="groups" eval="[(4, ref('odoo_e_41.2nd_lvl_approve'))]"/>
-    </record>
+    </record> -->
     
     <!-- Record Rule for 3rd Level Approval -->
-    <record id="rule_purchase_order_3rd_lvl_approval" model="ir.rule">
+    <!-- <record id="rule_purchase_order_3rd_lvl_approval" model="ir.rule">
         <field name="name">Purchase Order: 3rd Lvl Approval</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[
@@ -70,10 +70,10 @@
             ('y_purchase_lvl_amt_approval_line.y_is_3rd_user_completed', '=', True),  
         ]</field>
         <field name="groups" eval="[(4, ref('odoo_e_41.3rd_lvl_approve'))]"/>
-    </record>
+    </record> -->
     
     <!-- Record Rule for 4th Level Approval -->
-    <record id="rule_purchase_order_4th_lvl_approval" model="ir.rule">
+    <!-- <record id="rule_purchase_order_4th_lvl_approval" model="ir.rule">
         <field name="name">Purchase Order: 4th Lvl Approval</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[
@@ -94,10 +94,10 @@
          
         ]</field>
         <field name="groups" eval="[(4, ref('odoo_e_41.4th_lvl_approve'))]"/>
-    </record>
+    </record> -->
     
     <!-- Record Rule for 5th Level Approval -->
-    <record id="rule_purchase_order_5th_lvl_approval" model="ir.rule">
+    <!-- <record id="rule_purchase_order_5th_lvl_approval" model="ir.rule">
         <field name="name">Purchase Order: 5th Lvl Approval</field>
         <field name="model_id" ref="purchase.model_purchase_order"/>
         <field name="domain_force">[
@@ -119,6 +119,6 @@
             ('y_purchase_lvl_amt_approval_line.y_is_5th_user_completed', '=', True),  
         ]</field>
         <field name="groups" eval="[(4, ref('odoo_e_41.5th_lvl_approve'))]"/>
-    </record>
+    </record> -->
 
 </odoo>

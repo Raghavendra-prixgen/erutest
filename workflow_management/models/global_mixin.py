@@ -6,7 +6,7 @@ from odoo import models, api
 
 class GlobalMixin(models.AbstractModel):
     """ Mixin that overrides the create and write methods to properly generate
-        ir.model.data entries flagged with Global for the corresponding resources.
+        ir.model.data entries flagged with Studio for the corresponding resources.
         Doesn't create an ir.model.data if the record is part of a module being
         currently installed as the ir.model.data will be created automatically
         afterwards.
@@ -17,7 +17,7 @@ class GlobalMixin(models.AbstractModel):
     @api.model_create_multi
     def create(self, vals):
         res = super(GlobalMixin, self).create(vals)
-        if self._context.get('Global') and not self._context.get('install_mode'):
+        if self._context.get('global') and not self._context.get('install_mode'):
             res._compute_display_name()
             for ob in res:
                 ob.create_Global_model_data(ob.display_name)
@@ -32,8 +32,9 @@ class GlobalMixin(models.AbstractModel):
 
         res = super(GlobalMixin, self).write(vals)
 
-        if self._context.get('Global') and not self._context.get('install_mode'):
+        if self._context.get('global') and not self._context.get('install_mode'):
             for record in self:
                 record.create_Global_model_data(record.display_name)
 
         return res
+

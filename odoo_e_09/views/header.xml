@@ -148,17 +148,17 @@
                             </div>
                             <div class="row">
                                 <div style="width: 27%;"><span><strong>Invoice Date</strong> </span></div><div style="width:3%;">:</div>
-                                <div style="width: 70%;"><span t-field="doc.invoice_date"  t-options="{'widget': 'date'}"></span></div>
+                                <div style="width: 70%;"><span t-field="doc.invoice_date"></span></div>
                             </div>
                             <div class="row">
                                 <div style="width: 27%;"><span><strong>SO Number &amp; Date </strong></span></div><div style="width:3%;">:</div>
-                                <div style="width: 70%;"><span t-esc="doc.sale_order()"/> &amp;
-                                <span t-esc="doc.sale_order_date()"/></div>
+                                <div style="width: 70%;"><span t-esc="doc.sale_order().name"/> &amp;
+                                <span t-esc="doc.sale_order().date_order"/></div>
                             </div>
                             <div class="row">
                                 <div style="width: 27%;"><span><strong>Buyer order No &amp; Date </strong></span></div><div style="width:3%;">:</div>
-                                <div style="width: 70%;"><span t-esc="doc.sale_order_po_ref()"/> &amp;
-                                <span t-esc="doc.sale_order_po_date()"/></div>
+                                <div style="width: 70%;"><span t-esc="doc.sale_order().client_order_ref"/> &amp;
+                                <span t-esc="doc.sale_order().date_order"/></div>
                             </div>
                             <div class="row">
                                 <div style="width: 27%;"><span><strong>Country of origin </strong></span></div><div style="width:3%;">:</div>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="row">
                                 <div style="width: 27%;"><span><strong>IEC Date </strong></span></div><div style="width:3%;">:</div>
-                                <div style="width: 70%;"><span t-field="doc.company_id.parent_id.partner_id.y_iec_date" t-options="{'widget': 'date'}"></span></div>
+                                <div style="width: 70%;"><span t-field="doc.company_id.parent_id.partner_id.y_iec_date"></span></div>
                             </div>
                         </td>
                     </tr>
@@ -195,7 +195,6 @@
                             <span><div class="row"><div style="width:27%;"><strong>State </strong></div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.state_id.name"></span></div></div></span>
                             <span><div class="row"><div style="width:27%;"><strong>State Code</strong> </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.state_id.code"></span></div></div></span>
                             <span><div class="row"><div style="width:27%;"><strong>Country</strong> </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.country_id.name"></span></div></div></span>
-                            <span><div class="row"><div style="width:27%;"><strong>GSTIN</strong> </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.vat"></span></div></div></span>
                             <span><div class="row"><div style="width:27%;"><strong>Contact Person</strong> </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.phone"></span></div></div></span>
                         </td>
                        

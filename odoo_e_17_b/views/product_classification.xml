@@ -59,6 +59,6 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem parent="menu_product_group_root" name="Product Classification" id="menu_action_product_classification" action="action_product_classification"/>
+        <menuitem parent="stock.menu_stock_config_settings" name="Product Classification" id="menu_action_product_classification" action="action_product_classification"/>
    
 </odoo>

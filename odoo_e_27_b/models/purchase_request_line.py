@@ -311,6 +311,7 @@ class PurchaseRequestLine(models.Model):
             total_request_qty = 0.0  # Initialize total requested quantity
             for alloc in rec.purchase_request_allocation_ids:
                 if alloc.purchase_line_id.state not in ('cancel','reject'):
+                
                     total_request_qty += alloc.requested_product_uom_qty  # Total requested qty
                 # print("Total Request Qty:", total_request_qty)
                     # if total_request_qty > 0:
@@ -417,7 +418,6 @@ class PurchaseRequestLine(models.Model):
                     )
                 )
         return super(PurchaseRequestLine, self).unlink()
-               
 
     @api.model
     def _get_supplier_min_qty(self, product, partner_id=False):
@@ -458,6 +458,7 @@ class PurchaseRequestLine(models.Model):
         qty = max(rl_qty, supplierinfo_min_qty)
         print(rl_qty,'rl_qty------------',supplierinfo_min_qty,'----------supplierinfo_min_qty')
         return qty
+    
 
     def action_show_details(self):
         self.ensure_one()

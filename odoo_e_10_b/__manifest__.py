@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "odooe10b",
-    "version": "17.0.0.6",
+    "version": "17.0.0.5",
     'license': 'LGPL-3',
     'author': 'Prixgen Tech Solutions Pvt. Ltd.',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',

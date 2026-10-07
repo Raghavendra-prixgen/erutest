@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "odooe27bbb",
+    'name': "odooe27b",
 
     'description': """
         Included Functionalities - 
@@ -28,7 +28,7 @@
     'module_type':'official',
     'App origin': "Base",
     'category': 'Purchase',
-    'version': '17.0.2.2',
+    'version': '17.0.2.0',
     'license': 'LGPL-3',
 
     'depends': ['base','purchase','product','purchase_requisition_stock','sale_management','stock_landed_costs','account','analytic','stock','mail','purchase_stock','purchase_requisition'],
@@ -72,8 +72,6 @@
         "views/stock_move_views.xml",
         "views/stock_picking_views.xml",
         "views/request_type.xml",
-        
-        'wizard/purchase_request_reason_wizard_view.xml',
 
 
         'wizard/purchase_short_close_wizard.xml',

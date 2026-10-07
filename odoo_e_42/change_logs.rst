@@ -33,6 +33,7 @@ added object.name in mail.template subject.
 ===============================================================
 resolved psycopg2.errors.InvalidTextRepresentation: invalid input syntax for type boolean: "The SO total amount '1.13' exceeds the approved limit '0.0'"
 
-17.0.0.7 ----> 17.0.0.8(05-Aug-2026)  **Anke**
-========================================================
-Added _validate_analytic_distribution() request approval
+
+17.0.0.7 --------------->17.0.0.8(08-04-2025)  **$@g@r**
+===============================================================
+hide approval tab and appoval status in tree view

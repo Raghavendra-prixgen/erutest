@@ -15,8 +15,8 @@ class ItemGroup(models.Model):
     _rec_name = 'y_name'
     # _sql_constraints = [('code_unique', 'unique(code)', 'code already exists!')]
 
-    y_name = fields.Char(string="Name")
-    y_code = fields.Char(string="Code")
+    y_name = fields.Char()
+    y_code = fields.Char()
     y_company_id = fields.Many2one('res.company',string="Company",default=lambda self: self.env.company.id, index=1)
     active = fields.Boolean(default=True)
 
@@ -35,13 +35,11 @@ class ProductGroup1(models.Model):
     _rec_name = 'y_name'
     # _sql_constraints = [('code_unique', 'unique(code)', 'code already exists!')]
 
-    y_name = fields.Char(string="Name")
-    y_code = fields.Char(string="Code")
-    y_product_category_id = fields.Many2one('product.category',string="Product Category",domain=[('y_release', '=', True)])
+    y_name = fields.Char()
+    y_code = fields.Char()
+    y_product_category_id = fields.Many2one('product.category')
     y_company_id = fields.Many2one('res.company',string="Company",default=lambda self: self.env.company.id, index=1)
     active = fields.Boolean(default=True)
-    y_item_group = fields.Many2one('item.group', ondelete='restrict',string="Item Group")
-
 
     @api.constrains('y_code','y_company_id')
     def check_item_group_code(self):
@@ -57,9 +55,9 @@ class ProductGroup2(models.Model):
     _rec_name = 'y_name'
     # _sql_constraints = [('code_unique', 'unique(code)', 'code already exists!')]
 
-    y_name = fields.Char(string="Name")
-    y_code = fields.Char(string="Code")
-    y_product_group_1 = fields.Many2one('product.group.1',string="Product Group 1")
+    y_name = fields.Char()
+    y_code = fields.Char()
+    y_product_group_1 = fields.Many2one('product.group.1')
     y_company_id = fields.Many2one('res.company',string="Company",default=lambda self: self.env.company.id, index=1)
     active = fields.Boolean(default=True)
 
@@ -77,9 +75,9 @@ class ProductGroup3(models.Model):
     _rec_name = 'y_name'
     # _sql_constraints = [('code_unique', 'unique(code)', 'code already exists!')]
 
-    y_name = fields.Char(string="Name")
-    y_code = fields.Char(string="Code")
-    y_product_group_2 = fields.Many2one('product.group.2',string="Product Group 2")
+    y_name = fields.Char()
+    y_code = fields.Char()
+    y_product_group_2 = fields.Many2one('product.group.2')
     y_company_id = fields.Many2one('res.company',string="Company",default=lambda self: self.env.company.id, index=1)
     active = fields.Boolean(default=True)
     
@@ -95,28 +93,28 @@ class ProductGroup3(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    y_item_group = fields.Many2one('item.group', ondelete='restrict',string="Item Group")
-    y_product_group_1 = fields.Many2one('product.group.1', domain="['|',('y_product_category_id', '=', categ_id),('y_item_group', '=', y_item_group)]", ondelete='restrict',string="Product Group 1")
-    y_product_group_2 = fields.Many2one('product.group.2', domain="[('y_product_group_1', '=', y_product_group_1)]", ondelete='restrict',string="Product Group 2")
-    y_product_group_3 = fields.Many2one('product.group.3', domain="[('y_product_group_2', '=', y_product_group_2)]", ondelete='restrict',string="Product Group 3")
+    y_item_group = fields.Many2one('item.group', ondelete='restrict')
+    y_product_group_1 = fields.Many2one('product.group.1', domain="[('y_product_category_id', '=', categ_id)]", ondelete='restrict')
+    y_product_group_2 = fields.Many2one('product.group.2', domain="[('y_product_group_1', '=', y_product_group_1)]", ondelete='restrict')
+    y_product_group_3 = fields.Many2one('product.group.3', domain="[('y_product_group_2', '=', y_product_group_2)]", ondelete='restrict')
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    y_item_group = fields.Many2one(related='product_tmpl_id.y_item_group', store=True,string="Item Group")
-    y_product_group_1 = fields.Many2one(related='product_tmpl_id.y_product_group_1',store=True,string="Product Group 1")
-    y_product_group_2 = fields.Many2one(related='product_tmpl_id.y_product_group_2',store=True,string="Product Group 2")
-    y_product_group_3 = fields.Many2one(related='product_tmpl_id.y_product_group_3',store=True,string="Product Group 3")
+    y_item_group = fields.Many2one(related='product_tmpl_id.y_item_group', store=True)
+    y_product_group_1 = fields.Many2one(related='product_tmpl_id.y_product_group_1',store=True)
+    y_product_group_2 = fields.Many2one(related='product_tmpl_id.y_product_group_2',store=True)
+    y_product_group_3 = fields.Many2one(related='product_tmpl_id.y_product_group_3',store=True)
 
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
     y_product_category_id = fields.Many2one('product.category',related='product_id.product_tmpl_id.categ_id', store=True)
-    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True,string="Item Group")
-    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True,string="Product Group 1")
-    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True,string="Product Group 2")
-    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True,string="Product Group 3")
+    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True)
+    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True)
+    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True)
+    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True)
     
     @api.model
     def _get_inventory_fields_write(self):            
@@ -127,34 +125,17 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     y_product_category_id = fields.Many2one('product.category',related='product_id.product_tmpl_id.categ_id', store=True)
-    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True,string="Item Group")
-    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True,string="Product Group 1")
-    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True,string="Product Group 2")
-    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True,string="Product Group 3")
+    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True)
+    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True)
+    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True)
+    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True)
 
 
 class StockMove(models.Model):
     _inherit = "stock.move.line"
 
     y_product_category_id = fields.Many2one('product.category',related='product_id.product_tmpl_id.categ_id', store=True,)
-    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True,string="Item Group")
-    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True,string="Product Group 1")
-    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True,string="Product Group 2")
-    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True,string="Product Group 3")
-
-class StockValuationLayer(models.Model):
-    _inherit = "stock.valuation.layer"
-
-    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True,string="Item Group")
-    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True,string="Product Group 1")
-    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True,string="Product Group 2")
-    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True,string="Product Group 3")
-
-
-class prixgen_stock_picking(models.Model):
-    _inherit = 'sale.order.line'
-
-    y_product_group_1 = fields.Many2one('product.group.1',string="Product Group 1",related='product_id.product_tmpl_id.y_product_group_1',store=True)
-    y_product_group_2 = fields.Many2one('product.group.2',string="Product Group 2",related='product_id.product_tmpl_id.y_product_group_2',store=True)
-    y_product_group_3 = fields.Many2one('product.group.3',string="Product Group 3",related='product_id.product_tmpl_id.y_product_group_3',store=True)
-    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group',store=True,string="Item Group")
+    y_item_group = fields.Many2one('item.group',related='product_id.product_tmpl_id.y_item_group', store=True)
+    y_product_group_1 = fields.Many2one('product.group.1',related='product_id.product_tmpl_id.y_product_group_1',store=True)
+    y_product_group_2 = fields.Many2one('product.group.2',related='product_id.product_tmpl_id.y_product_group_2',store=True)
+    y_product_group_3 = fields.Many2one('product.group.3',related='product_id.product_tmpl_id.y_product_group_3',store=True)

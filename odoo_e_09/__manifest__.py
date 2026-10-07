@@ -13,7 +13,7 @@
     'website': "https://www.prixgen.com",
     'module_type':'official',
     'category': '',
-    'version': '17.0.1.9',
+    'version': '17.0.1.6',
     'license': 'LGPL-3',
     'origin': "Project Specific",
     'depends': ['base','account','odoo_e_11','purchase','account_edi','odoo_e_14_b'],

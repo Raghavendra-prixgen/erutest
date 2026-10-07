@@ -12,7 +12,7 @@
     'website': "https://www.prixgen.com",
     'company': "Prixgen Tech Solutions Pvt. Ltd.",
 
-    'version': '17.0.2.0',
+    'version': '17.0.1.8',
     'license': 'LGPL-3',
     'depends': ['base','sale','web','odoo_e_11'],
     'module_type':'official',

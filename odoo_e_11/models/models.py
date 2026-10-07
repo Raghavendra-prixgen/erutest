@@ -6,8 +6,6 @@ import json
 from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, get_lang
 from odoo.tools.float_utils import float_compare, float_round
-from datetime import timedelta
-from collections import defaultdict
 
 
 
@@ -42,32 +40,6 @@ class ResbankdetailsCustomization(models.Model):
 
 
 
-
-class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
-    _inherit = "purchase.request.line.make.purchase.order"
-
-
-    def make_purchase_order(self):
-        res = super().make_purchase_order()
-
-        orders = self.item_ids.mapped('line_id.purchase_lines.order_id')
-        for order in orders:
-            if not order.partner_id:
-                continue
-            base_date = order.create_date or fields.Datetime.now()
-            for po_line in order.order_line:
-                if not po_line.product_id:
-                    continue
-                sellers = po_line.product_id.seller_ids.filtered(
-                    lambda s: s.partner_id == order.partner_id
-                )
-                lead_time = max(sellers.mapped('delay'), default=0)
-                po_line.date_planned = base_date + timedelta(days=lead_time)
-            dates = order.order_line.mapped('date_planned')
-            if dates:
-                order.date_planned = max(dates)
-
-        return res
 
 
 
@@ -394,14 +366,20 @@ class Purchaseorderlinecustom(models.Model):
             if seller:
                 product_ctx = {'seller_id': seller.id, 'lang': get_lang(line.env, line.partner_id.lang).code}
                 vendor_description = line._get_product_purchase_description(line.product_id.with_context(product_ctx))
-                vendor_code = seller.product_code if seller and seller.product_code else None
-                vendor_name = seller.product_name if seller and seller.product_name else None
-                if vendor_code and vendor_name:
-                    line.name = f"{default_product_name},[{vendor_code}] {vendor_name}"
-                elif vendor_name:
+
+                # Check if the vendor has a product code
+                vendor_has_code = seller.product_code and len(seller.product_code.strip()) > 0
+                vendor_has_name = seller.product_name and len(seller.product_name.strip()) > 0
+
+                if vendor_has_code and vendor_has_name:
+                    # If vendor has code, the description includes [code]description format
+                    line.name = f"{default_product_name},{vendor_description}"
+                elif vendor_has_code and not vendor_has_name:
+                    vendor_code = seller.product_code
+                    line.name = f"{default_product_name}",[vendor_code]
+                elif vendor_has_name and not vendor_has_code:
+                    vendor_name = seller.product_name
                     line.name = f"{default_product_name},{vendor_name}"
-                elif vendor_code:
-                    line.name = f"{default_product_name},[{vendor_code}]"
                 else:
                     line.name = default_product_name
             else:
@@ -595,55 +573,3 @@ class respartnercustom(models.Model):
     y_export_bank_detail_ids = fields.One2many('bank.details.export.domestic','y_export_bank_detail_id', string="Export Bank Details")
     y_domestic_bank_detail_ids = fields.One2many('bank.details.export.domestic','y_domestic_bank_detail_id', string="Domestic Bank Details")
 
-
-class GlobalApprovalRuleInherit(models.Model):
-    _inherit = 'global.approval.rule'
-
-    def _register_hook(self):
-
-        def _patch(model, method_name, function):
-            if model not in patched_models[method_name]:
-                patched_models[method_name].add(model)
-                ModelClass = model.env.registry[model._name]
-                method = getattr(ModelClass, method_name, None)
-                if method:
-                    function.global_approval_rule_origin = method
-                    setattr(ModelClass, method_name, function)
-
-        def _make_approval_method(method_name, model_name):
-            def method(self, *args, **kwargs):
-
-                # ── STEP 1: Validation FIRST 
-                if method_name == 'action_post' and model_name == 'account.move':
-                    for record in self:
-                        if record.move_type in ('in_invoice', 'entry'):
-
-                            # 1. Attachment check
-                            attachments = self.env['ir.attachment'].sudo().search([
-                                ('res_model', '=', 'account.move'),
-                                ('res_id', '=', record.id),
-                            ])
-                            if not attachments and not record.attachment_ids:
-                                raise ValidationError(_("Attachments are required for this record."))
-
-                            # 2. Analytic distribution check
-                            for line in record.line_ids:
-                                line._validate_analytic_distribution()
-
-                # ── STEP 2: Call original approval engine 
-                return method.global_approval_rule_origin(self, *args, **kwargs)
-
-            return method
-
-        result = super()._register_hook()
-
-        patched_models = defaultdict(set)
-        for approval in self.search([]):
-            Model = self.env.get(approval.model_name)
-            if approval.method and Model is not None:
-                approval_method = _make_approval_method(
-                    approval.method, approval.model_name
-                )
-                _patch(Model, approval.method, approval_method)
-
-        return result

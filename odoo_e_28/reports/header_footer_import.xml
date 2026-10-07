@@ -119,6 +119,9 @@
 
 
                             
+                            
+                   
+                            
                         </td>
                         </tr>
                         <tr>
@@ -268,8 +271,8 @@
                                         
                                     </div>
                                     <div class="col-6" style="text-align:left;width:73%;padding-left:20px">
-                                        <t t-if="o.date_approve">
-                                            <span t-esc="o.date_approve.strftime('%d-%m-%Y')" />
+                                        <t t-if="o.date_order">
+                                            <span t-esc="o.date_order.strftime('%d-%m-%Y')" />
                                         </t>
                                         
                                     </div>
@@ -713,13 +716,8 @@
                                         <span>:</span>
                                     </div>
                                     <div class="col-6" style="text-align:left;width:73%;padding-left:20px">
-                                         <!-- <t t-if="o.picking_type_id.warehouse_id.partner_id.mobile">
+                                         <t t-if="o.picking_type_id.warehouse_id.partner_id.mobile">
                                             <span t-field="o.picking_type_id.warehouse_id.partner_id.mobile" />
-
-                                        </t>   -->
-
-                                         <t t-if="o.user_id.mobile">
-                                            <span t-field="o.user_id.mobile" />
                                         </t>  
                                     </div>
                                 </div>

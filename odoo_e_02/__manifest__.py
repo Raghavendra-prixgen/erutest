@@ -4,7 +4,7 @@
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',
     'website': 'https://www.prixgen.com',    
     
-    'version': '17.0.1.0',
+    'version': '17.0.0.5',
     
     'category': 'Purchase',
 
@@ -13,7 +13,7 @@
     'description': """This module is useful to show the purchase order lines with status of GRN and Invoice""" ,
     'module_type':'official',
     'App origin':'Base',
-    'depends': ['purchase','stock','odoo_e_27_b','odoo_e_31_b'],
+    'depends': ['purchase','odoo_e_27_b','odoo_e_31_b'],
     
     'data': [
         'views/purchase_order_line.xml',

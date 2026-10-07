@@ -15,8 +15,3 @@
 17.0.0.1 (13-03-2024) **Prakruthi C
 ==================================================
 app converted from analytic_base-17.0.0.3 to odoo_e_06_b.
-
-
-17.0.0.2 -----> 17.0.0.3(14-08-2026)**Nikitha
-===================================================
-[ADD]: Added Conditions for the analytical account validation 

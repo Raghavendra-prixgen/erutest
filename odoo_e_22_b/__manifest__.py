@@ -16,7 +16,7 @@
 
     'category': 'Customization',
     'origin': 'base',
-    'version': '17.0.1.3',
+    'version': '17.0.1.1',
     'license': 'LGPL-3',
 
     'depends': ['base','stock','purchase','odoo_e_27_b'],

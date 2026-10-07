@@ -8,14 +8,17 @@ class StockValuationLayer(models.Model):
     y_code = fields.Selection([('incoming', 'Receipt'), ('incoming_return', 'Purchase Return'), ('outgoing', 'Delivery'), ('outgoing_return', 'Sale Return'), 
                              ('internal', 'Internal Transfer'),('production', 'Production'),('consumption', 'Consumption'),
                              ('positive_adjustment', 'Positive Adjustment'),('negative_adjustment', 'Negative Adjustment'),
-                             ('landed_cost', 'Landed Cost'),('revaluation', 'Revaluation'),('price_diff','Price Diffrence')], string='Type of Transaction')
+                             ('landed_cost', 'Landed Cost'),('revaluation', 'Revaluation')], string='Type of Transaction')
     
     @api.model
     def create(self, vals_list):
+
+
         res = super(StockValuationLayer, self).create(vals_list)
         if res.stock_move_id and res.stock_move_id.location_id and res.stock_move_id.location_id.usage and res.stock_move_id.location_dest_id and res.stock_move_id.location_dest_id.usage:
             if res.stock_move_id and res.stock_landed_cost_id:
-                res.y_code = 'landed_cost'            
+                res.y_code = 'landed_cost'
+            
             elif res.stock_move_id.location_id.usage == 'supplier' and res.stock_move_id.location_dest_id.usage == 'internal':
                 res.y_code = 'incoming'
             elif res.stock_move_id.location_id.usage == 'internal' and res.stock_move_id.location_dest_id.usage == 'supplier':
@@ -36,9 +39,8 @@ class StockValuationLayer(models.Model):
                 res.y_code = 'negative_adjustment'
 
         elif not res.stock_move_id and not res.stock_landed_cost_id:
-            res.y_code = 'revaluation'
-        elif not res.stock_move_id and res.stock_valuation_layer_id:
-            res.y_code = 'price_diff'
+
+                res.y_code = 'revaluation'
 
             
         return res
@@ -46,8 +48,11 @@ class StockValuationLayer(models.Model):
     def update_operation_type(self):
         for rec in self:
             if rec.stock_move_id and rec.stock_move_id.location_id and rec.stock_move_id.location_id.usage and rec.stock_move_id.location_dest_id and rec.stock_move_id.location_dest_id.usage:
+
                 if rec.stock_move_id and rec.stock_landed_cost_id:
                    rec.y_code = 'landed_cost'
+               
+               
                 elif rec.stock_move_id.location_id.usage == 'supplier' and rec.stock_move_id.location_dest_id.usage == 'internal':
                     rec.y_code = 'incoming'
                 elif rec.stock_move_id.location_id.usage == 'internal' and rec.stock_move_id.location_dest_id.usage == 'supplier':
@@ -68,9 +73,8 @@ class StockValuationLayer(models.Model):
                     rec.y_code = 'negative_adjustment'
 
             elif not rec.stock_move_id and not rec.stock_landed_cost_id:
+
                 rec.y_code = 'revaluation'
-            elif not res.stock_move_id and res.stock_valuation_layer_id:
-                res.y_code = 'price_diff'
 
     
 

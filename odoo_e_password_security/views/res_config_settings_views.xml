@@ -91,6 +91,16 @@
                              Minimum number of special characters required in passwords.
                         </div>
                     </div>
+
+                    <div class="mt16">
+                        <span>
+                            Number of attempts
+                            <field name="max_attempts" class="oe_inline" />
+                        </span>
+                        <div class="text-muted">
+                             Number of attempts to login.
+                        </div>
+                    </div>
                 </block>
             </xpath>
 

@@ -85,14 +85,16 @@ class PurchaseOrder(models.Model):
 
         self._purchase_request_confirm_message()
         return res
-
     def button_approve(self, force=False):  
-        self.order_line.purchase_line_request_line_check()
-        res = super(PurchaseOrder, self).button_approve(force=False)
-        return res
+            self.order_line.purchase_line_request_line_check()
+            res = super(PurchaseOrder, self).button_approve(force=False)
+            return res
 
-   
-
+    # def button_approve(self, force=False):  
+    #     self.order_line.purchase_line_request_line_check()
+    #     res = super(PurchaseOrder, self).button_approve(force=False)
+    #     return res
+    
     def unlink(self):
         alloc_to_unlink = self.env["purchase.request.allocation"]
         for rec in self:
@@ -170,12 +172,9 @@ class PurchaseOrderLine(models.Model):
                             _("Purchase Request %s has already been completed")
                             % (",".join(po_line.request_id.mapped('name')))
                         )
-                if product_qty < (total_purchased_qty + po_line.product_qty):
-                    raise exceptions.UserError(_("The quantity requested exceeds the purchase request quantity."))
+                # if product_qty < (total_purchased_qty + po_line.product_qty):
+                #     raise exceptions.UserError(_("The quantity requested exceeds the purchase request quantity."))
         return True
-
-
-
 
 
     def update_service_allocations(self, prev_qty_received):

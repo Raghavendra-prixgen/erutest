@@ -115,6 +115,10 @@ class ProductProductNew(models.Model):
 
 
 
+
+
+
+
 class ApiConnection(models.Model):
     _name = "api.connection"
     _description = "API Connection"

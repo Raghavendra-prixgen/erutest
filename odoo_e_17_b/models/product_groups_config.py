@@ -61,7 +61,7 @@ class ProductGroupConfiguration(models.Model):
     @api.model
     def create(self,vals):
         access_record_rule_obj = self.env['product.group.config'].sudo().search([])
-        if len(access_record_rule_obj) > 1:
+        if access_record_rule_obj:
             raise UserError(_("Configuration already done"))
         return super().create(vals)
 

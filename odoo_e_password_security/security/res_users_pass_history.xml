@@ -19,4 +19,8 @@
         <field name="domain_force">[(1, '=', 1)]
         </field>
     </record>
+
+     <record model="res.groups" id="group_unlock_account">
+        <field name="name">Access to Unlock Account</field>
+    </record>
 </odoo>

@@ -1,6 +1,0 @@
-/* Hide Reset Password link */
-.oe_login_form a[href*="reset"],
-a.o_login_forgot_password,
-.o_login_forgot_password {
-    display: none !important;
-}

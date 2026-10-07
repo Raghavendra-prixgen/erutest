@@ -12,18 +12,6 @@ from odoo.tools import html2plaintext
 def get_selection_label(self, object, field_name, field_value):
 	return (dict(self.env[object].fields_get(allfields=[field_name])[field_name]['selection'])[field_value])
 
-class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
-
-    def _validate_analytic_distribution(self):
-        super()._validate_analytic_distribution()
-        for line in self.filtered(lambda l: not l.display_type and l.state in ['draft', 'sent','to_approve']):
-            line._validate_distribution(**{
-                'product': line.product_id.id,
-                'business_domain': 'sale_order',
-                'company_id': line.company_id.id,
-            })
-            
 class CustomSaleDocType(models.Model):
     _inherit= 'sale.doc.type'
 
@@ -308,7 +296,7 @@ class CustomizeSaleOrder(models.Model):
     y_doc_type_id = fields.Many2one(tracking=True)
 
     y_to_approve_states_bool = fields.Boolean(string="Is states Bool")
-    y_show_so_warning = fields.Char(string="Warning",compute='_compute_is_show_budget_warning_move',default=False,store=True)
+    y_show_so_warning = fields.Char(string="Warning",compute=False,default=False,store=True)
     
    
     y_exchange_rate = fields.Float(string="Currency Rate",compute='_compute_exchange_rate',default=False,store=True,help="This rate will be used to convert the PO value and check the approval range in comapny currency.")
@@ -430,7 +418,6 @@ class CustomizeSaleOrder(models.Model):
             rec.y_approver_visible = True
             rec.y_to_approve_states = 'to_approve_state1'
             rec.post_approval_message()
-            rec.order_line._validate_analytic_distribution()
 
 
     def action_draft(self):
@@ -817,25 +804,25 @@ class CustomizeSaleOrder(models.Model):
                 # else:
                 #     raise UserError (_(" Create the Sale approval "))
                     
-            for rec in self.y_sale_approval_line:
-                if rec.y_is_approve==False and rec.y_approvals=='1':
-                    self.y_to_approve_states = 'to_approve_state2'
+            # for rec in self.y_sale_approval_line:
+            #     if rec.y_is_approve==False and rec.y_approvals=='1':
+            #         self.y_to_approve_states = 'to_approve_state2'
                     
-                    break
+            #         break
 
-                if rec.y_is_approve==False and rec.y_approvals=='2' :
-                    self.y_to_approve_states = 'to_approve_state2'
-                    break
+            #     if rec.y_is_approve==False and rec.y_approvals=='2' :
+            #         self.y_to_approve_states = 'to_approve_state2'
+            #         break
 
-                if rec.y_is_approve==False and rec.y_approvals=='3' :
-                    self.y_to_approve_states = 'to_approve_state3'
-                    break
+            #     if rec.y_is_approve==False and rec.y_approvals=='3' :
+            #         self.y_to_approve_states = 'to_approve_state3'
+            #         break
 
-                data = self.y_sale_approval_line.mapped('y_is_approve')  
-                if all(data) == True:
-                    self.y_to_approve_states = 'approved'
-                    self.action_confirm()
-                    break
+            #     data = self.y_sale_approval_line.mapped('y_is_approve')  
+            #     if all(data) == True:
+            #         self.y_to_approve_states = 'approved'
+            #         self.action_confirm()
+            #         break
 
         # -------------------------------------------------------------------------------------start
             if current_appoval_line and current_appoval_line.y_user_ids:
@@ -843,6 +830,9 @@ class CustomizeSaleOrder(models.Model):
                 if self.y_approval_method == 'stages':
                     msg = "{} By: {}".format(pending_state, ', '.join(current_appoval_line[0].y_user_ids.mapped('name')))
                     message_post = self.message_post(body=msg)
+
+            self.action_confirm()
+
         # ---------------------------------------------------------------------------------------end
         else:
             for lvl_approval_lines in self.y_sale_lvl_amt_approval_line:
@@ -976,7 +966,7 @@ class CustomizeSaleOrder(models.Model):
 
 
 
-
+            self.action_confirm()
 
             for rec in self.y_sale_lvl_amt_approval_line:
                 if rec.y_approval_level == '1stlvlapproval':
@@ -999,17 +989,7 @@ class CustomizeSaleOrder(models.Model):
                         self.action_confirm()
 
 
-            for rec in self.y_sale_lvl_amt_approval_line:
-                if rec.y_approval_level == '2ndlvlapproval':
-                    if rec.y_is_1st_user_completed==True and  rec.y_is_2nd_user_completed==False:
-                        self.y_to_approve_states = 'to_approve_state2'
-
-                if rec.y_approval_level == '3rdlvlapproval':
-                    if rec.y_is_1st_user_completed==True and  rec.y_is_2nd_user_completed==False and rec.y_is_3rd_user_completed==False:
-                        self.y_to_approve_states = 'to_approve_state2'
-
-                    if rec.y_is_1st_user_completed==True and  rec.y_is_2nd_user_completed==True and rec.y_is_3rd_user_completed==False:
-                        self.y_to_approve_states = 'to_approve_state3'
+            
 # ----------------------------------------------------------------start-----------------------------
             # current_appoval_line = self.sale_approval_line.filtered(lambda line : int(line.approvals) == self.current_approvall)
             # self.current_approvall +=1

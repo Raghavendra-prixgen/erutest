@@ -4,47 +4,25 @@ from num2words import num2words
 class AccountMoveCustomReport(models.Model):
 	_inherit = 'account.move'  
 
-	
-
-	def sale_order(self):
-        	joined_names = ','.join(self.invoice_line_ids.sale_line_ids.order_id.mapped('name'))
-        	return joined_names
-
-	def sale_order_po_ref(self):
-        	po_refs = self.invoice_line_ids.mapped('sale_line_ids.order_id.y_po_ref')
-        	return ', '.join(ref for ref in po_refs if ref)
-    
-
-	def sale_order_po_date(self):
-        	dates = []
-        	for po_date in self.invoice_line_ids.mapped('sale_line_ids.order_id.y_po_date'):
-            		if po_date:
-                		filter_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(po_date))
-                		date_str = filter_date.strftime('%d-%m-%Y %H:%M:%S')
-                		dates.append(date_str)
-        	return ', '.join(dates) if dates else None
-
-    
+	def fetch_sale_order(self):
+		sale_order_ids = self.invoice_line_ids[0].sale_line_ids.order_id.id
+		sale_id = self.env["sale.order"].browse(sale_order_ids)
+		return sale_id
+      
 
 	def tax_calculation(self):
 		taxes_dict = {}
 		for line in self.invoice_line_ids:
 			line_taxes = {}
 			for each_line in line.tax_ids:
-				if line.discount:
-					discounted_price_unit = line.price_unit * (1 - line.discount / 100)
-				else:
-					discounted_price_unit = line.price_unit
-
 				taxes_res = each_line.compute_all(
 					quantity=line.quantity,
 					currency=line.currency_id,
 					product=line.product_id,
 					partner=self.partner_id,
-					price_unit=discounted_price_unit,
-					is_refund=False)
-
-				
+					price_unit=line.price_unit,
+					is_refund=False,
+				)
 				for tax in taxes_res['taxes']:
 					parent_tax = each_line.name
 					tax_info = {
@@ -52,19 +30,24 @@ class AccountMoveCustomReport(models.Model):
 						'amount': tax['amount'],
 					}
 					if parent_tax in line_taxes:
+						# If the parent tax already exists, add the amount
 						line_taxes[parent_tax]['amount'] += tax_info['amount']
 					else:
+						# Otherwise, initialize the parent tax entry
 						line_taxes[parent_tax] = tax_info
 
+			# Sum the amounts of different parent taxes
 			total_tax_amount = sum([tax_info['amount'] for tax_info in line_taxes.values()])
+
+			# Store both the total amount and the tax names for reference
 			taxes_list = [{'name': k, 'amount': v['amount']} for k, v in line_taxes.items()]
 			taxes_dict[line.id] = {'total_amount': total_tax_amount, 'taxes': taxes_list}
+
 		return taxes_dict
-
-
 
 	def amount_in_words_acc_move(self):
 		amount = "{:.2f}".format(self.amount_total_signed)
+		print(amount,'1111111111111111111111')
 		amount1 = str(amount)
 		amt= amount1.split(".")
 		if int(amt[1]) > 0:

@@ -134,14 +134,7 @@
                                 <td colspan="12"
                                 style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
                                     <strong><span>Amount (in words):</span></strong>
-                                    <!-- <span  t-esc="o.amount_total_words"/> -->
-                                    <t t-if="o.currency_id.name == 'INR'">
-                                        <t t-set="amountwords" t-value="o.amount_in_words(o.amount_total).title()" />
-                                        <span t-esc="amountwords" />
-                                    </t>
-                                    <t t-else="">
-                                        <span t-esc="o.currency_id.amount_to_text(o.amount_untaxed).replace('And', '').strip().title()" />
-                                    </t>
+                                    <span  t-esc="o.amount_total_words"/>
                                  </td>
                             </tr>
                         </table>   

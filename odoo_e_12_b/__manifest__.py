@@ -13,9 +13,9 @@
     'author': 'Prixgen Tech Solutions Pvt. Ltd.',
     'website': 'https://www.prixgen.com',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',
-    'origin':'project specification',
+    'origin':'Base',
     'category': 'Uncategorized',
-    'version': '17.0.0.3',
+    'version': '17.0.0.2',
     'license': 'LGPL-3',
     'depends': ['base','stock','mail','sale','purchase','mrp'],
     'data': [

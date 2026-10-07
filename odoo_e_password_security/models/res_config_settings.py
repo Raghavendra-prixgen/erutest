@@ -12,6 +12,8 @@ class ResConfigSettings(models.TransientModel):
     password_upper = fields.Integer(config_parameter="auth_password_policy.password_upper", default=0)
     password_numeric = fields.Integer(config_parameter="auth_password_policy.password_numeric", default=0)
     password_special = fields.Integer(config_parameter="auth_password_policy.password_special", default=0)
+
+    max_attempts = fields.Integer(config_parameter="odoo_e_password_security.max_attempts", default=5)
     
     minimum_reset_interval = fields.Integer(
         string="Minimum Reset Interval (hours)", config_parameter="auth_password_policy.minimum_reset_interval", default=0,

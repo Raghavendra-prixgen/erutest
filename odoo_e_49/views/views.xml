@@ -12,22 +12,22 @@
 					<field name="company_id" optional="show" />
 					<field name="opening_stock" optional="show" />
 					<field name="opening_value" sum="Total Value" optional="show"/>
-					<field name="purchase_qty" decoration-success="1"  optional="show"/>
-					<field name="purchase_value" decoration-success="1"  optional="show"/>
-					<field name="purchase_return_qty" decoration-danger="1" optional="show"/>
-					<field name="purchase_return_value" decoration-danger="1" optional="show"/>
-					<field name="sale_qty" decoration-danger="1" optional="show"/>
-					<field name="sale_value" decoration-danger="1" optional="show"/>
-					<field name="sale_return_qty" decoration-success="1"  optional="show"/>
-					<field name="sale_return_value" decoration-success="1"  optional="show"/>
-					<field name="production_qty" decoration-success="1"  optional="show"/>
-					<field name="production_value" decoration-success="1"  optional="show"/>
-					<field name="consumption_qty" decoration-danger="1" optional="show"/>
-					<field name="consumption_value" decoration-danger="1" optional="show"/>
-					<field name="positive_adjustment_qty" decoration-success="1"  optional="show"/>
-					<field name="positive_adjustment_value" decoration-success="1"  optional="show"/>
-					<field name="negative_adjustment_qty" decoration-danger="1" optional="show"/>
-					<field name="negative_adjustment_value" decoration-danger="1" optional="show"/>
+					<field name="purchase_qty" optional="show"/>
+					<field name="purchase_value" optional="show"/>
+					<field name="purchase_return_qty" optional="show"/>
+					<field name="purchase_return_value" optional="show"/>
+					<field name="sale_qty" optional="show"/>
+					<field name="sale_value" optional="show"/>
+					<field name="sale_return_qty" optional="show"/>
+					<field name="sale_return_value" optional="show"/>
+					<field name="production_qty" optional="show"/>
+					<field name="production_value" optional="show"/>
+					<field name="consumption_qty" optional="show"/>
+					<field name="consumption_value" optional="show"/>
+					<field name="positive_adjustment_qty" optional="show"/>
+					<field name="positive_adjustment_value" optional="show"/>
+					<field name="negative_adjustment_qty" optional="show"/>
+					<field name="negative_adjustment_value" optional="show"/>
 					<field name="closing_stock" optional="show" />
 					<field name="closing_value" sum="Total Value" optional="show" />
 				</tree>
@@ -45,6 +45,14 @@
         </search>
       </field>
     </record>
+
+
+		
+
+
+
+
+
 
 
 	<record id="inv_bal_summary_wiz_view_form" model="ir.ui.view">
@@ -77,12 +85,39 @@
     </record>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	 <record id="inv_bal_sum_wiz_action" model="ir.actions.act_window">
 	      <field name="name">Inventory Summary</field>
 	      <field name="res_model">inv.bal.sum.wiz</field>
 	      <field name="view_mode">form</field>
 	      <field name="target">new</field>
 	    </record>
+
+
+
+
+
+
+
+
+
 
 		<menuitem id="inv_bal_sum_menu_act" name="Inventory Summary" parent="stock.menu_warehouse_report" action="inv_bal_sum_wiz_action"/>
 

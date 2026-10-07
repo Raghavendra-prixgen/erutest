@@ -1,7 +1,7 @@
 <odoo>
   <data>
     <record id="purchase.purchase_rfq" model="ir.actions.act_window">
-      <field name="domain">[('state','in',('sent', 'draft','cancel'))]</field>
+      <field name="domain">[('state','in',('sent','to approve','draft','reject'))]</field>
     </record>
     
 <record id="purchase.purchase_form_action" model="ir.actions.act_window">
@@ -101,7 +101,7 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-   
+    
 
     <menuitem id="menu_product_in_config_purchase_others" name="Others"
             parent="purchase.menu_purchase_config" sequence="45"/>

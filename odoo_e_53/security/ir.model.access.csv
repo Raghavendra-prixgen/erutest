@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cogs_register_wizard,cogs.register.wizard,model_cogs_register_wizard,,1,1,1,1
-access_cogs_register_report,cogs.register.report,model_cogs_register_report,,1,1,1,1

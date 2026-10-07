@@ -3,10 +3,10 @@
 import unicodedata
 import uuid
 import re
+
 import xml.etree.ElementTree as ET
-from odoo.osv import expression
+
 from odoo import api, fields, models, _, Command
-from odoo.tools import ustr
 from odoo.exceptions import ValidationError
 
 OPTIONS_WL = [
@@ -32,20 +32,19 @@ def sanitize_for_xmlid(s):
         Strips leading and trailing spaces, converts unicode chars to ascii,
         lowers all chars, replaces spaces with underscores and truncates the
         resulting string to 20 characters.
-        :param s: str
+
+        :type s: str
         :rtype: str
     """
-    s = ustr(s)
     uni = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
 
-    slug_str = re.sub(r'[\W]', ' ', uni).strip().lower()
+    slug_str = re.sub(r'\W', ' ', uni).strip().lower()
     slug_str = re.sub(r'[-\s]+', '_', slug_str)
     return slug_str[:20]
 
 
-
-class IrModel(models.AbstractModel):
-    _inherit = "base"
+class Base(models.AbstractModel):
+    _inherit = 'base'
 
     def create_Global_model_data(self, name):
         """ We want to keep track of created records with global
@@ -64,7 +63,7 @@ class IrModel(models.AbstractModel):
         else:
             module = self.env['ir.module.module'].get_global_module()
             IrModelData.create({
-                'name': '%s_%s' % (sanitize_for_xmlid(name), uuid.uuid4()),
+                'name': '%s_%s' % (sanitize_for_xmlid(name or 'False'), uuid.uuid4()),
                 'model': self._name,
                 'res_id': self.id,
                 'module': module.name,
@@ -571,10 +570,10 @@ class IrModel(models.Model):
         available_view_types = set(map(lambda v: v['type'], model_views))
         # in actions, kanban should be first, then list, etc.
         # this is arbitrary, but we need consistency!
-        VIEWS_ORDER = {'kanban': 0, 'tree': 1, 'form': 2, 'calendar': 3, 'gantt': 4, 'map': 5,
+        VIEWS_ORDER = {'kanban': 0, 'list': 1, 'form': 2, 'calendar': 3, 'gantt': 4, 'map': 5,
                        'pivot': 6, 'graph': 7, 'qweb': 8, 'activity': 9}
         sorted_view_types = list(sorted(available_view_types, key=lambda vt: VIEWS_ORDER.get(vt, 10)))
-        view_mode = ','.join(sorted_view_types) if sorted_view_types else 'tree,form'
+        view_mode = ','.join(sorted_view_types) if sorted_view_types else 'list,form'
         action = self.env['ir.actions.act_window'].create({
             'name': name,
             'res_model': self.model,
@@ -587,7 +586,7 @@ class IrModel(models.Model):
                     other view types depending on the options you chose for your model.
                 </p>
                 <p>
-                    You can start customizing these screens by clicking on the Global icon on the
+                    You can start customizing these screens by clicking on the global icon on the
                     top right corner (you can also customize this help message there).
                 </p>
             """),

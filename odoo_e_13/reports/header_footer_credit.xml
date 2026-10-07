@@ -415,7 +415,10 @@
                                 </div>
                             </div>
                             
-                        
+                            
+
+                    
+
                     </td>   
                     </tr>
                     <tr>
@@ -495,7 +498,19 @@
                                 
                             </div>
                         </div>
-                        <div class="row">
+                            
+                            
+
+                            
+
+
+                            
+                       
+                    </td>
+                    
+                        <td colspan="8" style="font-size:11px;width:50%;solid black;font-family: Century Gothic;border-right:1px solid black;border-top:none;border-bottom:1px solid black" >
+                            
+                                <div class="row">
                                     <div class="col-3" style="text-align:left;width:30%;font-size:11px">
                                    
                                     <t t-if="o.move_type == 'out_refund'">
@@ -514,7 +529,7 @@
                                         </t>
                                     </div>
                                 </div>
-                                 <div class="row">
+                                <div class="row">
 
                                 <div class="col-3" style="text-align:left;width:30%;font-size:11px">
                                    <b> <span>Payment Terms </span></b>
@@ -533,99 +548,24 @@
                                         </t>
                                     </t>
                                 </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3" style="text-align:left;width:30%;font-size:11px">
-                                    <b> <span>Delivery Terms </span></b>
-
-                                    </div>
-                                    <div class="col-1" style="text-align:left;width:10%">
-                                        <b>
-                                        <span>:</span>
-                                    </b>
-                                    </div>
-                                    <div class="col-6" style="text-align:left;width:60%;font-size:11px">
-
-                                        <t t-if="o.invoice_incoterm_id">
-                                            <span t-field="o.invoice_incoterm_id" />
-                                        </t>
-                                    </div>
-                                </div>
-                            
-                    </td>
-                    
-                        <td colspan="8" style="font-size:11px;width:50%;solid black;font-family: Century Gothic;border-right:1px solid black;border-top:none;border-bottom:1px solid black" >
-                            
-                               <div class="row">
-
+                            </div>
+                            <div class="row">
                                 <div class="col-3" style="text-align:left;width:30%;font-size:11px">
-                                   <b> <span>Ship From</span></b>
+                                   <b> <span>Delivery Terms </span></b>
 
                                 </div>
                                 <div class="col-1" style="text-align:left;width:10%">
                                     <b>
                                     <span>:</span>
-                                   </b>
+                                </b>
                                 </div>
                                 <div class="col-6" style="text-align:left;width:60%;font-size:11px">
-                                    <span t-field ="o.company_id.partner_id.name"/>
+
+                                    <t t-if="o.invoice_incoterm_id">
+                                        <span t-field="o.invoice_incoterm_id" />
+                                    </t>
                                 </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3" style="text-align:left;width:30%;font-size:11px">
-                                    <b> <span>Address </span></b>
-
-                                    </div>
-                                    <div class="col-1" style="text-align:left;width:10%">
-                                        <b>
-                                        <span>:</span>
-                                    </b>
-                                    </div>
-                                    <div class="col-6" style="text-align:left;width:60%;font-size:11px">
-                                          <span t-if="o.company_id.partner_id.street"
-                                            t-field="o.company_id.partner_id.street" />, 
-                                            <br/>
-                                            <span t-if="o.company_id.partner_id.street2"
-                                            t-field="o.company_id.partner_id.street2" />
-                                        <!-- <br/> -->
-                                        <span
-                                            t-if="o.company_id.partner_id.city" t-field="o.company_id.partner_id.city" />
-                                        <span
-                                            t-if="o.company_id.partner_id.zip" t-field="o.company_id.partner_id.zip" />
-                                        <!-- <span
-                                            t-if="o.partner_id.country_id" t-field="o.partner_id.country_id" /> -->
-                                        <br />
-                                    </div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-3" style="text-align:left;width:30%;font-size:11px">
-                                    <b> <span>GSTIN </span></b>
-
-                                    </div>
-                                    <div class="col-1" style="text-align:left;width:10%">
-                                        <b>
-                                        <span>:</span>
-                                    </b>
-                                    </div>
-                                    <div class="col-6" style="text-align:left;width:60%;font-size:11px">
-                                        <span t-field="o.company_id.partner_id.vat" />
-                                    </div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-3" style="text-align:left;width:30%;font-size:11px">
-                                    <b> <span>State </span></b>
-
-                                    </div>
-                                    <div class="col-1" style="text-align:left;width:10%">
-                                        <b>
-                                        <span>:</span>
-                                    </b>
-                                    </div>
-                                    <div class="col-6" style="text-align:left;width:60%;font-size:11px">
-                                        <span t-field="o.company_id.partner_id.state_id" />
-                                    </div>
-                                </div> 
-                               
+                    </div>
                         </td>
                     </tr>
 

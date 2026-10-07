@@ -13,42 +13,6 @@ invoice_status = [
 ]
 
 
-class PurchaseOrder(models.Model):
-    _inherit = "purchase.order"
-
-    y_ageing = fields.Integer(string="Ageing (Days)", compute="_compute_ageing", store=True)
-
-    @api.depends('date_order')
-    def _compute_ageing(self):
-        for po in self:
-            if po.date_order:
-                po.y_ageing = (fields.Date.today() - po.date_order.date()).days
-            else:
-                po.y_ageing = 0
-
-    def cron_update_po_ageing(self):
-        # Update Purchase Order ageing
-        po_query = """
-            UPDATE purchase_order
-            SET y_ageing = CURRENT_DATE - date_order::date
-            WHERE state IN ('purchase','done')
-            AND date_order IS NOT NULL
-        """
-        self.env.cr.execute(po_query)
-
-        # Update Purchase Order Line ageing
-        pol_query = """
-            UPDATE purchase_order_line pol
-            SET y_ageing = CURRENT_DATE - po.date_order::date
-            FROM purchase_order po
-            WHERE pol.order_id = po.id
-            AND po.state IN ('purchase','done')
-            AND po.date_order IS NOT NULL
-        """
-
-        self.env.cr.execute(pol_query)
-
-
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
@@ -64,18 +28,6 @@ class PurchaseOrderLine(models.Model):
     y_pending_qty = fields.Float(compute="get_y_pending_qty",store=True)
     y_pending_value = fields.Float(compute="get_y_pending_value",store=True)
     y_product_categ = fields.Char(related='product_id.categ_id.name',store=True,string="Product Category")
-    y_ageing = fields.Integer(string="Ageing (Days)", compute="calculate_ageing", store=True)
-
-    @api.depends('order_id.date_order')
-    def calculate_ageing(self):
-        for line in self:
-            if line.order_id.date_order:
-                line.y_ageing = (fields.Date.today() - line.order_id.date_order.date()).days
-            else:
-                line.y_ageing = 0
-
-    
-
 
 
     @api.depends('product_qty','qty_received')
