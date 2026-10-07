@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="eruvaka_pl_paper_format" model="report.paperformat">
+        <field name="name">eruvaka report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">145</field>
+        <field name="margin_bottom">35</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">140</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="eruvaka_packing_list_report" model="ir.actions.report">
+        <field name="name">Packing List Report</field>
+        <field name="model">stock.quant.package</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_e_40.eruvaka_packing_list_custom_report</field>
+        <field name="report_file">odoo_e_40.eruvaka_packing_list_custom_report</field>
+        <field name="binding_model_id" ref="odoo_e_14_b.model_stock_quant_package" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="odoo_e_40.eruvaka_pl_paper_format" />
+    </record>
+
+    <template id='eruvaka_packing_list_custom_report'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="odoo_e_40.external_layout_for_eruvaka_packing_list_header_footer">
+                    <div class="page">
+                        <table colspan="12" class="table m-0 p-0 table-borderless table-sm"
+                            style="border:1px solid black;border-top:none;font-family: Century Gothic;">
+                            <t t-if="o.y_sale_origin_id.y_pre_carriage in ['bysea', 'byroad', 'byrail']">
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="1"
+                                        style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
+                                        Sl.No.</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Part No</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Description</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Quantity</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        No. of Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Max. Qty. per Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Net Wt.(kg)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Gross Wt.(Kg)
+                                    </th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Package Measurement(cm3)
+                                    </th>
+                                </tr>
+
+                                
+                                <t t-set="sl" t-value="1" />
+                            <t t-set="prev_group" t-value="None" />
+                            <t t-set="y_qty_in_package" t-value="0.0"/>
+                            <t t-set="prev_kit_product" t-value="None" />
+                            <t t-foreach="o.y_packaging_line_ids.sorted(key=lambda b: (b.y_kit_product.split('-')[0].strip() if b.y_kit_product else '', b.y_group))" t-as="line">
+                                <!-- Check if the current line has a kit product and if it is different from the previous one -->
+                                <t t-if="line.y_kit_product and line.y_kit_product.split('-')[0].strip() != prev_kit_product">
+                                    <tr>
+                                        <td colspan="11" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                            <span><b>Kit Product: </b></span>
+                                            <span t-esc="line.y_kit_product.split('-')[0].strip()" /><strong> - </strong><strong><span t-esc="o.get_kit_product_quantity(line.y_kit_product)" /></strong> <strong>No's</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-set="prev_kit_product" t-value="line.y_kit_product.split('-')[0].strip()" />
+                                </t>
+                                <tr>
+                                    <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                        <span t-esc="sl" />
+                                        <t t-set="sl" t-value="sl+1" />
+                                    </td>
+                                    <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                        <span t-esc="line.y_product_id.default_code" />
+                                    </td>
+                                    <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                        <span t-esc="line.y_product_id.name" />
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                        <span t-esc="line.y_total_qty" />
+                                    </td>
+                                    <t t-if="line.y_group != prev_group">
+                                        <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                            <t t-esc="line.y_total_package" />
+                                        </td>
+                                        <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+
+                                            <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('qty_in_package', 0.0)"  t-options="{'widget': 'float', 'precision': 2}"/>
+                                            
+                                        </td>
+                                        <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                            <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('net_weight', 0.0)"  t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </td>
+                                        <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                            <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('gross_weight', 0.0)" t-options="{'widget': 'float', 'precision': 2}" />
+                                        </td>
+                                        <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                            <span t-esc="line.y_length" /> * 
+                                            <span t-esc="line.y_width" /> * 
+                                            <span t-esc="line.y_height" />
+                                        </td>
+                                    </t>
+                                    <t t-if="line.y_group == prev_group">
+                                        <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                            <span>empty</span>
+                                        </td>
+                                        <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                            
+                                            <span>empty</span>
+                                            
+                                        </td>
+                                        <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                            <span>empty</span>                                        
+                                        </td>
+                                        <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                            <span>empty</span>                                       
+                                         </td>
+                                        <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                            <span>empty</span>
+                                        </td>
+                                    </t>
+                                    
+                                    <t t-set="prev_group" t-value="line.y_group" />
+                                </tr>
+                            </t>
+                            <tr style="border-bottom:1px solid black;">
+                                <th colspan="6" style="text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;border-top:1px solid black;">Grand Total</th>
+                                <!-- <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_quantity" t-value="o.get_total_quantity()"/>
+                                    <t t-if="total_quantity != None">
+                                        <span t-esc="total_quantity" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                </td> -->
+                                <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_y_total_package" t-value="o.get_total_y_total_package()"/>
+                                    <t t-if="total_y_total_package != None">
+                                        <span t-esc="total_y_total_package" />
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <t t-set="total_net_weight" t-value="o.get_total_net_weight()"/>
+                                        <t t-if="total_net_weight != None">
+                                        <span t-esc="total_net_weight" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <t t-set="total_gross_weight" t-value="o.get_total_gross_weight()"/>
+                                    <t t-if="total_gross_weight != None">
+                                        <span t-esc="total_gross_weight" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="2" style="border:1px solid black;text-align:right;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    </td>
+                                </tr>
+                                <tr style="page-break-inside:avoid;">
+                                    <div style="width: 100%;"> 
+                                        <td colspan="12" style="border-top:1px solid black;border-right: 1px solid black; font-size: 11px; width: 95%; font-family: Century Gothic; white-space: normal;">
+                                                <b><span>Note: </span></b>
+                                                <span t-if="o.y_note" t-field="o.y_note" />
+                                            </td>
+                                    </div>
+                                </tr>
+                            </t>
+                            <t t-if="o.y_sale_origin_id.y_pre_carriage == 'byair'">
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="1"
+                                        style="border:1px solid black;text-align:center;font-family: Century Gothic;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
+                                        Sl.No.</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Part No</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Description</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Quantity</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        No. of Package(EA)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Max. Qty. per Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Volumetric Wt(Kg)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Net Wt. (kg)
+                                    </th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Gross Wt.(Kg)
+                                    </th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Package Measurement(cm3)
+                                    </th>
+                                </tr>
+
+                                <t t-set="sl" t-value="1" />
+                                <t t-set="prev_group" t-value="None" />
+                                <t t-set="y_qty_in_package" t-value="0.0"/>
+                                <t t-set="prev_kit_product" t-value="None" />
+                                <t t-foreach="o.y_packaging_line_ids.sorted(key=lambda b: (b.y_kit_product.split('-')[0].strip() if b.y_kit_product else '', b.y_group))" t-as="line">
+                                    <!-- Check if the current line has a kit product and if it is different from the previous one -->
+                                    <t t-if="line.y_kit_product and line.y_kit_product.split('-')[0].strip() != prev_kit_product">
+                                        <tr>
+                                            <td colspan="12" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span><b>Kit Product: </b></span>
+                                                <span t-esc="line.y_kit_product.split('-')[0].strip()" /><strong> - </strong><strong><span t-esc="o.get_kit_product_quantity(line.y_kit_product)" /></strong> <strong>No's</strong>
+                                            </td>
+                                        </tr>
+                                        <t t-set="prev_kit_product" t-value="line.y_kit_product.split('-')[0].strip()" />
+                                    </t>
+                                    <tr>
+                                        <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                            <span t-esc="sl" />
+                                            <t t-set="sl" t-value="sl+1" />
+                                        </td>
+                                        <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                            <span t-esc="line.y_product_id.default_code" />
+                                        </td>
+                                        <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                            <span t-esc="line.y_product_id.name" />
+                                        </td>
+                                        <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                            <span t-esc="line.y_total_qty" />
+                                        </td>
+                                        <t t-if="line.y_group != prev_group">
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <t t-esc="line.y_total_package" />
+                                            </td>
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('qty_in_package', 0.0)" t-options="{'widget': 'float', 'precision': 2}"/>
+                                            </td>
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('Volumetric_weight', 0.0)" t-options="{'widget': 'float', 'precision': 2}"/>
+                                            </td>
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('net_weight', 0.0)" t-options="{'widget': 'float', 'precision': 2}"/>
+                                            </td>
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="o.calculate_group_weights().get(line.y_group, {}).get('gross_weight', 0.0)" t-options="{'widget': 'float', 'precision': 2}" />
+                                            </td>
+                                            <td style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="line.y_length" /> * 
+                                                <span t-esc="line.y_width" /> * 
+                                                <span t-esc="line.y_height" />
+                                            </td>
+                                        </t>
+                                        <t t-if="line.y_group == prev_group">
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>
+                                            </td>
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>                                            </td>
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>                                            </td>
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>                                            </td>
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>                                            </td>
+                                            <td style="color:white;border:1px solid black;text-align:center;font-size:11px;border-bottom:none;border-right:1px solid black;border-left:none;border-top:none;font-family: Century Gothic;">
+                                                <span>empty</span>
+                                            </td>
+                                        </t>
+                                        <t t-set="prev_group" t-value="line.y_group" />
+                                    </tr>
+                                </t>
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="5" style="text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;border-top:1px solid black;">Grand Total</th>
+                                    <!-- <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <t t-set="total_quantity" t-value="o.get_total_quantity()"/>
+                                        <t t-if="total_quantity != None">
+                                            <span t-esc="total_quantity" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                    </td> -->
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <t t-set="total_y_total_package" t-value="o.get_total_y_total_package()"/>
+                                        <t t-if="total_y_total_package != None">
+                                            <span t-esc="total_y_total_package" />
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                        </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        </td>
+                                        <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                            <t t-set="total_Volumetric_weight" t-value="o.get_total_Volumetric_weight()"/>
+                                            <t t-if="total_Volumetric_weight != None">
+                                            <span t-esc="total_Volumetric_weight" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                        </td>
+                                        <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                            <t t-set="total_net_weight" t-value="o.get_total_net_weight()"/>
+                                            <t t-if="total_net_weight != None">
+                                            <span t-esc="total_net_weight" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                        </td>
+                                        <td colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                            <t t-set="total_gross_weight" t-value="o.get_total_gross_weight()"/>
+                                        <t t-if="total_gross_weight != None">
+                                            <span t-esc="total_gross_weight" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                        </td>
+                                        <td colspan="2" style="border:1px solid black;text-align:right;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <div style="width: 100%;"> 
+                                            <td colspan="12" style="border-right: 1px solid black; font-size: 11px; width: 95%; font-family: Century Gothic; white-space: normal;">
+                                                    <b><span>Note: </span></b>
+                                                    <span t-if="o.y_note" t-field="o.y_note" />
+                                                </td>
+                                        </div>
+                                    </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

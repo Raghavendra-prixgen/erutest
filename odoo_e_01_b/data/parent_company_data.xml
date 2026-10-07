@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="parent.company.access" id="parent_company_access_data">
+          <field name="y_model_ids" model="ir.model" search="[('model','=','account.account')]"/>
+        </record>
+        <!-- <record model="default.company.access" id="default_company_access_data">
+          <field name="y_model_ids" model="ir.model" search="[('model','in',('res.company','res.config.settings'))]"/>
+        </record> -->
+    </data>
+</odoo>

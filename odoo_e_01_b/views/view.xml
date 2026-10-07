@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+
+        <record id="access_action_parent_company_access_tree" model="ir.ui.view">
+            <field name="name">Parent Company Access</field>
+            <field name="model">parent.company.access</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="y_model_ids" string="Models" widget="many2many_tags" required="1"/>                    
+                </tree>
+            </field>
+        </record>       
+
+        <record id="action_parent_company_access" model="ir.actions.act_window">
+            <field name="name">Parent Company Access</field>
+            <field name="res_model">parent.company.access</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="target">current</field>
+        </record>
+
+
+        <menuitem id="access_parent_company_access_menu" name="Parent Company Access" action="action_parent_company_access"
+        parent="base.menu_users" sequence="10"/>
+<!-- 
+        <record id="access_action_default_company_access_tree" model="ir.ui.view">
+            <field name="name">Default Company Access</field>
+            <field name="model">default.company.access</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="y_model_ids" string="Models" widget="many2many_tags" required="1"/>                    
+                </tree>
+            </field>
+        </record>       
+
+        <record id="action_default_company_access" model="ir.actions.act_window">
+            <field name="name">Default Company Access</field>
+            <field name="res_model">default.company.access</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="target">current</field>
+        </record>
+
+
+        <menuitem id="access_default_company_access_menu" name="Default Company Access" action="action_default_company_access"
+        parent="base.menu_users" sequence="11"/> -->
+
+	
+    </data>
+</odoo>

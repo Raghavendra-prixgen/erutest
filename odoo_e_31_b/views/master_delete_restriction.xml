@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="form_view_mail_activity_type_delete_button" model="ir.ui.view">
+        <field name="name">mail.activity.type.form.delete.button</field>
+        <field name="model">mail.activity.type</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_mail_activity_type_delete_button" model="ir.ui.view">
+        <field name="name">mail.activity.type.tree.delete.button</field>
+        <field name="model">mail.activity.type</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+     <record id="form_view_delivery_carrier_delete_button" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.delete.button</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="mytree_view_delivery_carrier_delete_button" model="ir.ui.view">
+        <field name="name">delivery.carrier.mytree.delete.button</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name='delete'>0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="search_view_crm_tag_delete_button" model="ir.ui.view">
+        <field name="name">crm.tag.search.delete.button</field>
+        <field name="model">crm.tag</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_crm_tag_delete_button" model="ir.ui.view">
+        <field name="name">crm.tag.tree.delete.button</field>
+        <field name="model">crm.tag</field>
+        <field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="form_view_sale_order_template_delete_button" model="ir.ui.view">
+        <field name="name">sale.order.template.form.delete.button</field>
+        <field name="model">sale.order.template</field>
+        <field name="inherit_id" ref="sale_management.sale_order_template_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_sale_order_template_delete_button" model="ir.ui.view">
+        <field name="name">sale.order.template.tree.delete.button</field>
+        <field name="model">sale.order.template</field>
+        <field name="inherit_id" ref="sale_management.sale_order_template_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="form_view_crm_team_delete_button" model="ir.ui.view">
+        <field name="name">crm.team.form.delete.button</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="search_view_crm_team_delete_button" model="ir.ui.view">
+        <field name="name">crm.team.search.delete.button</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_crm_team_delete_button" model="ir.ui.view">
+        <field name="name">crm.team.tree.delete.button</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="form_view_product_pricelist_delete_button" model="ir.ui.view">
+        <field name="name">product.pricelist.form.delete.button</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="tree_view_product_pricelist_delete_button" model="ir.ui.view">
+        <field name="name">product.pricelist.tree.delete.button</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+
+    <record id="Myform_res_partner_inherit1" model="ir.ui.view">
+        <field name="name">myform.res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sales_team.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </field>
+        </field>
+    </record>
+
+    
+
+
+
+</odoo>

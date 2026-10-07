@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_material_to_material" model="ir.sequence">
+            <field name="name">Material to Material Transfer</field>
+            <field name="code">material.to.material.transfer</field>
+            <field name="prefix">MMT-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"></field>
+        </record>
+    </data>
+</odoo>

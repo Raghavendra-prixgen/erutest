@@ -1,0 +1,146 @@
+<odoo>
+    <record id="view_sample_plan_form" model="ir.ui.view">
+        <field name="name">sample.plan.form</field>
+        <field name="model">sample.plan</field>
+        <field name="arch" type="xml">
+            <form string="Sample Plan">
+                <header>
+                    <field name="y_state" widget="statusbar" statusbar_visible="draft,review,approved,"/>
+
+                    <button string="Review" type="object" name="action_review"
+                            class="oe_highlight" style="margin-right:9px;margin-bottom:9px;"
+                            invisible="y_state not in ('draft')"/>
+
+                    <button string="Approve" type="object" name="action_approve"
+                            class="oe_highlight" style="margin-right:9px;margin-bottom:9px;"
+                            invisible="y_state not in ('review')"/>
+
+
+                    <button string="Reset to Draft" type="object" name="action_reset_draft"
+                            style="margin-right:9px;margin-bottom:9px;"
+                            invisible="y_state not in ('cancelled')"/>
+
+                    <button string="Cancel" type="object" name="action_cancel"
+                            style="margin-right:9px;margin-bottom:9px;"
+                            invisible="y_state in ('cancelled','approved')"/>
+                </header>
+                <sheet>
+
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="y_sample_document_name" readonly="y_state not in ('draft')"/>
+                        </group>
+
+                        <group>
+                            <field name="y_sample_document_origin_date" readonly="y_state not in ('draft')"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Sample Plan Lines">
+
+                            <field name="y_dimensional_line_ids" widget="section_and_note_one2many" readonly="y_state not in ('draft')">
+                                <tree editable="bottom" width="100">
+                                    <control>
+                                        <create name="add_product_control" string="Add a Item"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_y_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_y_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="name" required="1" width="200"/>
+                                    <field name="y_quality_technique_type" width="100" options="{'no_create': True,'no_create_edit': True}"/>
+                                    <field name="y_display_type" column_invisible="True"/>
+                                    <field name="y_qty_from" width="100"/>
+                                    <field name="y_qty_to" width="100"/>
+                                    <field name="y_sample_size" width="100"/>
+                                    <field name="y_accepted_qty" width="100"/>
+                                    <field name="y_reject_qty" width="100"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sample_plan_tree" model="ir.ui.view">
+        <field name="name">sample.plan.tree</field>
+        <field name="model">sample.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Sample Plan">
+                <field name="name"/>
+                <field name="y_sample_document_origin_date"/>
+                <field name="y_sample_document_name"/>
+                <field name="y_state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sample_plan_search" model="ir.ui.view">
+        <field name="name">sample.plan.search</field>
+        <field name="model">sample.plan</field>
+        <field name="arch" type="xml">
+            <search string="Sample Plan">
+                <field name="name" string="Sample Plan"/>
+                <field name="y_sample_document_name" string="Sample Document Name"/>
+                <field name="y_sample_document_origin_date" string="Document Origin Date"/>
+    
+                <filter string="Draft" name="draft" domain="[('y_state', '=', 'draft')]"/>
+                <filter string="Under Review" name="review" domain="[('y_state', '=', 'review')]"/>
+                <filter string="Approved" name="approved" domain="[('y_state', '=', 'approved')]"/>
+    
+                <filter string="Recent Documents" name="recent_docs" 
+                        domain="[('y_sample_document_origin_date', '>=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+    
+                <group expand="0" string="Group By">
+                    <filter string="State" name="group_by_state" context="{'group_by': 'y_state'}"/>
+                    <filter string="Document Origin Month" name="group_by_origin_month" 
+                            context="{'group_by': 'y_sample_document_origin_date:month'}"/>
+                </group>
+    
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="sample_plan_action" model="ir.actions.act_window">
+        <field name="name">Sample Plan</field>
+        <field name="res_model">sample.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="quality_instrument_view_tree" model="ir.ui.view">
+        <field name="name">quality.instrument.view.tree</field>
+        <field name="model">quality.instrument</field>
+        <field name="arch" type="xml">
+            <tree string="Quality Instrument" editable="bottom">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="quality_instrument_action" model="ir.actions.act_window">
+        <field name="name">Quality Instrument</field>
+        <field name="res_model">quality.instrument</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_sample_plan" name="Sample Plan"
+              parent="quality_control.menu_quality_configuration" action="sample_plan_action" sequence="40"/>
+    <menuitem id="menu_quality_instrument" name="Quality Instrument"
+              parent="quality_control.menu_quality_configuration" action="quality_instrument_action" sequence="50"/>
+</odoo>

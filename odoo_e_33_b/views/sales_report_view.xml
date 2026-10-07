@@ -1,0 +1,90 @@
+<odoo>
+    <data>
+        <record id="view_sale_register_report_list"  model="ir.ui.view" >
+            <field name="name">sales.register.report.list</field>
+            <field name="model">sales.register.report</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree create="false" >
+                    <field name="y_move_id" />
+                    <field name="y_invoice_date"/>
+                    <field name="y_is_free_sample" optional="hide"/>
+                    <field name="y_analytic_account_ids" widget="many2many_tags" optional="hide"/>
+                    <field name="y_partner_id" optional="hide"/>
+                    <field name="y_partner_ref" optional="hide"/>
+                    <field name="y_invoice_amount_fc" optional="hide"/>
+                    <field name="y_sales_person_id" optional="hide"/>
+                    <field name="y_sales_team_id" optional="hide"/>
+                    <field name="y_partner_state_id" optional="hide"/>
+                    <field name="y_partner_city" optional="hide"/>
+                    <field name="y_gst_name" optional="hide"/>
+                    <field name="y_partner_country_id" optional="hide"/>
+                    <field name="y_partner_shipping_id" optional="hide" string="Vendor Name"/>
+                    <field name="y_partner_shipping_state_id" optional="hide"/>
+                    <field name="y_vat" optional="hide"/>
+                    <field name="y_vendor_bill_ref" optional="hide"/>
+                    <field name="y_vendor_entry_ref" optional="hide"/>
+                    <field name="y_product_id" optional="hide"/>
+                    <field name="y_label" optional="hide"/>
+                    <field name="y_product_category_id" optional="hide"/>
+                     <field name="product_type" optional="hide"/>
+                    <field name="y_hsn_code" optional="hide"/>
+                    <field name="y_uom_id" optional="hide"/>
+                    <!-- <field name="y_item_group_id" optional="hide"/>
+                    <field name="y_product_group_1_id" optional="hide"/>
+                    <field name="y_product_group_2_id" optional="hide"/>
+                    <field name="y_product_group_3_id" optional="hide"/> -->
+                    <field name="y_payment_state" optional="hide"/>
+                    <field name="y_product_ref" optional="hide"/>
+                    <field name="y_account_id" optional="hide"/>
+                    <field name="y_journal_id" optional="hide"/>
+                    <field name="y_currency_id" optional="hide"/>
+                    <field name="y_sale_order_id" optional="hide"/>
+                    <field name="y_sale_order_date" optional="hide"/>
+                    <field name="y_quantity" string="Quantity" optional="hide"/>
+                    <field name="y_price_unit" string="Price" optional="hide"/>
+                    <field name="y_amount_exclusive_tax" optional="hide"/>
+                    <field name="y_cgst_percent" optional="hide"/>
+                    <field name="y_cgst_amount" optional="hide"/>
+                    <field name="y_sgst_percent" optional="hide"/>
+                    <field name="y_sgst_amount" optional="hide"/>
+                    <field name="y_igst_percent" optional="hide"/>
+                    <field name="y_igst_amount" optional="hide"/>
+                    <field name="y_tds_percent" optional="hide"/>
+                    <field name="y_tds_amount" optional="hide"/>
+                    <field name="y_tcs_percent" optional="hide"/>
+                    <field name="y_tcs_amount" optional="hide"/>
+                    <field name="y_rcm_percent" optional="hide"/>
+                    <field name="y_rcm_amount" optional="hide"/>
+                    <field name="y_ocean_tax_percent" optional="hide"/>
+                    <field name="y_ocean_tax_amount" optional="hide"/>
+                    <field name="y_tax_amount" optional="hide"/>
+                    <field name="y_amount_inclusive_tax" optional="hide"/>
+                    <field name="y_discount" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_register_report_search" model="ir.ui.view">
+            <field name="name">sales.register.report.search</field>
+            <field name="model">sales.register.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order Report">
+                    <field name="y_move_id"/>
+                    <field name="y_journal_id"/>
+                    <field name="y_account_id"/>
+                    <field name="y_product_id"/>
+                    <field name="y_partner_id"/>
+                    <separator/>
+                    <group expand="1" string="Group By">
+                        <filter string="Journal Name" name="journal name" context="{'group_by':'y_journal_id'}"/>
+                        <filter string="Account Name" name="account name" context="{'group_by':'y_account_id'}"/>
+                        <filter string="Product Category" name="product category" context="{'group_by':'y_product_category_id'}"/>
+                        <filter string="Product" name="product" context="{'group_by':'y_product_id'}"/>
+                    </group>                        
+                </search>
+            </field>               
+        </record>
+
+    </data>
+</odoo> 

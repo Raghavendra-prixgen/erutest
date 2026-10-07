@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hsn_san_list,hsn_san_list,model_hsn_san_list,,1,1,1,1
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="in_cancel_wizard_purchase" model="ir.ui.view">
+        <field name="name">On Cancel Reason</field>
+        <field name="model">in.cancel.reason.wizard.purchase</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="y_in_cancel_wizard_id" required='1' />
+
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_cancel_done" string="Submit" type="object"
+                            class="btn-primary" />
+                        <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel" />
+                    </footer>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="cancel_wizard_action_purchase" model="ir.actions.act_window">
+        <field name="name">Cancel Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">in.cancel.reason.wizard.purchase</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="odoo_e_11.in_cancel_wizard_purchase" />
+        <field name="target">new</field>
+    </record>
+
+    <record id="purchase_order_form_view_inherited1" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='purchase_delivery_invoice']/group/group[2]" position="inside">
+                <field name="y_cancel_reason_id" readonly="1" invisible="state != 'cancel'" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

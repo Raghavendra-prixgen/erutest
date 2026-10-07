@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="eruvaka_paper_format" model="report.paperformat">
+        <field name="name">eruvaka report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">114</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">110</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="eruvaka_proforma_invoice_report" model="ir.actions.report">
+        <field name="name">Domestic Proforma Invoice</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_e_25.germcrop_custom_report</field>
+        <field name="report_file">odoo_e_25.germcrop_custom_report</field>
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="odoo_e_25.eruvaka_paper_format" />
+    </record>
+
+    <template id='germcrop_custom_report'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="odoo_e_25.external_layout_for_eruvaka_header_footer">
+                    <div class="page">
+                        <!-- <table class="table table-borderless m-0 p-0"
+                            style="border:1px solid black;border-top:1px solid white;width:100%;font-family: Century Gothic;">
+                            <tr>
+                                <td
+                                    style="border:1px solid black;text-align:center;font-size:20px;padding-top:3px;padding-bottom:3px;font-family: Century Gothic;"
+                                    colspan="16">
+                                    <strong style="text-transform:uppercase">Proforma Invoice</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:11px;width:50%;border:1px solid black;font-family: Century Gothic;"
+                                    colspan="8">
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <b><span> Proforma Invoice No </span></b>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%;">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;font-size:11px;width:60%;">
+                                            <span t-if="o.name" t-field="o.name" />
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3"
+                                            style="text-align:left;width:30%;font-size:11px;">
+                                            <b><span> Proforma Invoice Date </span></b>
+                                            <br />
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;width:60%;">
+                                            <span t-if="o.date_order" t-field="o.date_order" />
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <b><span>Payment Terms </span></b>
+                                            <br />
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;width:60%;">
+                                            <span t-if="o.payment_term_id" t-field="o.payment_term_id" />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="font-size:11px;width:50%;border-left:1px solid white;border-right:1px solid black;font-family: Century Gothic;"
+                                    colspan="8">
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <b><span> Delivery Terms </span></b>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%;">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;font-size:11px;width:60%;">
+                                            <t
+                                                t-if="o.incoterm.name">
+                                                <span t-field="o.incoterm.name" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3"
+                                            style="text-align:left;width:30%;font-size:11px;">
+                                            <b><span> Shipping Method </span></b>
+                                            <br />
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;width:60%;">
+                                            <span t-if="o.shipping_method_id.shipping_method" t-field="o.shipping_method_id.shipping_method" />
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <b><span> Buyer Order No &amp; Date </span></b>
+
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6"
+                                            style="text-align:left;width:60%;">
+                                            <span t-if="o.y_po_ref" t-field="o.y_po_ref"/> &amp; <span t-if="o.y_po_date" t-field="o.y_po_date"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td
+                                    style="border:1px solid black;width:50%;font-size:11px;font-family: Century Gothic;"
+                                    colspan="8">
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Bill To </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <b><span t-if="o.partner_id.name"
+                                                t-field="o.partner_id.name" /></b>
+                                            <br />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Address </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <span t-if="o.partner_id.street"
+                                                t-field="o.partner_id.street" />, <span
+                                                t-if="o.partner_id.street2"
+                                                t-field="o.partner_id.street2" />
+                                            <br />
+                                            <span
+                                                t-if="o.partner_id.city" t-field="o.partner_id.city" />
+                                            <span
+                                                t-if="o.partner_id.zip" t-field="o.partner_id.zip" />
+                                            <span
+                                                t-if="o.partner_id.country_id"
+                                                t-field="o.partner_id.country_id" />
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>GSTIN </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <span t-if="o.partner_id.vat"
+                                                t-field="o.partner_id.vat" />
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>State</span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_id.state_id.name">
+                                                <span t-field="o.partner_id.state_id.name" />
+                                                <br />
+                                            </t>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>State Code</span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_id.state_id.code">
+                                                <span t-field="o.partner_id.state_id.code" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span> Contact No</span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_id.mobile">
+                                                <span t-field="o.partner_id.mobile" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Email </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_id.email">
+                                                <span t-field="o.partner_id.email" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td
+                                    style="text-align:left;border:1px solid black;border-left:1px solid white;width:50%;font-size:11px;font-family: Century Gothic;"
+                                    colspan="8">
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Ship To </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <b><span t-if="o.partner_shipping_id.name"
+                                                t-field="o.partner_shipping_id.name" /></b>
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Address </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <span t-if="o.partner_shipping_id.street"
+                                                t-field="o.partner_shipping_id.street" />, <span
+                                                t-if="o.partner_shipping_id.street2"
+                                                t-field="o.partner_shipping_id.street2" />
+                                            <br />
+                                            <span
+                                                t-if="o.partner_shipping_id.city"
+                                                t-field="o.partner_shipping_id.city" />
+                                            <span
+                                                t-if="o.partner_shipping_id.zip"
+                                                t-field="o.partner_shipping_id.zip" />
+                                            <span
+                                                t-if="o.partner_shipping_id.country_id"
+                                                t-field="o.partner_shipping_id.country_id" />
+                                            <br />
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span> GSTIN</span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+
+                                            <t t-if="o.partner_shipping_id">
+                                                <span t-field="o.partner_shipping_id.vat" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>State </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+                                            <br />
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_shipping_id.state_id.name">
+                                                <span t-field="o.partner_shipping_id.state_id.name" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>State Code </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+
+                                            <br />
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_shipping_id.state_id.code">
+                                                <span t-field="o.partner_shipping_id.state_id.code" />
+                                                <br />
+                                            </t>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Place of Supply </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_shipping_id.state_id.name">
+                                                <span t-field="o.partner_shipping_id.state_id.name" />
+                                                <br />
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3" style="text-align:left;width:30%">
+                                            <span>Email </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:10%">
+                                            <span>:</span>
+
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:60%">
+                                            <t t-if="o.partner_shipping_id">
+                                                <span t-field="o.partner_shipping_id.email" />
+                                                <br />
+                                            </t>
+
+                                        </div>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </table>
+ -->
+
+                        <table colspan="12" class="table m-0 p-0 table-borderless table-sm"
+                            style="border:1px solid black;border-top:none;font-family: Century Gothic;">
+                            <tr style="border-bottom:1px solid black;">
+                                <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
+                                    Sl.No.</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Code</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Description</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    HSN/SAC</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Qty</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    UoM</th>
+                                <th colspan="2"
+                                style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Price&#160;(<span t-field="o.currency_id.name" />)</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Disc.</th>
+                                <th colspan="2"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Taxes</th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Taxable Value&#160;(<span t-field="o.currency_id.name" />)
+                                </th>
+                            </tr>
+                            <t t-set="sl" t-value="1" />
+                            <t t-set="toaltax" t-value="0" />
+                            <t t-set="taxable" t-value="0" />
+                            <t t-set="total_tax_included" t-value="0.0" />
+
+
+                            <t t-foreach="o.order_line" t-as="line">
+                                <tr style="border-bottom:1px solid black;border-top:none;page-break-inside:avoid;">
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-esc="sl" />
+                                        <t t-set="sl" t-value="sl+1" />
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.default_code"
+                                            t-field="line.product_id.default_code" />
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.name"
+                                            t-field="line.name" />
+                                        <br />
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.l10n_in_hsn_code"
+                                            t-field="line.product_id.l10n_in_hsn_code" />
+
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_uom_qty"
+                                            t-field="line.product_uom_qty"
+                                            t-options="{'widget': 'float', 'precision': 2}" />
+
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_uom"
+                                            t-field="line.product_uom" />
+
+                                    </td>
+                                    <td colspan="2"
+                                    style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.price_unit"
+                                            t-field="line.price_unit"
+                                            t-options="{'widget': 'float', 'precision': 2}" />
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+
+                                            <span
+                                                t-field="line.discount"
+                                                t-options="{'widget': 'float', 'precision': 2}" />
+
+                                    </td>
+                                    <td colspan="2"
+                                    style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.tax_id"
+                                            t-field="line.tax_id" />
+
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.price_subtotal"
+                                            t-field="line.price_subtotal"/>
+                                    </td>
+
+                                </tr>
+                            </t>
+                            <tr style="border-bottom:1px solid black;page-break-inside:avoid;">
+                            
+                                <th colspan="8"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+
+                                <span  style="padding-left:265px;color:white;">.</span>
+                                    </th>
+                                <th colspan="3"
+                                style="padding-left:18px;border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                Subtotal </th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    
+                                <span t-field="o.amount_untaxed"/> </th>
+                            </tr>
+
+                            <tr style="border-bottom:1px solid black;page-break-inside:avoid;">
+                          
+                                <th colspan="8"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    </th>
+                                <th colspan="3"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                <t t-set="gst" t-value="o.tax_totals['groups_by_subtotal']" />
+                                <t t-set="sgstot" t-value="0.0" />
+                                <t t-set="igst" t-value="0.0" />
+
+
+                                <t t-foreach="gst['Untaxed Amount']" t-as="tax_line">
+                                    <t t-set="tax_t" t-value="tax_line" />
+                                    <t t-if="tax_line['tax_group_name'] == 'SGST'">
+                                        <t t-set="sgstot"
+                                            t-value="sgstot + tax_line['tax_group_amount']" />
+                                    </t>
+                                    <t t-if="tax_line['tax_group_name'] == 'CGST'">
+                                        <t t-set="sgstot"
+                                            t-value="sgstot + tax_line['tax_group_amount']" />
+                                    </t>
+                                    <t t-if="tax_line['tax_group_name'] == 'IGST'">
+                                        <t t-set="igst"
+                                        t-value="igst + tax_line['tax_group_amount']" />
+                                    </t>
+                                </t>
+
+                                <t t-if="sgstot">
+                                    <span style="font-weight: bolder;">GST</span>
+                                </t>
+                                <br />
+                                <t t-if="igst">
+                                    <span style="font-weight: bolder;">IGST</span>
+                                </t> </th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    
+                                <t t-if="sgstot">
+                                    <span t-field="o.currency_id.symbol" />
+                                    <span t-esc="sgstot" t-options="{'widget': 'float', 'precision': 2}"/>
+                                </t>
+                                <br />
+                                <t t-if="igst">
+
+                                    <span t-field="o.currency_id.symbol" />
+                                    <span t-esc="igst" t-options="{'widget': 'float', 'precision': 2}"  />
+                                </t>
+                           </th>
+                            </tr>
+
+                            <tr style="border-bottom:1px solid black;page-break-inside:avoid;">
+                            
+                                <th colspan="8"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    </th>
+                                <th colspan="3"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                Grand Total </th>
+                                <th colspan="1"
+                                style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    
+                                <span t-if="o.amount_total"
+                                t-field="o.amount_total"/> </th>
+                            </tr>
+
+
+
+                        <tr style="border-bottom:1px solid black;page-break-inside:avoid;">
+                           
+                            <td colspan="12"
+                            style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                
+                            <span>
+                                <strong>Total Amount In Words : </strong>
+                            </span>
+
+                            <t t-set="amountwords"
+                                t-value="o.amount_in_words(o.tax_totals['amount_total'])" />
+                            <span t-esc="amountwords" /> </td>
+                        </tr>
+                           
+                        </table>
+
+                        <!-- <table class="table m-0 p-0 table-borderless table-sm"
+                        style="border:1px solid black;border-top:none;font-family: Century Gothic;">
+                    
+                       
+
+
+
+                        <tr style="border-bottom:1px solid black;">
+                            
+                            <th colspan="9"
+                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+
+                            <span  style="padding-left:265px;color:white;">.</span>
+                                </th>
+                            <th colspan="2"
+                            style="padding-left:18px;border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                            Subtotal </th>
+                            <th colspan="1"
+                            style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                            <span t-field="o.amount_untaxed"/> </th>
+                        </tr>
+
+
+
+
+                        <tr style="border-bottom:1px solid black;">
+                          
+                            <th colspan="9"
+                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                </th>
+                            <th colspan="2"
+                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                            <t t-set="gst" t-value="o.tax_totals['groups_by_subtotal']" />
+                            <t t-set="sgstot" t-value="0.0" />
+                            <t t-set="igst" t-value="0.0" />
+
+
+                            <t t-foreach="gst['Untaxed Amount']" t-as="tax_line">
+                                <t t-set="tax_t" t-value="tax_line" />
+                                <t t-if="tax_line['tax_group_name'] == 'SGST'">
+                                    <t t-set="sgstot"
+                                        t-value="sgstot + tax_line['tax_group_amount']" />
+                                </t>
+                                <t t-if="tax_line['tax_group_name'] == 'CGST'">
+                                    <t t-set="sgstot"
+                                        t-value="sgstot + tax_line['tax_group_amount']" />
+                                </t>
+                                <t t-if="tax_line['tax_group_name'] == 'IGST'">
+                                    <t t-set="igst"
+                                    t-value="igst + tax_line['tax_group_amount']" />
+                                </t>
+                            </t>
+
+                            <t t-if="sgstot">
+                                <span style="font-weight: bolder;">GST</span>
+                            </t>
+                            <br />
+                            <t t-if="igst">
+                                <span style="font-weight: bolder;">IGST</span>
+                            </t> </th>
+                            <th colspan="1"
+                            style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                            <t t-if="sgstot">
+
+                                <span t-field="o.currency_id.symbol" />
+                                <span t-esc="sgstot" />
+                            </t>
+                            <br />
+                            <t t-if="igst">
+
+                                <span t-field="o.currency_id.symbol" />
+                                <span t-esc="igst" t-options="{'widget': 'float', 'precision': 2}"  />
+                            </t>
+                       </th>
+                        </tr>
+
+
+                        <tr style="border-bottom:1px solid black;">
+                            
+                            <th colspan="9"
+                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                </th>
+                            <th colspan="2"
+                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                            Total </th>
+                            <th colspan="1"
+                            style="border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                            <span t-if="o.amount_total"
+                            t-field="o.amount_total"/> </th>
+                        </tr>
+
+
+
+                        <tr style="border-bottom:1px solid black;">
+                           
+                            <th colspan="12"
+                            style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                
+                            <span>
+                                <strong>Total Amount In Words : </strong>
+                            </span>
+
+                            <t t-set="amountwords"
+                                t-value="o.amount_in_words(o.tax_totals['amount_total'])" />
+                            <span t-esc="amountwords" /> </th>
+                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </table> -->
+                    
+                        
+                            
+
+                            
+
+                
+
+                            <!-- <tr>
+                                <td colspan="10"
+                                    style="border:1px solid black;font-size:11px;font-family: Century Gothic;"
+                                >
+                                    <div class="row">
+                                        <div class="col-10" style="text-align:left;width:100%">
+                                            <strong>
+                                                <span>Bank Details </span>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width:70%;">
+                                        <div class="col-3" style="text-align:left;width:17%">
+                                            <span> Name
+                                            </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:2%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:100%">
+                                            <span t-if="o.company_id.partner_id.bank_ids.bank_id"
+                                                t-field="o.company_id.partner_id.bank_ids.bank_id" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="width:70%;">
+                                        <div class="col-3" style="text-align:left;width:17%">
+                                            <span>
+                                                Bank Account No
+                                            </span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:2%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:100%">
+                                            <span t-if="o.company_id.partner_id.bank_ids.acc_number"
+                                                t-field="o.company_id.partner_id.bank_ids.acc_number" />
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width:70%;">
+                                        <div class="col-3" style="text-align:left;width:17%">
+                                            <span>
+                                                IFSC Code</span>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;width:2%">
+                                            <span>:</span>
+                                        </div>
+                                        <div class="col-6" style="text-align:left;width:100%">
+                                            <span t-if="o.company_id.partner_id.bank_ids.bank_id.bic"
+                                                t-field="o.company_id.partner_id.bank_ids.bank_id.bic" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> -->
+                        <div style="page-break-after:always"></div>
+                        <table class="table-borderless table-sm" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="width:100%;border-bottom:1px solid black;">
+                                    
+                                    <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
+
+                                            <span  style="text-align:left;font-size:12px;width:100%;"><strong>Terms &amp; Conditions :</strong></span>
+                                            <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.note"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="page-break-after:always"></div>
+                        <table class="table table-borderless">          
+                        <div class="row" style="border:1px solid black;border-bottom:1px white solid;font-family: Century Gothic;">
+                            <div class="text-left" style="width:100%;padding-left:1%">
+                                <span style="font-weight: bolder;font-size:11px">
+                                    <strong>Bank Details </strong>
+                                </span>
+                                <br/>
+                                <div class="row" style="width:70%;">
+                                    <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                        <span> Name
+                                        </span>
+                                    </div>
+                                    <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+                                        <span t-field="o.y_bank_details.y_domestic_bank_id.name"/>
+
+                                        <!-- <t t-set="acc_name" t-value="o.function_for_bank_details_account_name_domestic()"/>
+                                        <span t-esc="acc_name" /> -->
+                                        <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.name"
+                                            t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.name" /> -->
+                                    </div>
+                                </div>
+                                <div class="row" style="width:70%;">
+                                    <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                        <span>
+                                            Bank Account No
+                                        </span>
+                                    </div>
+                                    <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+
+                                        <span t-field="o.y_bank_details.y_domestic_acc_number"/>
+
+                                        <!-- <t t-set="acc_num" t-value="o.function_for_bank_details_account_numbers_domestic()"/>
+                                        <span t-esc="acc_num" /> -->
+                                        <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].acc_number"
+                                            t-field="o.company_id.parent_id.partner_id.bank_ids[0].acc_number" /> -->
+                                    </div>
+                                </div>
+                                <div class="row" style="width:70%;">
+                                    <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                        <span>
+                                            IFSC Code</span>
+                                    </div>
+                                    <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+                                        <span t-field="o.y_bank_details.y_domestic_bank_id.bic"/>
+
+                                        <!-- <t t-set="acc_code" t-value="o.function_for_bank_details_account_swift_code_domestic()"/>
+                                        <span t-esc="acc_code" /> -->
+                                        <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"
+                                            t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" /> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;font-family: Century Gothic;">
+
+                            <div style="width:60%;padding-left:1%">
+                                <b><span style="font-size:11px;">Note:</span></b>
+                                <span style="font-size:11px" t-field="o.y_note" />
+                            </div>
+                            <div style="width:10%">
+                                
+                            </div>
+                            <div
+                                style="width:30%;font-family: Century Gothic;text-align:center;padding-right:10px;border-left:1px solid black">
+                                <b>
+                                <span style="font-size:11px;">For</span>
+                                <span style="font-size:11px" t-field="o.company_id.parent_id.name" />
+                                </b>
+                                <br />
+                                <br />
+                                <br />
+                                <span style="font-size:11px;text-align:center;">
+                                    Authorised Signatory
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;font-family: Century Gothic;border-bottom:1px black solid;">
+                            <div class="text-left" style="width:100%;">
+                                <span style="font-size:11px;font-family: Century Gothic;">* This is a
+                                    computer generated document and authenticated by Eruvaka
+                                    Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
+                                    manually.</span>
+                            </div>
+                        </div>
+                    </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

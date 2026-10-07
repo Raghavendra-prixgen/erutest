@@ -1,0 +1,8 @@
+.o_required_modifier.o_field_widget::before{
+  content: '*';
+  color:red;
+  display:inline;
+  position: absolute;
+  margin: 2px 0px 0px -11px;
+  font-size: 12px;
+}

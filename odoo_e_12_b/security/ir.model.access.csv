@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sto_config,sto_config,model_sto_config,base.group_user,1,1,1,1
+access_stock_transfer_order,stock_transfer_order,model_stock_transfer_order,base.group_user,1,1,1,1
+access_stock_transfer_order_line,stock_transfer_order_line,model_stock_transfer_order_line,base.group_user,1,1,1,1
+access_sto_short_close,sto_short_close,model_sto_short_close,base.group_user,1,1,1,1
+access_sto_short_close_reason,sto_short_close_reason,model_sto_short_close_reason,base.group_user,1,1,1,1

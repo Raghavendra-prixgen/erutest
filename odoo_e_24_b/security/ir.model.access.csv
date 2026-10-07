@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_material_to_material_transfer,material.to.material.transfer,model_material_to_material_transfer,,1,1,1,1
+
+access_material_to_material_transfer_from_line,material.to.material.transfer.from.line,model_material_to_material_transfer_from_line,,1,1,1,1
+
+access_material_to_material_transfer_to_line,material.to.material.transfer.to.line,model_material_to_material_transfer_to_line,,1,1,1,1

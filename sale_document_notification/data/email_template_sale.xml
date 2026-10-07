@@ -1,0 +1,31 @@
+<odoo>
+	<data>
+    	<record id="email_template_of_document_expiring_sale" model="mail.template">
+        	<field name="name">Sale Document Expiry Email Template</field>
+        	<field name="model_id" ref="sale_document_notification.model_sale_document_notification"/>
+        	<field name="subject">Sale Document Expiry Notification</field>
+        	<field name="body_html" type="html">
+            	<div style="margin: 0px; padding: 0px;">
+                	<div style="margin: 0px; padding: 0px;">
+                    	<p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Dear&#160;&#160;Sir/Madam,
+                        	<br/>
+                        	<br/>
+
+                        	<br/>This is to notify you the document "<t t-out="object.name"/> " is expiring on <t t-out="object.sale_expiry_date"/>.
+                            
+                        	<br/>
+                        	<br/>
+                        	Regards,
+                        	<br/>
+							HR and Admin
+							<br/>
+							<p style="font-size: 10px;">(This is system automated email.)</p>
+
+                    	</p>
+                	</div>
+            	</div>
+        	</field>
+    	</record>
+	</data>
+</odoo>

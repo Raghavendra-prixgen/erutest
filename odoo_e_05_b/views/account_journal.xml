@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="name">account.journal.inherit.view.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="y_make_seq_mandetory" invisible="1"/>
+                <field name="y_name_sequence_id" string="Custom Sequence" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                invisible="type in ['cash','bank']" />
+                <field name="y_refund_sequence_id" string="Custom Refund Sequence" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                invisible="type in ['cash','bank','general']" />
+                <field name="y_recon_sequence_id" string="Reconciliation Sequence" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                invisible="type not in ['cash','bank']" required="y_make_seq_mandetory == True"  />
+                <field name="y_out_sequence_id" string="Outward Sequence" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                invisible="type not in ['cash','bank']" required="y_make_seq_mandetory == True" />
+                <field name="y_in_sequence_id" string="Inward Sequence" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                invisible="type not in ['cash','bank']" required="y_make_seq_mandetory == True" />
+            </field>
+            <xpath expr="//page[@name='advanced_settings']/group" position="inside">
+                <group>
+                    <field name="y_ceiling_limit" widget="boolean_toggle"/>
+                    <field name="y_ceiling_limit_value" widget="monetory" invisible="y_ceiling_limit != True" required="y_ceiling_limit == True" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

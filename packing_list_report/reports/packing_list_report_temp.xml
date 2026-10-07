@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="eruvaka_pl_paper_format" model="report.paperformat">
+        <field name="name">eruvaka report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">145</field>
+        <field name="margin_bottom">35</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">140</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="eruvaka_packing_list_report" model="ir.actions.report">
+        <field name="name">Packing List Report</field>
+        <field name="model">packaging.list</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">packing_list_report.eruvaka_packing_list_custom_report</field>
+        <field name="report_file">packing_list_report.eruvaka_packing_list_custom_report</field>
+        <field name="binding_model_id" ref="odoo_e_14_b.model_packaging_list" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="packing_list_report.eruvaka_pl_paper_format" />
+    </record>
+
+    <template id='eruvaka_packing_list_custom_report'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="packing_list_report.external_layout_for_eruvaka_packing_list_header_footer">
+                    <div class="page">
+                        <table colspan="12" class="table m-0 p-0 table-borderless table-sm"
+                            style="border:1px solid black;border-top:none;font-family: Century Gothic;">
+                            <t t-if="o.y_sale_order_ids.y_pre_carriage in ['bysea', 'byroad', 'byrail']">
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="1"
+                                        style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
+                                        Sl.No.</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Part No</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Description</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Quantity</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        No. of Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Max. Qty. per Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Net Wt.(kg)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Gross Wt.(Kg)
+                                    </th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Package Measurement(cm3)
+                                    </th>
+                                </tr>
+
+                                <t t-set="sl" t-value="1" />
+                                
+
+                                <t t-foreach="o.get_report_values()" t-as="kit_detail">
+                                    <tr style="border-bottom:1px solid black;border-top:none">
+                                        <td colspan="12" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="kit_detail['kit_name']" t-esc="kit_detail['kit_name']"/>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="kit_detail['merged_info_list']" t-as="merged_info">
+                                        <tr>
+                                            <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span t-esc="sl" />
+                                                <t t-set="sl" t-value="sl+1" />
+                                            </td>
+                                            <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span  t-esc="merged_info['codes']" /><br/>
+                                            </td>
+                                            <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span  t-esc="merged_info['description']" /><br/>
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <span  t-esc="merged_info['total_quantity']" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <span  t-esc="len(merged_info['package_names'])" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <t t-set="max_qty_per_package" t-value="kit_detail.get('max_qty_per_package', 0)"/>
+                                                <t t-if="max_qty_per_package">
+                                                    <t t-esc="max_qty_per_package"/>
+                                                </t>
+                                                <t t-else="">
+                                                    0
+                                                </t>
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <t  t-esc="merged_info['total_net_weight']" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <t  t-esc="merged_info['total_gross_weight']" />
+                                            </td>
+                                            
+                                                
+                                            <td colspan="2" style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span t-esc="kit_detail['total_length']" /> * 
+                                                <span t-esc="kit_detail['total_width']" /> * 
+                                                <span t-esc="kit_detail['total_height']" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr style="border-bottom:1px solid black;">
+                                <th colspan="5"
+                                    style="text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;border-top:1px solid black;">Grand Total</th>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_quantity" t-value="o.get_total_quantity()"/>
+                                    <t t-if="total_quantity != None">
+                                        <span  t-esc="total_quantity"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        <t t-set="total_package_names_length" t-value="0" />
+                                        <t t-foreach="o.get_report_values()" t-as="kit_detail">
+                                            <t t-foreach="kit_detail['merged_info_list']" t-as="merged_info">
+                                                <t t-set="total_package_names_length" t-value="total_package_names_length + len(merged_info['package_names'])" />
+                                            </t>
+                                        </t>
+                                        <t t-if="total_package_names_length != None">
+                                            <span t-esc="total_package_names_length" />
+                                        </t>
+                                        <t t-else="">
+                                            0
+                                        </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_net_weight" t-value="o.get_total_net_weight()"/>
+                                    <t t-if="total_net_weight != None">
+                                        <span  t-esc="total_net_weight"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_gross_weight" t-value="o.get_total_gross_weight()"/>
+                                    <t t-if="total_gross_weight != None">
+                                        <span  t-esc="total_gross_weight"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="2"
+                                    style="border:1px solid black;text-align:right;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <div style="width: 100%;"> 
+                                        <td colspan="12" style="border-right: 1px solid black; font-size: 11px; width: 95%; font-family: Century Gothic; white-space: normal;">
+                                                <b><span>Note: </span></b>
+                                                <span t-if="o.y_narration" t-field="o.y_narration" />
+                                            </td>
+                                    </div>
+                                </tr>
+                            </t>
+                            <t t-if="o.y_sale_order_ids.y_pre_carriage == 'byair'">
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="1"
+                                        style="border:1px solid black;text-align:center;font-family: Century Gothic;border-bottom:1px solid black;vertical-align:middle;font-size:11px;">
+                                        Sl.No.</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Part No</th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Description</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Quantity</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        No. of Package(EA)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Max. Qty. per Package</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Volumetric Wt(Kg)</th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Net Wt. (kg)
+                                    </th>
+                                    <th colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Gross Wt.(Kg)
+                                    </th>
+                                    <th colspan="2"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                        Package Measurement(cm3)
+                                    </th>
+                                </tr>
+                                <t t-set="sl" t-value="1" />
+                                <t t-foreach="o.get_report_values()" t-as="kit_detail">
+                                    <tr style="border-bottom:1px solid black;border-top:none">
+                                        <td colspan="12" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;border-top:none;font-family: Century Gothic;">
+                                            <span t-esc="kit_detail['kit_name']"/>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="kit_detail['merged_info_list']" t-as="merged_info">
+                                        <tr>
+                                            <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span t-esc="sl" />
+                                                <t t-set="sl" t-value="sl+1" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span t-esc="merged_info['codes']" />
+                                            </td>
+                                            <td colspan="2" style="border:1px solid black;text-align:left;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:1px solid black;font-family: Century Gothic;">
+                                                <span  t-esc="merged_info['description']" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <span t-esc="merged_info['total_quantity']" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <span  t-esc="len(merged_info['package_names'])" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                
+                                                <t t-set="max_qty_per_package" t-value="kit_detail.get('max_qty_per_package', 0)"/>
+                                                <t t-if="max_qty_per_package">
+                                                    <t t-esc="max_qty_per_package"/>
+                                                </t>
+                                                <t t-else="">
+                                                    0
+                                                </t>                                           
+
+                                                
+                                                <!-- <t t-if="kit_detail['max_qty_per_package'].get(merged_info['codes'] + ', ' + merged_info['description']) != None">
+                                                    <t t-esc="kit_detail['max_qty_per_package'][merged_info['codes'] + ', ' + merged_info['description']]"/>
+                                                </t>
+                                                <t t-else="">
+                                                    0
+                                                </t>                                   -->
+                                            </td>
+                                            <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;font-size:11px;">
+                                            <t t-set="total_volume" t-value="kit_detail['total_length'] * kit_detail['total_width'] * kit_detail['total_height']" />
+                                            <t t-set="package_names_length" t-value="len(merged_info['package_names'])" />
+                                            <t t-set="total_volume_per_package_group" t-value="(total_volume / 6000) * package_names_length" />
+                                            <t t-if="total_volume_per_package_group != None">
+                                                <span t-esc="total_volume_per_package_group" />
+                                            </t>
+                                            <t t-else="">
+                                                0
+                                            </t>
+                                            
+                                            
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <t  t-esc="merged_info['total_net_weight']" />
+                                            </td>
+                                            <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;font-family: Century Gothic;">
+                                                <t  t-esc="merged_info['total_gross_weight']" />
+                                            </td>
+                                            
+                                                
+                                            <td colspan="2" style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;font-family: Century Gothic;">
+                                                <span  t-esc="kit_detail['total_length']" /> * 
+                                                <span  t-esc="kit_detail['total_width']" /> * 
+                                                <span  t-esc="kit_detail['total_height']" />                                            
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="4"
+                                    style="text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;border-top:1px solid black;">Grand Total</th>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_quantity" t-value="o.get_total_quantity()"/>
+                                    <t t-if="total_quantity != None">
+                                        <span  t-esc="total_quantity"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_package_names_length" t-value="0" />
+                                    <t t-foreach="o.get_report_values()" t-as="kit_detail">
+                                        <t t-foreach="kit_detail['merged_info_list']" t-as="merged_info">
+                                            <t t-set="total_package_names_length" t-value="total_package_names_length + len(merged_info['package_names'])" />
+                                        </t>
+                                    </t>
+                                    <t t-if="total_package_names_length != None">
+                                        <span t-esc="total_package_names_length" />
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                   
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_total_volume" t-value="0" />
+                                    <t t-foreach="kit_detail['merged_info_list']" t-as="merged_info">
+                                        <t t-set="total_volume" t-value="kit_detail['total_length'] * kit_detail['total_width'] * kit_detail['total_height']" />
+                                        <t t-set="package_names_length" t-value="len(merged_info['package_names'])" />
+                                        <t t-set="total_volume_per_package_group" t-value="(total_volume / 6000) * package_names_length" />
+                                        <t t-if="total_volume_per_package_group != None">
+                                            <t t-set="total_total_volume" t-value="total_total_volume + total_volume_per_package_group" />
+                                        </t>
+                                    </t>
+
+                                    <span t-esc="total_total_volume" />    
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_net_weight" t-value="o.get_total_net_weight()"/>
+                                    <t t-if="total_net_weight != None">
+                                        <span  t-esc="total_net_weight"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="1"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_gross_weight" t-value="o.get_total_gross_weight()"/>
+                                    <t t-if="total_gross_weight != None">
+                                        <span  t-esc="total_gross_weight"/>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                    </td>
+                                    <td colspan="2"
+                                    style="border:1px solid black;text-align:right;font-family: Century Gothic;border-center:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <div style="width: 100%;"> 
+                                    <td colspan="12" style="border-right: 1px solid black; font-size: 11px; width: 95%; font-family: Century Gothic; white-space: normal;">
+                                            <b><span>Note: </span></b>
+                                            <span t-if="o.y_narration" t-field="o.y_narration" />
+                                        </td>
+                                    </div>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

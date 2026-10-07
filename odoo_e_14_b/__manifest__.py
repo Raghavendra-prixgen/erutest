@@ -1,0 +1,32 @@
+{
+    'name': 'odooe14b',
+    'version': '17.0.0.1',
+    'summary': '',
+    'module_type':'official',
+    'author': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'website': 'https://www.prixgen.com',
+    'description':"""""", 
+    'App origin':"Base",
+    'license': 'LGPL-3',
+    'depends':['base',
+               'account',
+               'web',
+               'purchase',
+               'sale',
+               'contacts',
+               'mail',
+               'l10n_in',
+               'delivery',
+               'stock',
+               'stock_delivery'],
+    'data':[
+        'security/ir.model.access.csv',
+        'data/sequence.xml',
+        'views/import_export_fileds.xml',
+        # 'views/import_export.xml',
+        'views/import_export_addon.xml',       
+        ],    
+}
+
+

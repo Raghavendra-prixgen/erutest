@@ -1,0 +1,33 @@
+<odoo>
+
+   
+    <record id="view_purchase_order_account_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.analytic</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="y_cancel_po_bool" invisible="1"/>
+                <field name="y_parent_rfq_ref" invisible="1"/>
+            </field>
+            
+        </field>
+    </record>
+
+  
+
+     <record id="ir_action_update_create_po123" model="ir.actions.server">
+            <field name="name">Merge PO</field>
+            <field name="model_id" ref="model_purchase_order" />
+            <field name="binding_model_id" ref="model_purchase_order" />
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+            if records:
+                action = records.merge_po()
+            </field>
+    </record>
+
+    
+   
+</odoo>

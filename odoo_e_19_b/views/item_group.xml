@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+	<record id="view_production_pivot1" model="ir.ui.view">
+            <field name="name">mrp.production.pivot1</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_production_pivot"/>
+            <field name="arch" type="xml">
+                <field name='date_start' position='after'>
+                    <field name="item_group" type="row"/>
+                    <field name="product_group_1" type="row"/>
+                    <field name="product_group_2" type="row"/>
+                    <field name="product_group_3" type="row"/>
+                </field>
+            </field>
+        </record>
+
+
+    <record model="ir.actions.act_window" id="mrp.mrp_routing_action">
+        <field name="name">Operations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.routing.workcenter</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="domain">[('is_master','=',True)]</field> -->
+        <!-- <field name="context">{'default_is_master':True}</field> -->
+    </record>
+
+    <record id="mrp_account_enterprise.mrp_report_dashboard_action" model="ir.actions.act_window">
+        <field name="view_mode">graph,pivot</field>
+    </record>
+</odoo>

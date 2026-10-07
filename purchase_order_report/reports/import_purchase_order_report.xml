@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="custom_import_purchase_order_report" model="report.paperformat">
+        <field name="name">Import Purchase Order Report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">135</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">6</field>
+        <field name="margin_right">6</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">128</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="custom_import_purchase_order_report_format" model="ir.actions.report">
+        <field name="name">Eruvaka Import Purchase Order Report</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">purchase_order_report.eruvaka_import_purchase_order</field>
+        <field name="report_file">purchase_order_report.eruvaka_import_purchase_order</field>
+        <field name="binding_model_id" ref="model_purchase_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="purchase_order_report.custom_import_purchase_order_report" />
+    </record>
+
+    <template id='eruvaka_import_purchase_order'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="purchase_order_report.external_layout_for_eruvaka_import_header_footer">
+                    <div class="page">
+                  
+                        <table class="table table-sm m-0 p-0 table-borderless" style="border:1px solid black;border-top:none;width:100%;font-family: Century Gothic;">
+                           <thead>
+                            <tr style="border:1px solid black;">
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;vertical-align:middle;font-size:11px;width:2%"> Sl.No.</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:10%">Item Code</th>
+                                <th colspan="8" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:18%"> Description</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:10%">HSN/SAC</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:10%">Qty</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:5%">UOM</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:13%">Schedule Delivery</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:10%">Currency</th>
+                                <th colspan="5" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:10%;">Unit Price</th>
+                                <th colspan="6" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:12%;">Total&#160;(<span t-field="o.currency_id.name" />)</th>
+ 
+                            </tr>
+                        </thead>
+                        <tbody style="border-bottom:none;"> 
+                            <t t-set="sl" t-value="1" />
+                            <t t-set="toaltax" t-value="0" />
+                            <t t-set="taxable" t-value="0" />
+                            <t t-set="total_tax_included" t-value="0.0" />
+
+                            <t t-foreach="o.order_line" t-as="line">
+                                <tr style="border-bottom:none;border-top:none">
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-size:11px;width:2%;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-esc="sl" />
+                                        <t t-set="sl" t-value="sl+1" />
+                                    </td>
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.default_code"
+                                            t-field="line.product_id.default_code" />
+                                    </td>
+                                    <td colspan="8" style="border:1px solid black;text-align:left;font-size:11px;width:18%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.name"  t-field="line.product_id.name" />
+
+                                        <br />
+                                    </td>
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.l10n_in_hsn_code"
+                                            t-field="line.product_id.l10n_in_hsn_code" />
+
+                                    </td>
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                         <span t-if="line.product_qty"
+                                            t-field="line.product_qty"  t-options="{'widget': 'float', 'precision': 2}"/> 
+
+                                    </td>
+
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:5%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_uom" t-field="line.product_uom" />      
+                                    </td>
+
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                    
+                                        <span t-if="line.date_planned" t-esc="line.date_planned.strftime('%d-%m-%Y')" />
+
+                                   </td>
+
+                                    <td colspan="5" style="border:1px solid black;text-align:center;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <!-- <span t-field="o.currency_id.symbol" /> -->
+
+                                            <span t-if="line.currency_id"
+                                        t-field="line.currency_id" />
+                                    </td>
+                                    <td colspan="5" style="border:1px solid black;text-align:right;font-size:11px;width:10%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <t t-if="line.price_unit">
+
+                                            <span t-field="o.currency_id.symbol" />
+    
+                                            <span t-if="line.price_unit"
+                                            t-field="line.price_unit"  t-options="{'widget': 'float', 'precision': 2}"/></t>
+                                            <t t-else="">
+                                            </t>  </td>
+                                    
+                                    <td colspan="6" style="border:1px solid black;text-align:right;font-size:11px;width:14%;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <t t-if="line.price_subtotal">
+                                            <span t-field="o.currency_id.symbol" />
+    
+                                            <span t-if="line.price_subtotal"
+                                            t-field="line.price_subtotal"  t-options="{'widget': 'float', 'precision': 2}"/></t>
+                                            <t t-else="">
+                                            </t>
+                                    </td>
+                                    
+
+                                </tr>
+                            </t>
+                           
+                            
+
+                           
+
+                        </tbody>
+
+
+                        <tfoot style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black">
+      
+                            <tr style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black">
+                                <th colspan="1"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:1%"> </th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:7%"></th>
+                                <th colspan="8"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:16%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:5%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:5%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:3%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:9%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:8%"></th>
+                                <th colspan="5"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:11%;"></th>
+                                
+                                <th colspan="6"  style="border-top:none;border-bottom:1px solid black; border-right:1px solid black;border-left:1px solid black;width:12%;"></th>
+                            </tr>
+                             
+  
+                              </tfoot>
+                        </table>
+
+                        <table class="table m-0 p-0 table-borderless" style="page-break-inside:avoid;width:100%;font-family: Century Gothic;">
+                           <tr>
+                               
+                                <td colspan="44" style="border-left:1px solid black;font-size:11px;font-family: Century Gothic;text-align:right;border-right:none;">
+                                    <span style="font-weight: bolder;text-align:right;">
+                                         Grand Total&#160;(<span t-field="o.currency_id.name" />):
+                                    </span>
+
+                                </td>
+                                <td  colspan="6" style="border-right:1px solid black;font-size:11px;font-family: Century Gothic;text-align:right;border-left:none">
+                                    <strong>
+                                        <span t-field="o.currency_id.symbol" />
+                                        <span t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/> 
+                                    </strong>
+                                </td>
+                            </tr>
+                          
+                            <tr>
+                                <td colspan="50" style="border:1px solid black;font-size:11px;font-family: Century Gothic;" width="100%">
+                                    <span>
+                                        <strong>Total Amount In Words : </strong>
+                                    </span>
+
+                                    <t t-set="amountwords" t-value="o.amount_in_words(o.tax_totals['amount_total'])" />
+                                    <span t-esc="amountwords" /> 
+                                </td>
+                            </tr>
+                            <tr >
+                                <!-- <td colspan="25" style="border:1px solid black;font-size:11px;font-family: Century Gothic;width:70%" >
+                                    <span style="font-weight: bolder; text-decoration: underline;">
+                                        <strong>Notes</strong>
+                                    </span>
+                                    <br />
+                                    <br />
+                                    <span t-if="o.y_notes"
+                                        t-field="o.y_notes" />
+                                </td>
+
+                                <td colspan="25" style="border:1px solid black;font-size:11px;font-family: Century Gothic;width:30%" >
+                                    <div class="row">
+                                        <div class="col-12" style="text-align:center;">
+                                           <strong><span>For Eruvaka Technologies Private Limited </span></strong>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                           
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" style="text-align:center">
+                                          <span>Authorized Signatory</span>
+                                           <br/>
+                                           <br/>
+                                        </div>
+                                    </div>
+                                </td> -->
+                            </tr>
+                        </table>
+                        
+                        <div style="page-break-after:always"></div>
+                    <table class="table-borderless table-sm" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="width:100%;border-bottom:1px solid black;">
+                                
+                                <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
+
+                                        <span  style="text-align:left;font-size:12px;width:100%;"><strong>T &amp; C :</strong></span>
+                                        <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.notes"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="page-break-after:always"></div>
+                    <table class="table table-borderless m-0 p-0">
+                        
+                        <td colspan="23" style="border:1px solid black;font-size:11px;font-family: Century Gothic;width:70%;" >
+                            <span style="font-weight: bolder;">
+                                <strong>Notes : </strong>
+                            </span>
+                            
+                            <span t-if="o.y_notes"
+                                t-field="o.y_notes" />
+                                
+                        </td>
+                        <td colspan="23" style="border:1px solid black;font-size:11px;font-family: Century Gothic;width:30%" >
+                            <div class="row">
+                                    <div class="col-12" style="text-align:center;">
+                                        
+                                        
+                                   <strong>  <span>For Eruvaka Technologies Private Limited </span></strong> 
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br />
+                                    <br />
+                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" style="text-align:center;">
+                                       <span>Authorized Signatory</span>
+                                       
+                                    </div>
+                                </div>
+                            </td>
+                    </table>
+                    <table class="table table-borderless m-0 p-0">
+                        <td style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-size:11px;font-family: Century Gothic;width:100%;" >
+                            <div class="text-left" style="width:100%;padding-left:2px;">
+                                <span style="font-size:11px;font-family: Century Gothic;">* This is a
+                                    computer generated document and authenticated by Eruvaka
+                                    Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
+                                    manually.</span>
+                            </div>
+                                
+                        </td>
+                    </table>     
+                       
+                       
+                    </div>
+                       
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

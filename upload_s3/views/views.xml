@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<!--     <record model="res.groups" id="hide_log_messages">
+        <field name="name">Hide Attchment URL log Message</field>
+    </record>
+
+    <record id="rule_mail_message_hide_for_user" model="ir.rule">
+        <field name="name">Hide Attchment URL Log Messages</field>
+        <field name="model_id" ref="mail.model_mail_message"/>
+        <field name="groups" eval="[(4, ref('upload_s3.hide_log_messages'))]"/>
+        <field name="domain_force">[("subject", "not ilike", "Attachment URL:")]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+
+ -->
+
+
+
+    <!--  <record id="action_attachment_to_s3_update" model="ir.actions.server">
+        <field name="name">Update Atachment to S3</field>
+        <field name="model_id" ref="upload_s3.model_ir_attachment" />
+        <field name="binding_model_id" ref="upload_s3.model_ir_attachment" />
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.update_attachments_to_s3()
+        </field>
+    </record> -->
+
+    <!-- <record id="action_attachment_to_s3_delete" model="ir.actions.server">
+        <field name="name">Delete Atachment to S3</field>
+        <field name="model_id" ref="upload_s3.model_ir_attachment" />
+        <field name="binding_model_id" ref="upload_s3.model_ir_attachment" />
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.delete_attachments_from_s3()
+        </field>
+    </record> -->
+
+        
+        <record id="res_config_settings_view_form_design_url" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.url.api</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//widget[@name='res_config_dev_tool']" position="before">
+              
+                    <div id="sap_database_api_settings">
+                    <h2>S3 integration settings</h2>
+               
+                    <div class="row mt16 o_settings_container" name="s3_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="sap_database" title="S3 integration settings">
+                        <div class="o_setting_right_pane" id="s3_container_api_settings">
+                            <div>
+                                <label for="s3_region"/>
+                            </div>
+                            <div>
+                                <field name = "s3_region"/>
+                            </div>
+
+                            <div>
+                                <label for="s3_bucket"/>
+                            </div>
+                            <div>
+                                <field name = "s3_bucket"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </field>
+    </record>
+
+
+    
+
+</odoo>

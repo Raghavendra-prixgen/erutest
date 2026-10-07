@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="product_category_form_view_release_desc" model="ir.ui.view">
+          <field name="name">product_category_form_view_release_desc</field>
+          <field name="model">product.category</field>
+          <field name="inherit_id" ref="product.product_category_form_view"/>
+          <field name="arch" type="xml">
+            <field name="parent_id" position="before">
+              <field name="y_description"/>
+            </field>
+            <field name="parent_id" position="after">
+              <field name="y_release" widget="boolean_toggle"/>
+            </field>
+          </field>
+         </record>
+
+
+         <!-- <record id="res_config_settings_view_form_inventory" model="ir.ui.view">
+          <field name="name">res.config.settings.view.form.inherit.inventory</field>
+          <field name="model">res.config.settings</field>
+          <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+          <field name="arch" type="xml">
+
+           
+          <xpath expr="//div[@class='col-12 col-lg-6 o_setting_box' and @id='sell_purchase_uom']" position="inside">
+            <div class="o_setting_left_pane">
+                <field name="product_group"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="product_group"/>
+            </div>
+        </xpath>       
+          </field>
+        </record> -->
+
+
+
+
+
+
+    </data>
+</odoo>

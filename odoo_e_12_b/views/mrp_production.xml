@@ -1,0 +1,22 @@
+<odoo>
+  <data>
+    <record id="mrp_production_inherit_form_view" model="ir.ui.view">
+      <field name="name">mrp.production.inherit</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='action_generate_serial']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <field name="name" position="after">
+              <field name="y_lot_boolean"  invisible="1"/>
+              
+            </field>
+      </field>
+
+     
+    </record>
+
+  </data>
+</odoo>

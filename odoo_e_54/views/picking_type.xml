@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="form_view_stock_picking_type_product_category" model="ir.ui.view">
+      <field name="name">form_view_stock_picking_type_product_category</field>
+      <field name="model">stock.picking.type</field>
+      <field name="inherit_id" ref="stock.view_picking_type_form"/>
+      <field name="arch" type="xml">
+        <field name="create_backorder" position="after">
+          <field name="y_consumable" widget="boolean_toggle"/>
+          <field name="y_product_category"  widget="many2many_tags"/>
+        </field>
+      </field>
+      </record>  
+
+</odoo>

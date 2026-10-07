@@ -1,0 +1,37 @@
+
+
+<odoo>
+    <data>
+    <record id="request_type_view_tree_view" model="ir.ui.view">
+      <field name="name">request.type.type.view.tree</field>
+      <field name="model">request.type</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom" duplicate="0">
+          <field name="name" />
+          <field name="approver_ids" widget="many2many_tags"/>
+          <field name="warehouse_id" />
+          <field name="y_product_group" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+
+          <field name="sequence_id" required="True" options="{'no_create': 1, 'no_edit': 1, 'no_open': 1}"/>
+          <field name="company_id" options="{'no_create': 1, 'no_edit': 1, 'no_open': 1}" groups="base.group_multi_company"/>
+        </tree>
+      </field>
+    </record>
+
+
+     <record id="purchase_request_type_action" model="ir.actions.act_window">
+      <field name="name">Request Type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">request.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+   
+
+    <menuitem id="menu_product_in_config_purchase_reuest" name="Request Type"
+            parent="purchase.menu_purchase_config" sequence="50"/>
+
+    <menuitem id="purchase_request_type_menu_act" name="Request Type" parent="odoo_e_27_b.menu_product_in_config_purchase_reuest" action="purchase_request_type_action" sequence="100"/>
+</data>
+
+</odoo>

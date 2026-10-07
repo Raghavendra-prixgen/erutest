@@ -1,0 +1,424 @@
+<odoo>
+
+  <record id="view_product_form_product_warranty_inherits" model="ir.ui.view">
+    <field name="name">view_product_warranty_inherit</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="after">
+        <field name="y_product_warranty" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_product_form_product_template_warrantys" model="ir.ui.view">
+    <field name="name">view_product_warranty_template</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="after">
+        <field name="y_product_warranty" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_product_form_stock_lot_inherits" model="ir.ui.view">
+    <field name="name">view_stock_lot_warranty_inherit</field>
+    <field name="model">stock.lot</field>
+    <field name="inherit_id" ref="stock.view_production_lot_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='product_id']" position="after">
+        <field name="y_motor_id" />
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="stock_picking_form_view_inherited" model="ir.ui.view">
+    <field name="name">stock.picking.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='origin']" position="after">
+        <field name="y_po_number" invisible="1" />
+        <field name="y_invoice_number" readonly="state in ['cancel', 'done']" />
+        <field name="y_date" readonly="state in ['cancel', 'done']" />
+        <field name="y_boolean_purchase_id" invisible="1" />
+      </xpath>
+      <xpath expr="//field[@name='partner_id']" position="attributes">
+        <attribute name="readonly">y_boolean_purchase_id == True or state in ['cancel', 'done']</attribute>
+      </xpath>
+      <xpath expr="//field[@name='scheduled_date']" position="attributes">
+        <attribute name="readonly">y_boolean_purchase_id == True or state in ['cancel', 'done']</attribute>
+      </xpath>
+      <xpath expr="//field[@name='origin']" position="attributes">
+        <attribute name="readonly">y_boolean_purchase_id == True or state in ['cancel', 'done']</attribute>
+      </xpath>
+
+      <xpath expr="//page[@name='extra']/group/group[@name='other_infos']/field[@name='company_id']"
+        position="after">
+        <field name="y_vehicle_no" />
+        <field name="y_e_waybill_no" />
+        <field name="y_res_state_id" />
+        <field name="y_nature_of_supply" />
+        <field name="y_note" />
+
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="product_template_only_form_view_internal_reference" model="ir.ui.view">
+    <field name="name">product_template_only_form_view_internal_reference</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </xpath>
+
+    </field>
+  </record>
+
+  <record id="product_normal_form_view_internal_reference" model="ir.ui.view">
+    <field name="name">product_normal_form_view_internal_reference</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="attributes">
+        <attribute name="readonly">1</attribute>
+      </xpath>
+    </field>
+  </record>
+
+
+  <!-- <record id="bank_details_form_view_inherited" model="ir.ui.view">
+    <field name="name">bank.details.form.view.inherited</field>
+    <field name="model">res.bank</field>
+    <field name="inherit_id" ref="base.view_res_bank_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='email']" position="after">
+        <label for="domastic_bool" string="Overseas/Domestic" />
+        <div class="d-flex gap-2">
+        <field name="domastic_bool"  widget="boolean_toggle" />
+        </div>
+        <label for="export_bool" string="Export" />
+        <div class="d-flex gap-2">
+        <field name="export_bool"  widget="boolean_toggle" />
+      </div>
+     </xpath>
+    </field>
+  </record> -->
+
+  <record id="view_stock_move_line_operation_inherit_tree_new" model="ir.ui.view">
+    <field name="name">stock.move.line.operation.tree</field>
+    <field name="model">stock.move.line</field>
+    <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='lot_name']" position="after">
+        <field name="y_motor_id"/>
+
+        <field name="y_vender_serial_no"
+          column_invisible="parent.has_tracking == 'none' or not parent.show_lots_text" />
+      </xpath>
+
+    </field>
+  </record>
+
+  <!-- <record id="view_stock_picking_search_inherited_po_number" model="ir.ui.view">
+      <field name="name">stock.picking.search.inherited.po</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+      <field name="arch" type="xml">
+          <search>
+              <field name="y_po_number" string="PO Document Number"/>
+          </search>
+      </field>
+  </record> -->
+
+
+  <!-- <record id="stock_picking_salenumber_tree_inherit_custom" model="ir.ui.view">
+    <field name="name">stock.picking.tree.view.inherit.po.view</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.vpicktree"/>
+    <field name="arch" type="xml">
+        <field name="origin" position="after">
+            <field name="y_po_number" string="PO Document Number" optional="show"/>
+        </field>
+    </field>
+  </record> -->
+
+
+  <record id="stock_picking_form_view_inherited_custom" model="ir.ui.view">
+    <field name="name">stock.picking.form.custom</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="odoo_e_08_b.view_picking_form_inherit_branch_to_branch" />
+    <field name="arch" type="xml">
+      <xpath expr="//form/sheet/group/group[1]/field[@name='location_dest_id'][2]"
+        position="attributes">
+        <attribute name="readonly">y_boolean_purchase_id == True or y_btb_id != False</attribute>
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="purchase_order_form_view_inherited" model="ir.ui.view">
+    <field name="name">purchase.order.form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='purchase_delivery_invoice']/group/group[2]" position="inside">
+        <field name="y_notes" />
+        <field name="y_vendor_code" />
+        <field name="y_po_number" invisible="1" />
+      </xpath>
+
+      <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
+        <attribute name="invisible">state != 'done'</attribute>
+      </xpath>
+
+
+    </field>
+  </record>
+
+  <record id="res_partner_from_inherit_form" model="ir.ui.view">
+    <field name="name">res.partner.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+
+
+      <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+
+        <field name="y_iec_no" />
+        <field name="y_iec_date" />
+        <field name="y_lut_no" />
+        <field name="y_lut_valid_till" />
+        <field name="y_reg_date" />
+
+
+      </xpath>
+      <!-- <xpath expr="//field[@name='ref']" position="after">
+            <field name="y_contact_person"/>
+        </xpath> -->
+    </field>
+  </record>
+
+  <record id="sale_order_form_inherit" model="ir.ui.view">
+    <field name="name">sale.order.form.inherit1</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+        <field name="y_is_free_sample"/>
+      </xpath>
+
+
+
+      <xpath expr="//page[@name='other_information']//group/group[2]//field[@name='invoice_status']"
+        position="after">
+
+
+        <field name="y_po_ref" />
+        <field name="y_po_date" />
+        <field name="y_shipping_method_id" sring="Shipping Method" />
+        <field name="y_bank_details"/>
+        <field name="y_bank_details_domain" invisible="1" />
+
+
+      </xpath>
+      <xpath expr="//field[@name='y_short_close_reason']" position="after">
+        <field name="y_note" />
+      </xpath>
+
+
+    </field>
+  </record>
+
+  <record id="account_move_form_inherit" model="ir.ui.view">
+    <field name="name">account.move.form.inherit1</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_move_form" />
+    <field name="arch" type="xml">
+
+      <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+        <field name="y_is_free_sample" column_invisible="parent.move_type != 'out_invoice'"/>
+      </xpath>
+
+      <xpath expr="//field[@name='to_check']" position="after">
+        <field name="y_lut_arn_nu" />
+        <field name="y_valid_till" />
+        <field name="y_note" />
+        <field name="y_exchange_rate" invisible="1" />
+      </xpath>
+      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/group[1]/group[@name='sale_info_group']/field[@name='delivery_date']" position="after">
+        <field name="y_bank_details"/>   
+        <field name="y_bank_details_domain" invisible="1"/>     
+      </xpath>
+    </field>
+
+    <!-- <xpath expr="//form/sheet/group/group[@id='header_right_group']//field[@name='partner_id']"
+    position="after">
+          <field name="y_exchange_rate"  invisible="0"/>
+        </xpath> -->
+  </record>
+  <record id="account_move_inherit_custom_app" model="ir.ui.view">
+    <field name="name">account.move.view.form.inherit.new</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="odoo_e_14_b.view_account_move_form_inherit_account_new_demoo" />
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='import_export_new']//field[@name='y_pre_carriage']"
+        position="after">
+        <field name="y_export_ref_no" />
+      </xpath>
+      <xpath expr="//page[@name='import_export_new']//field[@name='y_voyage_no']" position="after">
+        <field name="y_export_ref_date" />
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="shipping_method_tree_view" model="ir.ui.view">
+    <field name="name">shipping.method.tree</field>
+    <field name="model">shipping.method</field>
+    <field name="arch" type="xml">
+      <tree string="Shipping Method">
+        <field name="y_shipping_method" />
+      </tree>
+    </field>
+  </record>
+
+
+  <record
+    id="shipping_method_form_view" model="ir.ui.view">
+    <field name="name">shipping.method.form</field>
+    <field name="model">shipping.method</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="y_shipping_method" />
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="account_move_inherit_custom_app" model="ir.ui.view">
+    <field name="name">packaging.list.view.form.inherit.new</field>
+    <field name="model">packaging.list</field>
+    <field name="inherit_id" ref="odoo_e_14_b.view_packaging_list_document_form" />
+    <field name="arch" type="xml">
+      <!-- <xpath expr="//page[@name='stock_packages']//field[@name='y_sale_origin']"
+      position="after">
+                <field name="y_kit_product" optional="hide"/>
+            </xpath> -->
+      <xpath expr="//form//field[@name='y_container_seal_number']" position="after">
+        <field name="y_note" />
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="bank_details_in_res_partner" model="ir.ui.view">
+    <field name="name">bank.details.view.form</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//notebook" position="inside">
+        <page string="Bank Details" name="bank_details">
+          <group>
+            <group string="Export Bank Accounts" name="banks_export" >
+              <field name="y_export_bank_detail_ids" nolabel="1" colspan="2">
+                <tree>
+                  <field name="y_export_acc_number" widget="handle" force_save="1"/>
+                  <field name="y_export_acc_number" string="Account Number"/>
+                  <field name="y_export_acc_number_update"  string="Account Number" column_invisible="1"/>
+                  <field name="y_export_bank_id" />
+                  <field name="y_export_acc_holder_name" column_invisible="True" />
+                </tree>
+                <form action="">
+                  <sheet>
+                    <group>
+                      <field name="y_export_acc_number_update" string="Account Number"/>
+                      <field name="y_export_acc_number" string="Account Number" invisible="1"/>
+                      <field name="y_export_bank_id" />
+                      <field name="y_export_acc_holder_name" />
+                    </group>
+                  </sheet>
+                </form>
+              </field>
+            </group>
+            <group string="Domestic Bank Accounts" name="banks_domestic" >
+              <field name="y_domestic_bank_detail_ids" nolabel="1" colspan="2">
+                <tree>
+                  <field name="y_domestic_acc_number" widget="handle" force_save="1"/>
+                  <field name="y_domestic_acc_number" string="Account Number"/>
+                  <field name="y_domestic_acc_number_update"  string="Account Number" column_invisible="1"/>
+                  <field name="y_domestic_bank_id"/>
+                  <field name="y_domestic_acc_holder_name" column_invisible="True" />
+                </tree>
+                <form action="">
+                  <sheet>
+                    <group>
+                      <field name="y_domestic_acc_number_update" string="Account Number"/>
+                      <field name="y_domestic_acc_number" string="Account Number" invisible="1"/>
+                      <field name="y_domestic_bank_id"/>
+                      <field name="y_domestic_acc_holder_name" />
+                    </group>
+                  </sheet>
+                </form>
+              </field>
+            </group>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+   <record id="bank_details_export_domestic_view_form" model="ir.ui.view">
+    <field name="name">bank.details.export.domestic.view.form</field>
+    <field name="model">bank.details.export.domestic</field>
+    <field name="arch" type="xml">
+      <form string="">
+        <sheet>
+            <group >
+                  <field name="y_export_acc_number"  invisible="1"/>
+                  <field name="y_export_acc_number_update" invisible="y_domestic_bank_id != False" string="Account Number"/>
+                  
+                  <field name="y_export_bank_id" invisible="y_domestic_bank_id != False"/>
+                  <field name="y_export_acc_holder_name" invisible="y_domestic_bank_id != False"/>
+            </group>
+            <group>
+              <field name="y_domestic_acc_number" invisible="1"/>
+              <field name="y_domestic_acc_number_update" invisible="y_export_bank_id != False" string="Account Number"/>
+
+              <field name="y_domestic_bank_id"  invisible="y_export_bank_id != False"/>
+              <field name="y_domestic_acc_holder_name" invisible="y_export_bank_id != False"/>
+            </group>
+            
+        </sheet>
+      </form>
+    </field>
+   </record>
+
+   <record id="bank_details_export_domestic_action" model="ir.actions.act_window">
+    <field name="name">Action Name</field>
+    <field name="res_model">bank.details.export.domestic</field>
+    <field name="view_mode">tree,form</field>  
+   </record>
+
+  <record
+    id="res_shipping_method_action" model="ir.actions.act_window">
+    <field name="name">Shipping Method View</field>
+    <field name="res_model">shipping.method</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_res_shipping_method"
+    name="Shipping Method"
+    action="odoo_e_11.res_shipping_method_action" parent="sale.menu_sale_general_settings"
+    sequence="6" />
+</odoo>

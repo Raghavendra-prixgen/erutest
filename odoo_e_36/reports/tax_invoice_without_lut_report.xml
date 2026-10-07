@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="custom_tax_invoice_report_without_lut" model="report.paperformat">
+        <field name="name">Tax Invoice Report</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">165</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">162</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="custom_tax_invoice_report_format_without_lut" model="ir.actions.report">
+        <field name="name">Eruvaka Tax Invoice Report Without LUT</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_e_36.eruvaka_tax_invoice_report_without_lutt</field>
+        <field name="report_file">odoo_e_36.eruvaka_tax_invoice_report_without_lutt</field>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="odoo_e_36.custom_tax_invoice_report_without_lut" />
+    </record>
+
+    <template id='eruvaka_tax_invoice_report_without_lutt'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="odoo_e_36.external_layout_for_eruvaka_header_footer_without_lut">
+                    <div class="page">
+
+                        <table class="table m-0 p-0 table-borderless table-sm"
+                            style="border:1px solid black;border-top:none;font-family: Century Gothic;width:100%;">
+                            <tr style="border-bottom:1px solid black;">
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-bottom:1px solid black;vertical-align:middle;font-size:11px;"> Sl.No.</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Code</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Product</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">HSN / SAC</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Quantity</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">UOM</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Price</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Dis %</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Taxable Value</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Rate</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Tax Amount</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">Total</th>
+                            </tr>
+                            <t t-set="sl" t-value="1" />
+                                <t t-set="taxes123" t-value="o.tax_calculation()" />
+                                <t t-set="igstot" t-value="0.0" />
+                                <t t-set="tax_totals" t-value="o.tax_totals" />
+                                <t t-set="tax_tot" t-value="tax_totals['groups_by_subtotal']" />
+                                <t t-if="len(tax_tot)">
+                                    <t t-foreach="tax_tot['Untaxed Amount']" t-as="tax_line">
+                                        <t t-set="tax_t" t-value="tax_line" />
+                                        <t t-set="percent"
+                                            t-value="(tax_line['tax_group_amount']/(o.amount_untaxed/100))" />
+                                        <t t-if="tax_line['tax_group_name'] == 'SGST'">
+                                            <t t-set="sgstot"
+                                                t-value="sgstot + tax_line['tax_group_amount']" />
+                                        </t>
+                                        <t t-if="tax_line['tax_group_name'] == 'CGST'">
+                                            <t t-set="cgstot"
+                                                t-value="cgstot + tax_line['tax_group_amount']" />
+                                        </t>
+                                        <t t-if="tax_line['tax_group_name'] == 'IGST'">
+                                            <t t-set="igstot"
+                                                t-value="igstot + tax_line['tax_group_amount']" />
+                                        </t>
+
+                                    </t>
+                                </t>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <tr style="border-bottom:1px solid black;border-top:none">
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-esc="sl" />
+                                            <t t-set="sl" t-value="sl+1" />
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.product_id.default_code"
+                                                t-field="line.product_id.default_code" />
+
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.product_id.name"
+                                                t-field="line.product_id.name" />
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.product_id.l10n_in_hsn_code"
+                                                t-field="line.product_id.l10n_in_hsn_code" />
+
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.quantity"
+                                                t-field="line.quantity"
+                                                t-options="{'widget': 'float', 'precision': 2}" />
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:center;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.product_id.uom_id"
+                                                t-field="line.product_id.uom_id" />
+
+                                        </td>
+
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.price_unit" t-field="line.price_unit"
+                                                t-options="{'widget': 'float', 'precision': 2}" />
+                                        </td>
+
+                                        <td 
+                                            style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-field="line.discount" />
+
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;width:20%;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.price_subtotal"
+                                                t-field="line.price_subtotal"
+                                                t-options="{'widget': 'float', 'precision': 2}" />
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.tax_ids"
+                                                t-field="line.tax_ids" />
+                                            
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <t t-foreach="taxes123" t-as="tax">
+                                                <t t-if="line.id == tax['line_id']">
+                                                    <t t-if="tax['tax_group'] == 'IGST'">
+                                                        <t t-set="igst" t-value="tax['taxes']" />
+                                                        <t t-if="igst[0]['amount']>0">
+                                                            <t t-esc="igst[0]['amount']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="0.00" t-options="{'widget': 'float', 'precision': 2}"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td colspan="1"
+                                            style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-esc="(line.quantity * line.price_unit) + (line.quantity * line.price_unit) * 
+                                            (line.tax_ids.amount / 100)" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr style="border-bottom:1px solid black;">
+                                    <th colspan="8"
+                                    style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    Grand Total</th>
+                                    <td colspan="1"
+                                    style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <span t-esc="o.tax_totals['amount_untaxed']"
+                                        t-options="{'widget': 'float', 'precision': 2}" />
+                                    </td>
+                                    <td colspan="1"
+                                    style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="get_total_tax" t-value="o.get_total_tax()"/>
+                                    <span  t-esc="get_total_tax" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </td>
+                                    <td colspan="1"
+                                    style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="total_tax_value" t-value="o.get_total_tax_value()"/>
+                                    <span  t-esc="total_tax_value" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </td>
+                                    <td colspan="1"
+                                    style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;">
+                                    <t t-set="grand_value" t-value="o.get_grand_amount()"/>
+                                    <span  t-esc="grand_value" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom:1px solid black;">
+                                    <td colspan="12"
+                                    style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                        <span>
+                                            <strong>Total Invoice Value in Words : </strong>
+                                        </span>
+                                        <span  t-esc="o.amount_total_words"/>
+                                     </td>
+                                </tr> 
+                        </table>
+
+                        <div style="page-break-after:always"></div>
+                        <table class="table-borderless table-sm" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="width:100%;border-bottom:1px solid black;">
+                                    
+                                    <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
+
+                                            <span  style="text-align:left;font-size:12px;width:100%;"><strong>Terms &amp; Conditions :</strong></span>
+                                            <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.narration"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="page-break-after:always"></div>
+                        <table class="table-borderless table-sm" style="font-size: 11px; width: 100%;padding-left: 10px;">
+                        <tr>
+                   
+                        
+                            <td rowspan="2" style="font-size: 11px;;width: 47%;padding-left:3px;font-size:11px;border-left:1px solid black;border-top:1px solid black;border-right:1px solid black;border-bottom:1px solid black;"> <strong>Note :<br /></strong>
+                                <span style="padding-right:3px;padding-left:3px;" 
+                                t-field="o.y_note">
+                            </span>
+                            </td>
+                            <td rowspan="2" style="font-size: 11px; width: 30%; padding-left:3px;font-size:11px;border-top:1px solid black;border-right:1px solid black;border-bottom:1px solid black;">
+                                  <span><div class="row"><div style="width:37%;"><strong>Bank Details :</strong></div></div></span>
+                                  <span><div class="row"><div style="width:30%;">Name</div><div style="width:10%;">:</div><div style="width:60%;"> 
+                                    <span t-if="o.company_id.partner_id.bank_ids.bank_id"
+                                            t-field="o.company_id.partner_id.bank_ids.bank_id"/>
+                            </div></div></span>
+                                  <span><div class="row"><div style="width:30%;">Account No</div><div style="width:10%;">:</div><div style="width:60%;">
+                                     <span t-if="o.company_id.partner_id.bank_ids.acc_number"
+                                            t-field="o.company_id.partner_id.bank_ids.acc_number" />
+                                </div></div></span>
+                                  <span><div class="row"><div style="width:30%;">SWIFT Code</div><div style="width:10%;">:</div><div style="width:60%;">
+                                     <span t-if="o.company_id.partner_id.bank_ids.bank_id.bic"
+                                            t-field="o.company_id.partner_id.bank_ids.bank_id.bic" />
+                                </div></div></span>
+                                  <span><div class="row"><div style="width:30%;">IFSC Code</div> <div style="width:10%;">:</div><div style="width:60%;">
+                                    <span t-if="o.company_id.partner_id.bank_ids.bank_id.bic"
+                                            t-field="o.company_id.partner_id.bank_ids.bank_id.bic" />
+                                </div></div></span>
+                            </td>
+                            <td style="width: 23%;padding-left:3px;height:90px;text-align: center;font-size:11px;border-top:1px solid black;border-right:1px solid black;">
+                                <strong><span>For</span><br />
+                                <span t-field="o.company_id.name"></span></strong>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 23%;padding-left:3px;text-align: center;font-size:11px;border-right:1px solid black;border-bottom:1px solid black;">
+                                <span>Authorized Signatory</span><br />
+                            </td>
+                        </tr>
+                       
+                    </table>
+                    <table class="table table-borderless m-0 p-0">
+                            <td style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-size:11px;font-family: Century Gothic;width:100%;" >
+                                <div class="text-left" style="width:100%;padding-left:2px;">
+                                    <span style="font-size:11px;font-family: Century Gothic;">* This is a
+                                        computer generated document and authenticated by Eruvaka
+                                        Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
+                                        manually.</span>
+                                </div>
+                                    
+                            </td>
+                        </table> 
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

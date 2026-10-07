@@ -1,0 +1,140 @@
+<odoo>
+    <record id="stock_picking_form_view_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']/group/group[@name='other_infos']/field[@name='company_id']" position="after">
+                <field name="vehicle_no"/>
+                <field name="e_waybill_no"/>
+                <field name="res_state_id"/>
+                <field name="nature_of_supply"/>
+            </xpath>
+        </field>
+    </record>
+
+  <record id="purchase_order_form_view_inherited" model="ir.ui.view">
+    <field name="name">purchase.order.form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='purchase_delivery_invoice']/group/group[2]" position="inside">
+        <field name="y_notes"></field>
+     </xpath>
+    </field>
+  </record>
+    
+    <record id="res_partner_from_inherit_form" model="ir.ui.view">
+      <field name="name">res.partner.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+      
+
+        <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+
+             <field name="iec_no"/>
+              <field name="iec_date"/>
+              <field name="lut_no"/>
+              <field name="lut_valid_till"/>
+              <field name="y_reg_date"/>
+
+
+        </xpath>
+      </field>
+    </record>
+
+      <record id="sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit1</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        
+    
+          <xpath expr="//page[@name='other_information']//group/group[2]//field[@name='invoice_status']" position="after">
+
+              
+                <field name="po_ref"/>
+                <field name="po_date"/>
+                <field name="shipping_method_id" sring="Shipping Method"/>
+
+
+              
+          </xpath>
+        </field>
+      </record>
+
+      <record id="account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit1</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='to_check']" position="after">
+
+        
+          
+
+                <field name="lut_arn_nu"/>
+                <field name="valid_till"/>
+                <field name="y_note"/>
+          </xpath>
+        </field>
+      </record>
+      <record id="account_move_inherit_custom_app" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit.new</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="export_imports.view_account_move_form_inherit_account_new_demoo"/>
+        <field name="arch" type="xml">
+          <xpath expr="//page[@name='import_export_new']//field[@name='y_pre_carriage']" position="after">
+            <field name="y_export_ref_no" />
+          </xpath>
+          <xpath expr="//page[@name='import_export_new']//field[@name='y_voyage_no']" position="after">
+              <field name="y_export_ref_date" />
+          </xpath>
+        </field>
+      </record>
+
+
+
+
+      <record id="shipping_method_tree_view" model="ir.ui.view">
+        <field name="name">shipping.method.tree</field>
+        <field name="model">shipping.method</field>
+        <field name="arch" type="xml">
+            <tree string="Shipping Method">
+                <field name="shipping_method"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record
+        id="shipping_method_form_view" model="ir.ui.view">
+        <field name="name">shipping.method.form</field>
+        <field name="model">shipping.method</field>
+        <field name="arch" type="xml">  
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="shipping_method" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+        <record
+            id="res_shipping_method_action" model="ir.actions.act_window">
+            <field name="name">Shipping Method View</field>
+            <field name="res_model">shipping.method</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    
+        <menuitem id="menu_res_shipping_method"
+            name="Shipping Method"
+            action="custom_app_eruvaka.res_shipping_method_action" parent="sale.menu_sale_general_settings"
+            sequence="6" />
+</odoo>

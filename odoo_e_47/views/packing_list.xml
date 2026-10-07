@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_quant_package_form_view_inherit">
+            <field name="name">stock_quant_package_form_view_inherit</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='unpack']" position="after">
+                    <button name="get_package_lines" string="Attach to Shipment" type="object" invisible="y_state == 'validated'"/>
+                    <field name="y_state" widget = "statusbar"/>
+                </xpath> 
+                <xpath expr="//form/header/button[@name='unpack']" position="attributes">
+                    <attribute name="invisible">y_state == 'validated'</attribute>
+                </xpath> 
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath> 
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='company_id']" position="before">
+                    <field name="y_net_weight"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='company_id']" position="after">
+                    <field name="y_invoice_ids" readonly="1" widget="many2many_tags"/>
+                    <field name="y_invoice_date" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="before">
+                    <field name="y_warehouse_id" required="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='pack_date']" position="after">
+                    <field name="y_partner_id" required="1"/>
+                    <field name="y_partner_shipping_id"  required="1"/>
+                    <field name="y_sale_origin_id" readonly="1"/>
+                    <field name="y_container_number" />
+                    <field name="y_container_seal_number" />
+                    <field name="y_volumetric_weight" invisible="y_pre_carriage != 'byair'"/>
+                   
+                </xpath>
+                <xpath expr="//form/sheet/separator" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/field[@name='quant_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']/button[@name='action_view_picking']" position="after">
+                    <button name="detailed_package_tracking" string="Detailed Package Tracking" icon="fa-bars" type="object"/>
+                </xpath>
+
+                <xpath expr="//sheet/div[@name='button_box']" position="after">
+                    <widget name="web_ribbon" text="Validated" bg_color="bg-success" invisible="y_state in ['inprogress','open']"/>
+                </xpath>
+                
+                <xpath expr="//form/sheet/group" position="after">
+                    <notebook>
+                        <page name="content" string="Content">
+                            <field name="quant_ids">
+                                <tree>
+                                    <field name="product_id" width="70px" />
+                                    <field name="y_kit_product" width="70px" />
+                                    <field name="y_product_packaging_id" width="70px" />
+                                    <field name="y_gross_weight" sum="Total"/>
+                                    <field name="y_net_weight" sum="Total"/>
+                                    <field name="y_number_of_cartons" sum="Total"/>
+                                    <field name="lot_id" groups="stock.group_production_lot"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id" groups="uom.group_uom"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field colspan="2" name="y_notes" nolabel="1" placeholder="Define your terms and conditions ..."/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="export" string="Export Details">
+                            <group>
+                                <group>
+                                    <field name="y_country_orgin_goods_id"/>
+                                    <field name="y_country_final_destination_id" />
+                                    <field name="y_pre_carriage" />
+                                    <field name="y_vessel_number"/>
+                                </group>
+                                <group>
+                                    <field name="y_port_loading_id" />
+                                    <field name="y_port_discharge_id" />
+                                    <field name="y_export_type" />
+                                    <field name="y_final_destination_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="note" string="Note">
+                            <group> 
+                                <field name="y_note" /> 
+                            </group>
+                        </page>
+                        <page name="kit_details" string="Kit Details">
+                            <field name="y_sale_kit_line_ids">
+                                
+                                    <tree editable="bottom">
+                                       
+                                
+                                    <field name="y_sale_kit_id" width="70px" />
+                                    <field name="y_kit_quantity" width="70px" />
+                                    
+                                </tree>
+                            </field>
+                            
+                        </page>
+                      </notebook>
+                     
+
+                </xpath>
+              <xpath expr="//sheet" position="after">
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                 </div> 
+              </xpath>
+            </field>
+        </record>
+
+        <record id="stock_quant_package_line_view" model="ir.ui.view">
+            <field name="name">Packaging List Line</field>
+            <field name="model">stock.quant.package.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirm"/>
+                    </header>
+                   <field name="y_product_id" width="70px" domain="[('id', 'in', y_stock_quant_id_quant_ids_product_ids)]"/>
+                   <field name="y_package_type_id" width="70px" />
+                   <field name="y_kit_product" width="70px"/>
+                   <field name="y_group" width="70px" options="{'no_create': 1, 'no_edit': 1, 'no_open': 1}"/>
+                   <field name="y_from_package" column_invisible="1"/>
+                   <field name="y_to_package" column_invisible="1"/>
+                   <field name="y_total_package"/>
+                   <field name="y_qty_in_package"/>
+                   <field name="y_total_qty" readonly="0"/>
+                   <field name="y_shipping_mark" width="70px" optional="hide"/>
+                   <field name="y_weight_from_uom"/>
+                   <field name="y_net_weight" sum="Total"/>
+                   <field name="y_tare_weight" sum="Total"/>
+                   <field name="y_gross_weight" sum="Total"/>
+                   <field name="y_length"/>
+                   <field name="y_width"/>
+                   <field name="y_height"/>
+                   <field name="y_volume"/>
+                   <field name="y_dimension"/>
+
+                   <field name="y_cubic_meter"/>
+                   <field name="y_stock_quant_id_quant_ids_product_ids" column_invisible="1"/>
+                   <field name="y_package_type_ids" column_invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_view_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.view.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="y_package_ids" widget="many2many_tags" required="0"/>
+                </xpath>
+            </field>
+          </record>
+        
+
+          <record id="packing_list_group_view_tree" model="ir.ui.view">
+            <field name="name">packing.list.group.view.tree</field>
+            <field name="model">packing.list.group</field>
+            <field name="arch" type="xml">
+                <tree string="Packing List Group" editable="bottom">
+                    <field name="y_group" />
+                    
+                </tree>
+            </field>
+          </record>
+          
+          <record id="packing_list_group_action" model="ir.actions.act_window">
+            <field name="name">Packing List Group</field>
+            <field name="res_model">packing.list.group</field>
+            <field name="view_mode">tree</field>
+          </record>
+          <menuitem id="menu_packing_list_group_root"
+                    name="Packing List Groups"
+                    parent="stock.menu_stock_config_settings"
+                    sequence="5"/>
+          <menuitem
+            id="packing_list_group_menu"
+            name="Packing List Group"
+            action="packing_list_group_action"
+            parent="odoo_e_47.menu_packing_list_group_root"
+            sequence="10"/>
+        
+        
+            <record id="ir_action_update_gross_weight" model="ir.actions.server">
+            <field name="name">Update Gross Weight</field>
+            <field name="model_id" ref="model_stock_quant_package_line" />
+            <field name="binding_model_id" ref="model_stock_quant_package_line" />
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records._compute_y_gross_weight()
+            </field>
+        </record>
+        
+    </data>
+</odoo>

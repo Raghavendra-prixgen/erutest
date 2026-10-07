@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="eruvaka_credit_paper_format_export" model="report.paperformat">
+        <field name="name">eruvaka report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">132</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">120</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="eruvaka_proforma_invoice_export_report_credit" model="ir.actions.report">
+        <field name="name">Credit Note</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_e_13.eruvaka_credit_report</field>
+        <field name="report_file">odoo_e_13.eruvaka_credit_report</field>
+        <field name="binding_model_id" ref="model_account_move" />
+        <!-- <field name="print_report_name">(%(object.name))</field> -->
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="odoo_e_13.eruvaka_credit_paper_format_export" />
+    </record>
+
+    <template id='eruvaka_credit_report'>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-foreach="o.invoice_line_ids" t-as="line"> -->
+               
+                <t t-call="odoo_e_13.external_layout_for_eruvaka_header_footer_new_credit">
+                    <!-- <div class="page"> -->
+                        <table  class="table table-borderless table-sm m-0 p-0" style="width:100%;font-family: Century Gothic;border:1px solid black;border-top:none;page-break-inside:avoid;">
+                            <tr style="border-bottom:1px solid black;width:100%;">
+
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:1px solid black;vertical-align:middle;font-size:12px;border:1px solid black;"> Sl.No.</th>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">Code</th>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">Product</th>
+                                <t t-if="o.currency_id.name == 'INR'">
+                                    <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">HSN / SAC</th>
+                                </t>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">Quantity</th>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">UOM</th>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">Price</th>
+                                <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">Currency</th>
+                                <th colspan="1" style="border-bottom:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;border-top:none;vertical-align:middle;font-size:12px;border:1px solid black;">Dis %</th>
+                                <t t-if="o.currency_id.name == 'INR'"> 
+                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">Tax Rate(%)</th>
+                                </t>
+                                <t t-if="o.currency_id.name == 'INR'">
+                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">Tax Amount</th>
+                                </t>
+                                <t t-if="o.currency_id.name == 'INR'"> 
+                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">Subtotal(incl. Tax)</th>
+                                </t> 
+                                <t t-else=""> 
+                                    <th colspan="1" style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">Subtotal(excl. Tax)</th>
+                                </t>                            </tr>
+                            <t t-set="sl" t-value="1" />
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr style="border-bottom:1px solid black;border-top:none;width:100%;">
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-esc="sl" />
+                                        <t t-set="sl" t-value="sl+1" />
+                                    </td>
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id.default_code"
+                                        t-field="line.product_id.default_code" /> 
+                                        
+                                    </td>
+                                    <td colspan="1"  style="border:1px solid black;text-align:left;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-if="line.product_id"
+                                        t-field="line.product_id" />   
+                                   </td>  
+                                   <t t-if="line.currency_id.name == 'INR'">
+                                        <td colspan="1"  style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.product_id.l10n_in_hsn_code"
+                                            t-field="line.product_id.l10n_in_hsn_code" />                                         
+
+                                        </td>
+                                    </t>
+                                    <td colspan="1"  style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                         <span t-if="line.quantity"
+                                            t-field="line.quantity"  t-options="{'widget': 'float', 'precision': 2}"/> 
+                                    </td>
+
+                                    <td colspan="1" style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                         <span t-if="line.product_uom_id" t-field="line.product_uom_id" /> 
+                                    </td>
+
+                                    <td colspan="1"  style="border:1px solid black;text-align:right;font-size:11px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                           <span t-if="line.price_unit" t-field="line.price_unit"  t-options="{'widget': 'float', 'precision': 2}"/>  
+                                   </td>
+
+                                   <td colspan="1"  style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                       <span t-if="line.currency_id.name" t-field="line.currency_id.name" /> 
+
+                                   </td>
+                                    <td colspan="1"  style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <span t-field="line.discount" /> 
+
+                                    </td>
+                                    <t t-if="line.currency_id.name == 'INR'">
+                                        <td colspan="1"  style="border:1px solid black;text-align:center;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                            <span t-if="line.tax_ids" t-field="line.tax_ids" /> 
+
+                                        </td>
+                                    </t>
+                                    <t t-if="line.currency_id.name == 'INR'">
+                                        <td colspan="1"  style="border:1px solid black;text-align:right;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <t t-set="tax" t-value="line.price_total - line.price_subtotal"/>
+                                        <t t-esc="tax" t-options="{'widget': 'float', 'precision': 2}"/>
+
+
+                                        </td>
+                                    </t>
+                                    
+                                    <td colspan="1" style="text-align:right;border:1px solid black;font-size:12px;border-right:1px solid black;border-left:none;border-bottom:none;border-top:none;font-family: Century Gothic;">
+                                        <t t-if="line.currency_id.name == 'INR'">
+                                            <span t-if="line.price_total" t-field="line.price_total"  t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t> 
+                                        <t t-else="">
+                                            <span t-if="line.price_subtotal" t-field="line.price_subtotal"  t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </t>                                    
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="o.currency_id.name == 'INR'">
+                                <tr style="border-bottom:1px solid black;">
+                                <th colspan="11"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">
+                                Grand Total</th>
+                                <td colspan="1"
+                                style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">
+                                <b><span t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/></b>
+                                </td>
+                            </tr> 
+                            </t>
+                            
+                            <t t-else="">
+                                <tr style="border-bottom:1px solid black;">
+                                <th colspan="8"
+                                style="border:1px solid black;text-align:center;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">
+                                Grand Total</th>
+                                <td colspan="1"
+                                style="padding-left:18px;border:1px solid black;text-align:right;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:12px;">
+                                <b><span style="text-align:right;" t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}"/></b>
+                                </td>
+                            </tr>
+                            </t>
+                           
+                             <t t-if="o.currency_id.name == 'INR'">
+                                <tr style="border-bottom:1px solid black;">
+                                <td colspan="12"
+                                style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                    <span id="total_in_words" class="mb16">
+                                        <t t-if="len(o.invoice_line_ids) &gt; 0">
+                                            <strong>Grand Total in Words: </strong>
+                                            <span style="font-size:12px;" t-esc="o.amount_total_words"/>
+
+                                        </t>
+                                    </span>  
+                                </td>
+                            </tr>
+                             </t>
+                             
+                             <t t-else="">
+                                <tr style="border-bottom:1px solid black;">
+                                <td colspan="9"
+                                style="border:1px solid black;text-align:left;font-family: Century Gothic;border-right:1px solid black;border-left:none;vertical-align:middle;font-size:11px;width:100%">
+                                    <span id="total_in_words" class="mb16">
+                                        <t t-if="len(o.invoice_line_ids) &gt; 0">
+                                            <strong>Grand Total in Words: </strong>
+                                            <span style="font-size:12px;" t-esc="o.amount_total_words"/>
+
+                                        </t>
+                                    </span>  
+                                </td>
+                            </tr>
+
+                             </t>
+                            
+                           
+                            
+                        </table>
+
+
+
+                    <div style="page-break-after:always"></div>
+                    <table class="table-borderless table-sm" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="width:100%;border-bottom:1px solid black;">
+                                
+                                <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
+
+                                        <span  style="text-align:left;font-size:12px;width:100%;"><strong>Terms &amp; Conditions :</strong></span>
+                                        <span style="text-align:left;font-size:11px;width:100%;" t-esc="o.narration"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                  <div style="page-break-after:always"></div>
+                  <table class="table table-borderless">      
+                      <div class="row" style="border:1px solid black;border-bottom:1px white solid;font-family: Century Gothic;">
+                          <div class="text-left" style="width:100%;padding-left:1%">
+                              <span style="font-weight: bolder;font-size:11px">
+                                  <strong>Bank Details :</strong>
+                              </span>
+                              <br/>
+                              <div class="row" style="width:70%;">
+                                  <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                     <b> <span> Name
+                                      </span></b>
+                                  </div>
+                                  <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                      <span>:</span>
+                                  </div>
+                                  <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+
+                                    <t t-if="o.y_bank_details.y_domestic_bank_id.name">
+                                        <span t-field="o.y_bank_details.y_domestic_bank_id.name"/>
+                                    </t>
+                                   
+                                    <t t-else="o.y_bank_details.y_export_bank_id.name">
+                                        <span t-field="o.y_bank_details.y_export_bank_id.name"/>
+
+                                    </t>
+
+
+
+                                      <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.name"
+                                          t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.name" /> -->
+                                  </div>
+                              </div>
+                              <div class="row" style="width:70%;">
+                                  <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                     <b>  <span>
+                                          Bank Account No
+                                      </span></b>
+                                  </div>
+                                  <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                      <span>:</span>
+                                  </div>
+                                  <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+                                    <t t-if="o.y_bank_details.y_domestic_acc_number">
+                                        <span t-field="o.y_bank_details.y_domestic_acc_number"/>
+                                    </t>
+                                   
+                                    <t t-else="o.y_bank_details.y_export_acc_number">
+                                        <span t-field="o.y_bank_details.y_export_acc_number"/>
+
+                                    </t>
+
+                                      <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].acc_number"
+                                          t-field="o.company_id.parent_id.partner_id.bank_ids[0].acc_number" /> -->
+                                  </div>
+                              </div>
+                              <t t-if="o.currency_id.name =='INR'">
+                                
+                                <div class="row" style="width:70%;">
+                                    <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                      <b>   <span>
+                                            IFSC Code</span></b>
+                                    </div>
+                                    <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+                                        <span t-field="o.y_bank_details.y_domestic_bank_id.bic"/>
+
+                                        <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"
+                                            t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" /> -->
+                                    </div>
+                                </div>
+                            </t>
+                           
+                            <t t-else="">
+                                <div class="row" style="width:70%;">
+                                  <div class="col-3" style="font-size:11px;text-align:left;width:17%">
+                                     <b>  <span>
+                                          SWIFT Code</span></b>
+                                  </div>
+                                  <div class="col-1" style="font-size:11px;text-align:left;width:2%">
+                                      <span>:</span>
+                                  </div>
+                                  <div class="col-6" style="font-size:11px;text-align:left;width:100%">
+                                        <span t-field="o.y_bank_details.y_export_bank_id.bic"/>
+
+                                      <!-- <span t-if="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic"
+                                          t-field="o.company_id.parent_id.partner_id.bank_ids[0].bank_id.bic" /> -->
+                                  </div>
+                              </div>
+                            </t>
+                          </div>
+                      </div>
+                      <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;font-family: Century Gothic;">
+
+                          <div style="width:60%;padding-left:1%">
+                           <b>  <span style="font-size:11px;">Note:</span></b>
+                           <span style="font-size:11px" t-field="o.y_note" />
+        
+                          </div>
+
+                          <div style="width:10%">
+                              
+                          </div>
+
+                          <div
+                              style="width:30%;font-family: Century Gothic;text-align:center;padding-right:10px;border-left:1px solid black">
+                              <b>
+                              <span style="font-size:11px;">For</span>
+                              <span style="font-size:11px" t-field="o.company_id.parent_id.name" />
+                              </b>
+                              <br />
+                              <br />
+                              <br />
+                              <span style="font-size:11px;text-align:center;">
+                                  Authorised Signatory
+                              </span>
+                          </div>
+                      </div>
+
+                      <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;border-bottom:1px black solid;font-family: Century Gothic;">
+                          <div class="text-left" style="width:100%;padding-left:2px;">
+                              <span style="font-size:11px;font-family: Century Gothic;">* This is a
+                                  computer generated document and authenticated by Eruvaka
+                                  Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
+                                  manually.</span>
+                          </div>
+                      </div>
+                  </table>
+                  
+
+                    </t>
+                </t>
+            </t>
+    </template>
+</odoo>

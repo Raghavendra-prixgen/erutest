@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+
+    <record id="hrmls_custom_fields_hr_view_employee_form" model="ir.ui.view">
+          <field name="name">hr.hrms.custom.fields.form.emp</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+            <field name="country_id" position="after">
+                <field name="y_universal_account_number" invisible="1"/>
+                <field name="y_provident_fund"/>
+                <field name="y_pan_no" invisible="1"/>
+                <field name="y_esi_number" invisible="1"/>
+                <field name="y_aadhaar_number" invisible="1"/>
+            </field>
+            <field name="identification_id" position="attributes">
+              <attribute name="string">Aadhaar No.</attribute>
+            </field>
+          </field>
+      </record>
+
+
+
+    <record model="ir.ui.view" id="view_country_state_tree_gst_india">
+      <field name="name">view country state tree gst india</field>
+      <field name="model">res.country.state</field>
+      <field name="inherit_id" ref="base.view_country_state_tree"/>
+      <field name="arch" type="xml">
+         <xpath expr="//tree/field[@name='code']" position="after">
+            <field name="y_l10n_in_tin" />
+        </xpath>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_excise_income_tax_tree_gst_india">
+      <field name="name">view excise income tax tree gst india</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page string="Tax Information">
+            <group>
+              <group string="Income Tax">
+                <field name="y_tan_no"/>
+                <field name="y_tcan_no"/>
+                <field name="y_ce_range"/>
+                <field name="y_ecc_number"/>
+              </group>              
+              <group string="Excise">
+                  <field name="y_ccc_no"/>
+                  <field name="y_ce_range"/>
+                  <field name="y_ecc_number"/>
+                  <field name="y_ce_division"/>
+                  <field name="y_circle_no"/>
+                  <field name="y_assignes_officer"/>
+                  <field name="y_ward_number"/>
+              </group>
+            </group>
+          </page>
+        </notebook>
+      </field>
+    </record>  
+    
+  </data>
+</odoo>

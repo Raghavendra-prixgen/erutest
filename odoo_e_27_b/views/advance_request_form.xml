@@ -1,0 +1,105 @@
+<odoo>
+  <data>
+    <record id="view_custom_reject_reason" model="ir.ui.view">
+        <field name="name">reject.reason.form</field>
+        <field name="model">reject.reason</field>
+        <field name="arch" type="xml">
+            <form string="Reject Reason">   
+                <group>           
+                <field name="y_reject_reason"/>
+                </group>
+                <footer>
+                    <button string="OK" name="pass_y_reject_reason" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="purchase_account_payment_tree">
+      <field name="name">Down Payment Request Approval Report</field>
+      <field name="model">purchase.account.payment</field>
+      <field name="arch" type="xml">
+        <tree create="false">
+          <field name="y_sequence"/>
+          <field name="create_uid"/>
+          <field name="y_approved_by"/>
+          <field name="y_purchase_id" string="Purchase Order"/>
+          <field name="y_partner_id"/>
+          <field name="y_company_id"/>
+          <field name="y_invoice_date_due" widget="remaining_days"/>
+          <field name="y_remark"/>
+          <field name="y_currency_id"/>
+          <field name="y_amount"/>
+          <field name="y_date"/>
+          <field name="y_ref"/>
+          <field name="y_is_advance_payment_done" column_invisible="True"/>
+          <field name="y_approval_status" widget="badge" decoration-info="y_approval_status == 'approval_pending'" decoration-success="y_approval_status == 'approved'"/>
+          <button string="Approve" name="action_approve" type="object" icon="fa-thumbs-up" invisible="y_approval_status in ('rejected', 'approved')" />
+          
+          
+          <button string="Reject" name="action_reject" type="object" icon="fa-times" invisible="y_approval_status in ('rejected', 'approved')" />
+          <field name="y_payment_status" widget="badge" decoration-info="y_payment_status == 'draft'" decoration-success="y_payment_status == 'confirm'"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="advance_request_approval_tree">
+      <field name="name">Tree View Down Payment Request</field>
+      <field name="model">advance.request.approval.form</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+          <field name="y_advance_sequence_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+          <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+          <field name="y_approval_user_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+          <field name="active" column_invisible="True"/>
+  
+          
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="advance_request_approval_form">
+      <field name="name">Form View Down Payment Request</field>
+      <field name="model">advance.request.approval.form</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+
+                <field name="y_advance_sequence_id"  options="{'no_create_edit':True, 'no_open': True}"/>
+                <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+              </group>
+              <group>
+                <field name="y_approval_user_ids" widget="many2many_tags"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="advance_request_approval_action" model="ir.actions.act_window">
+      <field name="name">Down Payment Request Configuration</field>
+      <field name="res_model">advance.request.approval.form</field>
+      <field name="view_mode">tree</field>
+    </record>
+
+
+    <record id="advance_request_approval_report" model="ir.actions.act_window">
+      <field name="name">Down Payment Request</field>
+      <field name="res_model">purchase.account.payment</field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="purchase_account_payment_tree"/>
+    </record>
+
+    <menuitem id="advance_request_approval" name="Down Payment Request Approval Form"
+            parent="purchase.menu_purchase_config" groups="odoo_e_27_b.y_group_advance_request_id" sequence="45"/>
+
+    <menuitem id="menu_advance_request_configuration" name="Down Payment Request Configuration" parent="odoo_e_27_b.advance_request_approval" action="advance_request_approval_action" groups="odoo_e_27_b.y_group_advance_request_id"  sequence="110"/>
+
+    <menuitem id="menu_advance_request_approval_reports"  parent="purchase.menu_procurement_management" action="advance_request_approval_report" groups="odoo_e_27_b.y_group_advance_request_id"  name="Down Payment Request"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data noupdate="1">
+
+<!-- Group with members assigned directly -->
+<record model="res.groups" id="group_access_restrict">
+    <field name="name">Admin Restrict</field>
+    <field name="category_id" ref="base.module_category_hidden" />
+    <field name="users" eval="[(4, ref('base.user_admin'))]" />
+</record>
+
+</data>
+
+
+
+    <record id="analytic_account_view_tree" model="ir.ui.view">
+        <field name="name">analytic.account.user.access.view.tree</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <tree string="Analytic Account User Tree View" create="0">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="analytic_account_view_form" model="ir.ui.view">
+        <field name="name">analytic.account.user.access.view.form</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <form string="Analytic Account User Form View" create="0">
+                <sheet>
+                    <label for="name" string="Users " />
+                    <field name="name" readonly="1" />
+                    <br />
+                  
+                    <notebook>
+                        <page name="analytic_lines" string="Analytic Account">
+                           
+                            <field name="y_analytic_ids" />
+                        
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+   
+
+
+    <record id="analytic_account_user_access" model="ir.rule">
+        <field name="name">Analytic Account User Access</field>
+        <field name="model_id" ref="analytic.model_account_analytic_account" />
+        <field name="domain_force">
+            [(1, '=', 1)] if user.has_group('base.group_system') else [('id', 'in',
+            user.y_analytic_ids.ids)]
+</field>
+        <field name="groups" eval="[(5, 0, 0)]" />
+    </record>
+
+
+    <record model="ir.actions.act_window" id="analytic_account_view_main_action">
+        <field name="name">Analytic Account User Access</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,form</field>
+        <field name="groups_id" eval="[(6, 0, [ref('group_access_restrict')])]" />
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_hr_employee_tree_view">
+        <field eval="1" name="sequence" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="analytic_account_view_tree" />
+        <field name="act_window_id" ref="analytic_account_view_main_action" />
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_hr_employee_form_view">
+        <field eval="2" name="sequence" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="analytic_account_view_form" />
+        <field name="act_window_id" ref="analytic_account_view_main_action" />
+    </record>
+
+
+    <menuitem
+        id="analytic_account_view_menu"
+        name="Analytic Account User Access"
+        action="analytic_account_view_main_action"
+        parent="account.menu_finance_configuration"
+        groups="group_access_restrict"
+        sequence="4" />
+        
+
+</odoo>

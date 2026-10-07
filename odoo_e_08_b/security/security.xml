@@ -1,0 +1,5 @@
+<data noupdate="0">
+  <record id="stock.stock_picking_type_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id','in', company_ids)]</field>
+  </record>
+</data>

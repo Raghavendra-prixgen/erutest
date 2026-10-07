@@ -1,0 +1,10 @@
+<odoo>
+	<record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+    <record id="y_group_advance_request_id" model="res.groups">
+        <field name="name">Down Payment Request</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+{
+    "name": "Password Security",
+    "version": "17.0.0.1",
+    "summary": "The Password Security module for Odoo helps you maintain strong password hygiene across your organization. Enforce password expiration, length, and character requirements. Track password history to prevent reuse and estimate password strength. Configure these settings centrally to ensure consistent security practices.",
+    "description": """The Password Security module for Odoo enforces company-wide password policies, including expiration, length, character requirements, and history. It features password strength estimation and prevents the reuse of previous passwords. Administrators can configure these settings at the company level to ensure strong, secure password practices across the organization.""",
+    "category": "Extra Tools",
+    'author': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'website': 'https://www.prixgen.com',
+    
+    "depends": ["auth_signup", "auth_password_policy_signup", 'hr', "auth_password_policy","mail"],
+    "data": [
+        "security/res_users_pass_history.xml",
+        "security/ir.model.access.csv",
+        "data/cron_send_mail.xml",
+        "views/password_expire_notification_templates.xml",
+        "views/res_config_settings_views.xml",
+        "views/res_users_views.xml",
+        "views/signup_templates.xml",
+        "views/user_password_log_views.xml",
+        "views/templates.xml",
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            'odoo_e_password_security/static/src/css/custom.css',
+            'odoo_e_password_security/static/src/js/custom.js',
+        ],
+    }, 
+    # "images": [
+    #     "static/description/banner.png",
+    # ],
+    'App origin':'Projet Specific',
+    'module_type':'official',
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    "price": 0.00,
+    "currency": "USD",
+}

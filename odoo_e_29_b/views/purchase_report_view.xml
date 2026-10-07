@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+        <record id="view_purchase_register_report_list" model="ir.ui.view">
+            <field name="name">purchase.register.report.list</field>
+            <field name="model">purchase.register.report</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="y_bill_num" />
+                    <field name="y_bill_date" optional="hide"/>
+                    <field name="y_accounting_date" optional="hide"/>
+                    <field name="y_invoice_ref" optional="hide"/>
+                    <field name="y_purchase_order_id" optional="hide"/>
+                    <field name="y_purchase_order_date" optional="hide" widget="date"/>
+                    <field name="y_grn_ref" optional="hide"/>
+                    <field name="y_partner_id" optional="hide"/>
+                    <field name="y_partner_state_id" optional="hide"/>
+                    <field name="y_partner_city" optional="hide"/>
+                    <field name="y_partner_country_id" optional="hide"/>
+                    <field name="y_gst_name" optional="hide"/>
+                    <field name="y_analytic_account_ids" widget="many2many_tags" optional="hide"/>
+                    <field name="y_journal_id" optional="hide"/>
+                    <field name="y_currency_id" optional="hide"/>
+                    <field name="y_boe_rate" optional="hide"/>    
+                    <field name="y_product_id" string="Product" optional="hide"/>
+                    <field name="y_label" optional="hide"/>
+                    <field name="y_account_id" optional="hide"/>
+                    <field name="y_product_category_id" optional="hide"/>
+                    <!-- <field name="y_product_group_1_id"  optional="hide"/>
+                    <field name="y_product_group_2_id"  optional="hide"/>
+                    <field name="y_product_group_3_id"  optional="hide"/>
+                    <field name="y_item_group_id"  optional="hide"/> -->
+                    <field name="y_uom_id" optional="hide"/>
+                    <field name="y_quantity" string="Quantity"/>
+                    <field name="y_price_unit" string="Price"/>
+                    <field name="y_amount_exclusive_tax" optional="hide"/>
+                    <field name="y_cgst_percent" optional="hide"/>
+                    <field name="y_cgst_amount" optional="hide"/>
+                    <field name="y_sgst_percent" optional="hide"/>
+                    <field name="y_sgst_amount" optional="hide"/>
+                    <field name="y_igst_percent" optional="hide"/>
+                    <field name="y_igst_amount" optional="hide"/>
+                    <field name="y_tds_percent" optional="hide"/>
+                    <field name="y_tds_amount" optional="hide"/>
+                    <field name="y_tcs_percent" optional="hide"/>
+                    <field name="y_tcs_amount" optional="hide"/>
+                    <field name="y_rcm_percent" optional="hide"/>
+                    <field name="y_rcm_amount" optional="hide"/>
+                    <field name="y_ocean_tax_percent" optional="hide"/>
+                    <field name="y_ocean_tax_amount" optional="hide"/>
+                    <field name="y_tax_amount" optional="hide"/>
+                    <field name="y_amount_inclusive_tax" optional="hide"/>
+                    <field name="y_payment_state" optional="hide"/>
+                    <field name="y_product_type" optional="hide"/>
+                    <field name="y_bill_aging" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+    
+    
+    
+        <record id="view_purchase_register_report_list_filter" model="ir.ui.view">
+            <field name="name">purchase.register.report.select</field>
+            <field name="model">purchase.register.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Register">
+                    <field name="y_partner_id" operator="child_of"/>
+                    <field name="y_bill_num"/>
+                    <field name="y_product_id" />
+                    <field name="y_journal_id" />
+                    <field name="y_account_id" />
+                    <field name="y_gst_name" />
+               </search>
+            </field>
+        </record>
+        
+    </data>
+</odoo> 

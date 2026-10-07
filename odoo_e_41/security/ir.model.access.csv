@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+odoo_e_41.access_purchase_approval,access_purchase_approval,odoo_e_41.model_purchase_approval,base.group_user,1,1,1,1
+odoo_e_41.access_purchase_approval_line,access_purchase_approval_line,odoo_e_41.model_purchase_approval_line,base.group_user,1,1,1,1
+odoo_e_41.access_purchase_lvlamt_approval,access_purchase_lvlamt_approval,odoo_e_41.model_purchase_lvlamt_approval,base.group_user,1,1,1,1
+odoo_e_41.access_purchase_order_approval_lvlsamt,access_purchase_order_approval_lvlsamt,odoo_e_41.model_purchase_order_approval_lvlsamt,base.group_user,1,1,1,1
+odoo_e_41.access_purchase_order_approval,access_purchase_order_approval,odoo_e_41.model_purchase_order_approval,base.group_user,1,1,1,1
+odoo_e_41.access_purchase_approval_remarks,access_purchase_approval_remarks,odoo_e_41.model_purchase_approval_remarks,base.group_user,1,1,1,1

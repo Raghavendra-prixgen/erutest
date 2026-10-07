@@ -1,0 +1,19 @@
+// .o_list_row_count_sheliya {
+//  	width: 20px;
+//     padding-left: 10px !important;
+//     text-align: center;
+// }
+
+.o_list_renderer .o_list_table .o_handle_cell {
+    width: 10px !important;
+}
+
+.o_list_view > .o_list_table {
+    position: relative;
+}
+
+.o_list_view > .o_list_table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; 
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="get_package_lines_form" model="ir.ui.view">
+        <field name="name">get.package.line</field>
+        <field name="model">get.package.line</field>
+        <field name="arch" type="xml">
+            <form string="Attach to Shipment">
+                <group>
+                    <field name="y_package_id"  invisible="1"/>
+                    <field name="y_partner_id" invisible="1"/>
+                    <group>
+                        <field name="is_stock_picking" widget="boolean_toggle" readonly="is_stock_move_line != False"/>
+                    </group>
+                    <group>
+                        <field name="is_stock_move_line"  widget="boolean_toggle" readonly="is_stock_picking != False"/>
+                    </group>
+                    <field name="y_picking_ids" invisible="is_stock_picking != True"/> 
+                    <field name="y_stock_move_line_ids" invisible="is_stock_move_line != True"/> 
+                </group>
+                <footer>
+                    <button name="action_confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"/>
+                    <button string="Discard"
+                        class="btn-secondary"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="button_get_package_lines_form_action" model="ir.actions.act_window">
+        <field name="name">Attach to Shipment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">get.package.line</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="get_package_lines_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

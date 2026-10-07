@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_documentation_" model="ir.ui.view">
+        <field name="name">sale.documentation.res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Sale Documentation" name="sale_document"> 
+                    <field name="y_sale_doc_note_ids">
+                      <form>
+                        <header>
+                          <field name="y_state" widget="statusbar"/>
+                        </header>
+                        <sheet>
+                          <group>
+                            <group>
+                              <field name="y_name" />
+                              <field name="y_sale_attachment_ids" widget="many2many_binary" />
+                              <field name="y_order_notification" invisible="y_sale_notify_day == False"/>
+                            </group>
+                            <group>
+                              <field name="y_sale_expiry_date" />
+                              <field name="y_sale_notify_day" />
+                            </group>
+                          </group>
+                        </sheet>
+                      </form>
+                      <tree>
+                        <field name="y_name" />      
+                        <field name="y_sale_expiry_date" />  
+                        <field name="y_sale_day_expiry" />
+                        <field name="y_order_notification" invisible="y_sale_notify_day == False"/>        
+                        <field name="y_sale_notify_day"/>  
+                        <field name="y_sale_attachment_ids" widget="many2many_binary"/>
+                        <field name="y_state" decoration-success="y_state == 'running'"
+                        decoration-danger="y_state == 'expired'"
+                        decoration-info="y_state == 'notify'"
+                        widget="badge"/>  
+                      </tree>
+                    </field> 
+                  </page>          
+            </xpath>
+            
+        </field>
+    </record>
+
+    
+
+</odoo>

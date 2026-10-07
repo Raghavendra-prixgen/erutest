@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <data>
+        <template id="external_layout_for_commercial">
+
+            <div class="header" style="display: flex; width: 100%;font-family: Arial;">
+                <div class="row" style="border: 1px solid #000; padding-bottom: 10px;font-family: Century Gothic;">
+
+                    <div
+                        style="flex: 1;text-align: border:white;left;margin-top:20px;width: 20%;  padding-left:30px">
+                        <img t-if="doc.company_id.logo"
+                            t-att-src="image_data_uri(doc.company_id.logo)"
+                            style="float: left; width: 90%; max-height: 140px;" alt="Logo" />
+                    </div>
+
+                    <div style="flex: 1;text-align: center;margin-top:20px;width: 75%;">
+                        <strong>
+                            <span style="font-size: 17px;" t-esc="doc.company_id.name"></span>
+                        </strong><br></br>
+                    <strong><span style="font-size: 11px;"  >Regd office : </span></strong>
+                    <span style="font-size: 11px;" t-esc="doc.company_id.street"></span>
+
+                    <span style="font-size: 11px;" t-esc="doc.company_id.street2"></span>
+                    <span style="font-size: 11px;" t-esc="doc.company_id.city"></span>
+                    <span style="font-size: 11px;" t-esc="doc.company_id.zip"></span>
+                    <span style="font-size: 11px;" t-esc="doc.company_id.country_code"></span>,
+                    <span style="font-size: 11px;" t-esc="doc.company_id.country_id.name"></span>
+
+
+                    <br></br>
+                    <strong><span style="font-size: 11px;">GSTIN : </span></strong> <span style="font-size: 11px;" t-esc="doc.company_id.vat">
+                        
+                    </span> <strong><span style="font-size: 11px;">PAN : </span></strong> <span style="font-size: 11px;" t-esc="doc.partner_id.l10n_in_pan"></span>
+                    <strong><span style="font-size: 11px;" >CIN : </span></strong> <span style="font-size: 11px;" t-esc="doc.company_id.partner_id.company_registry"></span><br/><span style="font-size: 11px;" ></span>
+                    <strong><span style="font-size: 11px;" >Mail Id : </span></strong> <span style="font-size: 11px;" t-esc="doc.company_id.email"></span>   
+                    <strong><span style="font-size: 11px;" >WebPage : </span> </strong><span style="font-size: 11px;" t-esc="doc.company_id.website"></span>  
+                    <strong><span style="font-size: 11px;" >Contact Number : </span></strong> <span style="font-size: 11px;" t-esc="doc.company_id.phone"></span>
+                    
+                    </div>
+                </div>
+            
+                <table style="font-size: 16px; width: 100%;border-left: 1px solid black; border-right: 1px solid black;">
+
+                    <tr style="width:100%">
+                        <td style="width:50%;text-align: center;padding-top:5px;font-family: Century Gothic;">
+
+                            <strong>Commercial Invoice</strong>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table style="font-size: 11px; width: 100%;font-family: Century Gothic;">
+                    <tr>
+                        <td style="width: 50%; border-bottom:none;border-right: 1px solid black;border-left: 1px solid black;border-top: 1px solid black;padding-left:3px">
+                            <span><div class="row"><div style="width:27%;padding-top:5px;"><strong>Bill To </strong></div><div style="width:3%;padding-top:5px;">:</div><div style="width:70%;padding-top:5px;"><strong><span t-field="doc.partner_id.name"></span></strong></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Address </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.street"></span>
+                            <span style="width:70%;"><span t-field="doc.partner_id.street2"></span></span>
+                            <span style="width:70%;"><span t-field="doc.partner_id.city"></span></span>
+                            <span style="width:70%;"><span t-field="doc.partner_id.zip"></span></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;"> State </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.state_id.name"></span></div></div> </span>
+                            <span><div class="row"><div style="width:27%;">State Code </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.state_id.code"></span></div></div> </span>
+                            <span><div class="row"><div style="width:27%;">Country </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.country_id.name"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;"> Email </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.email"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;"> Contact Person </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_id.name"></span></div></div></span>
+
+                        </td> 
+                        <td style="width: 50%;border-bottom:none;padding-left:3px;font-family: Century Gothic;border-right: 1px solid black;border-top: 1px solid black;">
+                            <span><div class="row"><div style="width:27%;padding-top:5px;"><strong>Ship To</strong></div><div style="width:3%;padding-top:5px;">:</div><div style="width:70%;padding-top:5px;"><strong><span t-field="doc.partner_shipping_id.name"></span></strong></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Address</div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.street"></span>
+                            <span style="width:70%;"><span t-field="doc.partner_shipping_id.street2"></span></span>
+                            <span style="width:70%;"><span t-field="doc.partner_shipping_id.city"></span></span>
+                            <span style="width:70%;"><span t-field="doc.partner_shipping_id.zip"></span></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">State </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.state_id.name"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">State Code </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.state_id.code"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Country </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.country_id.name"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Email  </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.email"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Contact Person  </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.partner_shipping_id.name"></span></div></div></span>
+
+                        </td>
+                    </tr>
+                </table>
+                <table style="font-size: 11px; width: 100%; border: 1px solid black;">
+                    <tr>
+                        <td style="width: 50%; border-bottom:none;border-right: 1px solid black;padding-left:3px;font-family: Century Gothic;">
+                            <div class="row">
+                                <div style="width: 27%;padding-top:5px;"><span>Invoice No </span></div><div style="width:3%;padding-top:5px;">:</div>
+                                <div style="width: 70%;padding-top:5px;"><span t-field="doc.name"></span></div>
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>Invoice Date </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-field="doc.invoice_date"></span></div>
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>SO Number &amp; Date </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-esc="doc.sale_order().name"/> &amp;
+                                <span t-esc="doc.sale_order().date_order"/></div>
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>Buyer order No &amp; Date </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-esc="doc.sale_order().client_order_ref"/> &amp;
+                                <span t-esc="doc.sale_order().date_order"/></div>
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>Country of origin </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-field="doc.y_country_orgin_goods_id"></span></div>
+                            </div>
+                        </td>
+                        <td style="width: 50%;padding-left:3px;border-bottom:none;font-family: Century Gothic;">
+                            <div class="row">
+                                <b><div style="width: 100%;padding-top:5px;"><span>Export Reference No. &amp; date </span></div></b>
+                              <!--   <div style="width:3%;padding-top:5px;">:</div>
+                                <div style="width: 70%;padding-top:5px;"><span t-esc="doc.y_export_ref_no"/>  &amp;
+                                <span t-esc="doc.y_export_ref_date"/></div> -->
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>IEC No </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-field="doc.company_id.partner_id.iec_no"></span></div>
+                            </div>
+                            <div class="row">
+                                <div style="width: 27%;"><span>IEC Date </span></div><div style="width:3%;">:</div>
+                                <div style="width: 70%;"><span t-field="doc.company_id.partner_id.iec_date"></span></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="font-size: 11px;; width: 100%;font-family: Century Gothic;">
+                    <tr>
+                        <td style="width: 50%; border-top:none;border-top:none;border-right: 1px solid black;border-left: 1px solid black;padding-left:3px;font-family: Century Gothic;">
+                            <span><div class="row"><div style="width:27%;padding-top:5px;"><strong>Ship From </strong></div><div style="width:3%;padding-top:5px;">:</div><div style="width:70%;padding-top:5px;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.company_id.parent_id.name"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Address </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.street"></span>
+                            <span style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.street2"></span></span>
+                            <span style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.city"></span></span>
+                            <span style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.zip"></span></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">State </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.state_id.name"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">State Code </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.state_id.code"></span></div></div></span>
+                            <span><div class="row"><div style="width:27%;">Country </div><div style="width:3%;">:</div><div style="width:70%;"><span t-field="doc.invoice_line_ids.sale_line_ids.order_id.warehouse_id.partner_id.country_id.name"></span></div></div></span>
+                        </td>
+                       
+                        <td style="width: 50%;border-bottom:none;border-top:none;border-right: 1px solid black;padding-left:3px;font-family: Century Gothic;"> 
+                            <span><div class="row"><div style="width:47%;padding-top:5px;">Country of Destination</div><div style="width:3%;padding-top:5px;">:</div><div style="width:50%;padding-top:5px;"><span t-field="doc.y_country_final_destination_id"></span></div></div> </span>
+                            <span><div class="row"><div style="width:47%;">Pre carriage by</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_pre_carriage"></span></div></div></span>
+                            <span><div class="row"><div style="width:47%;">Place of receipt by Pre-Carrier</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_final_destination_id"></span></div></div></span>
+                            <span><div class="row"><div style="width:47%;">Vessel No / Flight no</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_vessel_number"></span></div></div></span>
+                            <span><div class="row"><div style="width:47%;">Container No</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_voyage_no"></span></div></div> </span>
+                            <span><div class="row"><div style="width:47%;">Port of Loading</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_port_loading_id"></span></div></div></span>
+                            <span><div class="row"><div style="width:47%;">Port of Discharge</div><div style="width:3%;">:</div><div style="width:50%;"><span t-field="doc.y_port_discharge_id"></span></div></div></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="font-size: 11px; width: 100%; border-top:none;border: 1px solid black;font-size:11px;">
+                    <tr>
+                        <td style="width: 50%;padding-left:3px;font-family: Century Gothic;">
+                            <br />
+                            <strong>Terms of Delivery &amp; Payment : </strong>
+                            <span t-field="doc.invoice_incoterm_id"/> &amp; 
+                            <span t-field="doc.invoice_payment_term_id"/> <br />
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="article o_report_layout_standard" t-att-data-oe-model="doc and doc._name" t-att-data-oe-id="doc and doc.id" t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer o_standard_footer">
+                <div class="col-12" style="text-align:center;padding:1px;margin-top:none !important;font-color:gray;border-top:1px solid black;">
+                    <p style="color:black;font-size:11px;text-align:center;" class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    of
+                    <span class="topage"/></p>
+                </div>
+            </div>
+                <!-- <div class="last-page">
+                    <table style="font-size: 11px; width: 100%; border: 1px solid black; padding-left: 10px;">
+                        <tr>
+                            <td style="width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                            <span><div class="row"><div style="width:37%;"><span>LUT ARN NO </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.lut_no"><span t-field="doc.company_id.partner_id.lut_no"></span></t></div></div></span>
+                            <span><div class="row"><div style="width:37%;"><span>Register Date </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.y_reg_date"><span t-field="doc.company_id.partner_id.y_reg_date"></span></t></div></div></span>
+                            <span><div class="row"><div style="width:37%;"><span>Valid Till </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.lut_valid_till"><span t-field="doc.company_id.partner_id.lut_valid_till"></span></t></div></div></span>
+                        </td>
+                            <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
+                                <span>E.&amp;O.E </span><span t-field="doc.e_o_e"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="font-size: 11px;;width: 47%; border: 1px solid black;padding-left:3px;font-size:11px;"> <b>Note:</b><br />
+                                <span style="padding-right:3px;padding-left:3px;" t-field="doc.y_note"></span>
+                            </td>
+                            <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                                  <span><div class="row"><div style="width:37%;"><strong>Bank Details</strong></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">Name</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.name"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.name"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">Account No</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].acc_number"><span t-field="doc.company_id.partner_id.bank_ids[0].acc_number"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">SWIFT Code</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.bic"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.bic"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">IFSC Code</div> <div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.bic"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.bic"></span></t></div></div></span>
+                            </td>
+                            <td style="width: 23%;padding-left:3px;height:90px;text-align: center;font-size:11px;">
+                                <b><span>For</span></b><br />
+                                <span t-field="doc.company_id.name"></span>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 23%; border-top:1px solid black;padding-left:3px;text-align: center;font-size:11px;">
+                                <span>Authorized Signatory</span><br />
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </div> -->
+
+          <!--       <div class="col-6" style="text-align:center;padding:1px;margin-top:none !important;font-color:gray">
+                    <p style="float:right;color:black;font-size:11px;" class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    of
+                    <span class="topage"/></p>
+                </div>
+
+            </div> -->
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="1st_lvl_approve" model="res.groups">
+        <field name="name">Purchase 1st lvl Approval</field>
+    </record>
+    <record id="2nd_lvl_approve" model="res.groups">
+        <field name="name">Purchase 2nd lvl Approval</field>
+    </record>
+    <record id="3rd_lvl_approve" model="res.groups">
+        <field name="name">Purchase 3rd lvl Approval</field>
+    </record>
+    <record id="4th_lvl_approve" model="res.groups">
+        <field name="name">Purchase 4th lvl Approval</field>
+    </record>
+    <record id="5th_lvl_approve" model="res.groups">
+        <field name="name">Purchase 5th lvl Approval</field>
+    </record>
+
+    <record id="acess_po_unlock" model="res.groups">
+        <field name="name">Access Unlock PO</field>
+    </record>
+
+
+
+
+
+    <!-- <record id="purchase_own_documents" model="res.groups">
+        <field name="name">Purchase Own Documents</field>
+    </record> -->
+
+</odoo>

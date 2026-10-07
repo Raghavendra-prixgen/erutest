@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+account_partner_ledger_report_handler_balance,account.partner.ledger.report.handler.balance,model_account_partner_ledger_report_handler_balance,,1,1,1,1
+
+
+

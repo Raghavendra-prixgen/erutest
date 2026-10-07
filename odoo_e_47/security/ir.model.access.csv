@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_quant_package_line,stock.quant.package.line,model_stock_quant_package_line,,1,1,1,1
+access_sale_order_kit_line,sale.order.kit.line,model_sale_order_kit_line,,1,1,1,1
+access_get_package_line,get.package.line,model_get_package_line,,1,1,1,1
+access_packing_list_group,packing.list.group,model_packing_list_group,,1,1,1,1
+
+
+
+
+
+
+
+
+
+
+

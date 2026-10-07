@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_claim_request,claim.request,model_claim_request,,1,1,1,1
+access_api_connection,api.connection,model_api_connection,,1,1,1,1
+access_api_logs,api.logs,model_api_logs,,1,1,1,1
+
+access_device_type,device.type,model_device_type,,1,1,1,1

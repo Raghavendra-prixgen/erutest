@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_package_type_form_dimension">
+            <field name="name">stock.package.type.form.dimension</field>
+            <field name="model">stock.package.type</field>
+            <field name="inherit_id" ref="stock.stock_package_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='delivery']/group/div[@class='o_row']" position="replace">
+                    <div class="o_row" name="size">
+                        <field name="packaging_length" placeholder="Length"/>L
+                        <span>&#215;</span>
+                        <field name="width" placeholder="Width"/>W
+                        <span>&#215;</span>
+                        <field name="height" placeholder="Height"/>H &#160; &#160;
+                        <span>
+                        <field name="length_uom_name" help="Size: Length &#215; Width &#215; Height" invisible="1" /></span>
+                        <span>
+                            &#160;&#160;   
+                        <field name="y_dimension"/>
+                        </span>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

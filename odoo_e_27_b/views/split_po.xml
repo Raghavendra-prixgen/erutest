@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+
+  <record id="purchase_order_split_view" model="ir.actions.server">
+      <field name="name">Split PO</field>
+      <field name="model_id" ref="model_purchase_order"/>
+      <field name="binding_model_id" ref="model_purchase_order"/>
+      <field name="state">code</field>
+      <field name="code">action = records.po_split_view()</field>
+  </record>
+
+  <record id="split_po_from_view" model="ir.ui.view">
+    <field name="name">po.split.view.form</field>
+    <field name="model">po.split</field>
+    <field name="arch" type="xml">
+      <form string="Task">
+        <sheet>
+          <group>
+            <group>
+              <field name="y_partner_id" required = "1"/>
+              
+            </group>
+            <group >
+              
+            </group>
+          </group>
+          <notebook>
+            <page name="product" string="Product">
+              <field name="y_split_ids" string="Split Ids">
+                <tree editable='bottom'>
+                  <field name="y_product_id" />
+                  <field name="y_po_quantity" />
+                  <field name="y_purchase_line_id" invisible="1"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+          <footer>
+            <button name="button_split_po" type="object" class="oe_highlight" string="Split PO" readonly="parent.y_partner_id != True"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
+  <record id="split_po_purchase_order_from_view" model="ir.ui.view">
+    <field name="name">po.split.purchase.order.view.form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+      <field name="partner_id" position="after">
+        <field name="y_is_split" invisible="1"/>
+      </field>
+        <!-- this is shows the parent of that split po -->
+        <!-- <xpath expr="//form/sheet/div[@name='button_box']" position="inside">
+          <button class="oe_stat_button" type="object" name="view_po" string="Split Purchase Order" invisible = "y_is_split != True" icon="fa-th" />
+        
+        </xpath>
+      -->
+      
+    </field>
+  </record>
+  </data>
+</odoo>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_order_approver_inherit" model="ir.ui.view">
+        <field name="name">view_order_form_order_approver</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='y_doc_type_id']" position="after">
+            <field name="y_max_approver" invisible="1"/>
+        </xpath>
+        </field>
+     </record>
+
+
+
+
+    <record id="email_template_sale_approve" model="mail.template">
+        <field name="name">Approve Email sale Template</field>
+        <field name="model_id" ref="sale_approval_17.model_sale_order"/>
+        <field name="subject">Request For Approve</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${user.lang}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <div style="margin:0px;padding: 0px;"><br/>
+                
+                    <span>You have been assigned to a new task</span>
+                    <br></br>
+                    <t t-esc="object.name"/> <br/> 
+                    <br></br>
+                    
+
+                    <a t-attf-href="/web#id=#{object.id}&amp;view_type=form&amp;model=sale.order"  class="oe_highlight" style="background-color: #651B4F; color: #ffffff;">View Task</a>
+                </div>
+                </div>
+        </field>
+    </record>
+
+
+    <record id="view_sale_approval_form" model="ir.ui.view">
+        <field name="name">sale.approval.form</field>
+        <field name="model">sale.approval</field>
+        <field name="arch" type="xml">
+          <form string="Sales Approval" >
+            <sheet>
+                <group>
+                    <group>
+                        <field name="y_document_type_id" required='1' options="{'no_create': True, 'no_open': True}"/>
+                        <field name="y_name" />
+                        <field name="y_warehouse_id" required='0' options="{'no_create': True, 'no_open': True}"/>
+                        <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" groups="base.group_multi_company"/>
+                        <field name="y_approval_method" required='1'  widget="radio"/>
+                    </group>
+                <group>
+                </group>
+                </group>
+                    <notebook>
+                        <page string="Levels" name="levels" invisible="y_approval_method != 'stages'" >
+                            <field name="y_approval_lines" widget="section_and_note_one2many" >
+                                <tree string="Sales Approval Lines" editable="bottom">
+                                    <field name='y_user_ids'  widget="many2many_tags" required='1' options="{'no_create': True, 'no_open': True}"/>
+                                    <field name='y_role' />
+                                    <field name='y_approval_amount' column_invisible="1"/>
+                                    
+                                    <field name='y_approval_one' column_invisible="parent.y_approval_method == 'amount'"/>
+                                    <field name='y_approval_two' column_invisible="parent.y_approval_method == 'amount'" />
+                                    <field name='y_approval_three' column_invisible="parent.y_approval_method == 'amount'" />
+                                    <field name='y_approval_amount_from' column_invisible="parent.y_approval_method == 'stages'" />
+                                    <field name='y_approval_amount_to' column_invisible="parent.y_approval_method == 'stages'" />
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Amount" name="amount" invisible="y_approval_method != 'amount'" >
+                            <field name="y_approval_lines" widget="section_and_note_one2many" >
+                                <tree string="Sales Approval Lines" editable="bottom">
+                                    <field name='y_user_ids'  widget="many2many_tags" required='1' options="{'no_create': True, 'no_open': True}"/>
+                                    <field name='y_role' />
+                                    <field name='y_approval_amount' column_invisible="1"/>
+                                    
+                                    <field name='y_approval_one' column_invisible="parent.y_approval_method == 'amount'" />
+                                    <field name='y_approval_two' column_invisible="parent.y_approval_method == 'amount'" />
+                                    <field name='y_approval_three' column_invisible="parent.y_approval_method == 'amount'" />
+                                    <field name='y_approval_amount_from' column_invisible="parent.y_approval_method == 'stages'" />
+                                    <field name='y_approval_amount_to' column_invisible="parent.y_approval_method == 'stages'" />
+                                </tree>
+                            </field>
+                        </page>
+
+
+
+                        <page string="Level and Amount" name="lvlandamount" invisible="y_approval_method != 'lvlsamt'" >
+                            <field name="y_lvl_amt_approval_lines" widget="section_and_note_one2many" >
+                                <tree string="Lvl and Amt Approval Lines" editable="bottom">
+                                    <field name='y_approval_level' />
+                                    <field name='y_lvl1_user_ids'  widget="many2many_tags"  options="{'no_create': True, 'no_open': True}" required="y_approval_level in ['1stlvlapproval','2ndlvlapproval','3rdlvlapproval']" />
+                                    <field name='y_lvl2_user_ids'  widget="many2many_tags"  options="{'no_create': True, 'no_open': True}" readonly="y_approval_level == '1stlvlapproval'" required="y_approval_level in ['2ndlvlapproval','3rdlvlapproval']" />
+                                    <field name='y_lvl3_user_ids'  widget="many2many_tags"  options="{'no_create': True, 'no_open': True}" readonly="y_approval_level in ['1stlvlapproval','2ndlvlapproval']" required="y_approval_level == '3rdlvlapproval'" />
+                                    
+                                    <field name='y_approval_amount_from' required="1"/>
+                                    <field name='y_approval_amount_to' required="1"/>
+                                    <field name='y_lvl_approval_id' column_invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+          </form>
+        </field>
+      </record>
+
+       <record id="view_sale_approval_form_tree" model="ir.ui.view">
+            <field name="name">sale.approval.tree</field>
+            <field name="model">sale.approval</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree string="Sales Approval" >
+                    <field name="y_document_type_id"/>
+                    <field name="y_warehouse_id"/>
+                    <field name="y_approval_method"/>
+                    <field name="y_company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_approval_search_view" model="ir.ui.view">
+            <field name="name">sale.approval.search</field>
+            <field name="model">sale.approval</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="active" string="Active" domain="[('active', '!=', False)]"/>
+                    <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.rule" id="sale_approval_record_restricted_company_rule">
+            <field name="name">Sale Approval Restricted Record: multi-company</field>
+            <field name="model_id" ref="model_sale_approval"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                ['|', ('y_company_id', '=', False), ('y_company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <record id="action_sale_approval" model="ir.actions.act_window">
+            <field name="name">Sale Approval</field>
+            <field name="res_model">sale.approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem 
+            id="menu_sale_approval" 
+            name="Sale Approval" 
+            parent="sale.menu_sale_config"
+            action="action_sale_approval" sequence="45"
+        />
+
+
+
+    <record id="sale_order_SO_approval" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="before">
+                <div class="alert alert-warning oe_edit_only" role="alert" invisible="state in ['sale', 'reject'] and y_so_approval_method != 'lvlsamt'" >
+                  The SO total amount is out of the Approval Grid. <br/>
+                   You can confirm the Sale Order.
+                </div>
+            </xpath>
+
+            
+            <!-- <button name="action_draft" position="attributes"> 
+                <attribute name="invisible">state not in ['cancel', 'reject']</attribute>
+            </button> -->
+
+
+            <button name="action_draft" position="after" >
+                <button name="get_approval" type="object" class="oe_highlight"  invisible="state in ['sale', 'cancel' ,'reject'] and y_so_approval_method != 'False'"  string="Approve"/>
+                <field name="y_is_approved" invisible="1"/>
+                <field name="y_is_approval_req" invisible="1"/>
+                <button name="%(sale_approval_17.action_sale_approval_remarks)d" type="action" class="oe_highlight" string="Reject"  invisible="state in ['sale', 'cancel','reject'] and y_so_approval_method != 'False'"/>
+            </button>
+
+            <field name="currency_id" position='after'>
+                <field name="y_so_approval_method" invisible ='1'/>
+                <field name="y_current_approvall" invisible ='1'/>
+                <field name="y_approval_method" invisible ='1'/>
+                <field name="y_to_approve_states" invisible="1"/>
+            </field>
+
+            <notebook position="inside">
+                <page string="Approvals" invisible="y_so_approval_method == 'lvlsamt' or y_so_approval_method == False" >
+                    <field name='y_sale_approval_line' widget="section_and_note_one2many" readonly="1">
+                        <tree>
+                            <field name='y_user_ids' widget="many2many_tags"/>
+                            <field name='y_role'/>
+                            <field name='y_approvals'/>
+                            <field name='y_approved_date'/>
+                            <field name='y_is_approve'/>
+                            <field name='y_remarks'/>
+                            <field name='y_amount' column_invisible='1'/>
+                            <field name='y_approval_method' column_invisible='1'/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Approvals Level and Amount" invisible="y_so_approval_method != 'lvlsamt'" >
+                    <field name='y_sale_lvl_amt_approval_line' widget="section_and_note_one2many" readonly="1">
+                        <tree>
+                            <field name='y_approval_level'/>
+                            <field name='y_lvl1_user_ids' widget="many2many_tags" />
+                            <field name="y_is_1st_user_completed" column_invisible="1"/>
+                            <field name="y_approved_date1" string="Level1" />
+
+                            <field name='y_lvl2_user_ids' widget="many2many_tags" column_invisible="parent.y_max_approver == '1stlvlapproval'" />
+                            <field name="y_is_2nd_user_completed" column_invisible="1"/>
+                            <field name="y_approved_date2" string="Level2" column_invisible="parent.y_max_approver == '1stlvlapproval'" />
+
+                            <field name='y_lvl3_user_ids' widget="many2many_tags" column_invisible="parent.y_max_approver != '3rdlvlapproval'" />
+                            <field name="y_is_3rd_user_completed" column_invisible="1"/>
+                            <field name="y_approved_date3" string="Level3" column_invisible="parent.y_max_approver != '3rdlvlapproval'"/>
+
+                            <field name='y_approval_amount_from'/>
+                            <field name='y_approval_amount_to'/>
+                            
+                            <field name='y_sale_lvl_id' column_invisible='1'/>
+                            <field name="y_is_approval_completed" string="Approval Completed"/>
+                            <field name="y_remarks"/>
+                        </tree>
+                    </field>
+                </page>
+             </notebook>
+            </field>
+    </record>
+
+    <record id="sale_order_tree_view_newx" model="ir.ui.view">
+        <field name="name">sale.order.tree.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="y_to_approve_states" widget="badge"/>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

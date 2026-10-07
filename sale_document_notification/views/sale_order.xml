@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_from_inheirted" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//field[@name='payment_term_id']" position="after">
+                <field name="manager_sale_id"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Sale Documentation" name="sale_document"> 
+                  <field name="sale_doc_note_ids">
+                    <form>
+                      <header>
+                        <field name="state" widget="statusbar"/>
+                      </header>
+                      <sheet>
+                        <group>
+                          <group>
+                            <field name="name" />
+                            <field name="sale_attachment_ids" widget="many2many_binary" />
+                            <field name="order_notification" invisible="sale_notify_day == False"/>
+                          </group>
+                          <group>
+                            <field name="sale_expiry_date" />
+                            <field name="sale_notify_day" />
+                          </group>
+                          
+                        </group>
+                        
+                      </sheet>
+                      
+                    </form>
+                    <tree>
+                      
+                      <field name="name" />      
+                      <field name="sale_expiry_date" />  
+                      <field name="sale_day_expiry" />
+                      <field name="order_notification" invisible="sale_notify_day == False"/>        
+                      <field name="sale_notify_day" />  
+                      <field name="sale_attachment_ids" widget="many2many_binary"/>
+                      <field name="state" decoration-success="state == 'running'"
+                      decoration-danger="state == 'expired'"
+                      decoration-info="state == 'notify'"
+                      widget="badge"/>  
+                    </tree>
+                  </field> 
+                </page>
+              </xpath>
+        </field>
+    </record>
+
+    <record id="sale_document_notification_tree_view" model="ir.ui.view">
+        <field name="name">sale.document.notification</field>
+        <field name="model">sale.document.notification</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sale_order_id" />
+                <field name="name" />      
+                <field name="sale_expiry_date" />
+                <field name="sale_day_expiry" />  
+                <field name="order_notification" invisible="sale_notify_day == False"/>
+                <field name="sale_notify_day" />      
+                <field name="sale_attachment_ids" widget="many2many_binary" />
+                <field name="state" decoration-success="state == 'running'"
+                decoration-danger="state == 'expired'"
+                decoration-info="state == 'notify'"
+                widget="badge"/>  
+            </tree>
+        </field>
+    </record>
+
+    <record id="document_notification_sale_from_view" model="ir.ui.view">
+        <field name="name">sale.document.notification</field>
+        <field name="model">sale.document.notification</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="sale_attachment_ids" widget="many2many_binary" />
+                            <field name="order_notification" invisible="sale_notify_day == False"/>
+                        </group>
+                        <group>
+                            <field name="sale_expiry_date" />
+                            <field name="sale_notify_day" />
+                        </group>
+                    </group> 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_document_notify" model="ir.actions.act_window">
+		<field name="name">Documents Notification</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.document.notification</field>
+		<field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sale_document_notification.sale_document_notification_tree_view"/>
+	</record>
+
+  <menuitem
+        id="menu_sale_document_note"
+        name="Sale Documents"
+        action="action_sale_document_notify" 
+        parent="sale.menu_sale_config"
+        sequence="110"/>
+
+</odoo>

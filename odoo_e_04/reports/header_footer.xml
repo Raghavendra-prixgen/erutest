@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="external_layout_for_eruvaka_delivery_challan_header_footer">
+            <div class="header">
+                <table class="table-sm m-0 p-0 table-condensed table-bordered"
+                style="border:1px solid black;width:100%;">
+                        <tr>
+                            <td style="border:1px solid black;">
+                                <div class="row">
+                                    <div class="col-2 text-left">
+                                        <img t-if="o.company_id.parent_id.logo"
+                                        t-att-src="image_data_uri(o.company_id.parent_id.logo)"
+                                        style="height:120px;width:136px;margin-top:6px;margin-left:15px;"
+                                        alt="Logo" />
+                                  
+        
+                                    </div>
+                                    <div class="col-8 text-center" style="font-size:13px;margin-top:8px;">
+        
+        
+                                      
+                                        <t class="text-center">
+        
+                                            <b>
+                                                <span style="font-size:17px;font-family: Century Gothic;"
+                                                    t-field="o.company_id.parent_id.name" />
+                                            </b>
+                                            <br />
+                                               
+                                             <b>
+                                        <span style="font-size:11px;">Regd Office:</span>
+                                     </b>
+                                        <span style="font-size:11px;font-family: Century Gothic;"
+                                             t-field="o.company_id.parent_id.street" /><br/>
+                                        <span style="font-size:11px;font-family: Century Gothic;"
+                                             t-field="o.company_id.parent_id.street2" /><br/>
+                                        <span style="font-size:11px;font-family: Century Gothic;"
+                                            t-field="o.company_id.parent_id.city" />,
+                                        <span style="font-size:11px;font-family: Century Gothic;"
+                                            t-field="o.company_id.parent_id.state_id" />-
+                                        <span style="font-size:11px;font-family: Century Gothic;"
+                                            t-field="o.company_id.parent_id.zip" />
+                                        <br />
+                                       
+                                        <b><span style="font-size:11px;font-family: Century Gothic;">GSTIN :</span></b>
+                                   
+                                    <span style="font-size:11px;font-family: Century Gothic;" t-if="o.company_id.parent_id.vat"
+                                          t-field="o.company_id.parent_id.vat" />
+                                   
+                                     
+                                    <b><span style="font-size:11px;font-family: Century Gothic;">PAN :</span></b>
+                                    
+                                    <span style="font-size:11px;font-family: Century Gothic;" t-if="o.company_id.parent_id.partner_id.l10n_in_pan"
+                                    t-field="o.company_id.parent_id.partner_id.l10n_in_pan" /> 
+                                       
+                                                                             
+
+                                            
+                                                <b><span style="font-size:11px;font-family: Century Gothic;">
+                                            CIN :</span></b>
+        
+                                            <span style="font-size:11px;font-family: Century Gothic;" t-if="o.company_id.parent_id.company_registry"
+                                                        t-field="o.company_id.parent_id.company_registry"
+                                                         />
+                                            
+                                                <!-- </t> -->
+                                                <br/>
+                                                
+                                    
+                                            
+                                     <b><span style="font-size:11px;font-family: Century Gothic;">Mail Id :</span></b>
+                                        
+                                     <span style="font-size:11px;font-family: Century Gothic;" t-if="o.company_id.parent_id.email"
+                                         t-field="o.company_id.parent_id.email" />
+                                        
+                                     <b><span style="font-size:11px;font-family: Century Gothic;">WebPage :</span></b>
+                                    
+                                    <span style="font-size:11px;font-family: Century Gothic;" t-if="o.company_id.parent_id.website"
+                                         t-field="o.company_id.parent_id.website" />
+                                       
+                                      <br/>
+                                    <b><span style="font-size:11px;font-family: Century Gothic;">Contact Number :</span></b>
+                                    
+                                    <span style="font-size:11px;font-family: Century Gothic;">
+                                    <t t-if="o.company_id.parent_id.mobile">
+                                        <span t-field="o.company_id.parent_id.mobile" />
+                                        <br />
+                                    </t>
+                                    </span>
+                                </t>
+                            </div>
+                            <div class="col-2"></div>
+                            </div>
+                         </td>
+                    </tr>
+                </table>    
+
+                <table class="table table-borderless m-0 p-0"
+                    style="border:1px solid black;border-top:none;width:100%;font-family: Century Gothic;">
+                    <tr>
+                        <td
+                            style="border:1px solid black;text-align:center;border-top:none;font-size:16px;padding-top:3px;padding-bottom:2px;font-family: Century Gothic;"
+                            colspan="16">
+                            <strong style="text-transform:uppercase">Delivery Challan</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right:1px solid black;font-size:11px;width:50%;font-family: Century Gothic;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>Consignor Name</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <!-- <span t-if="o.company_id.parent_id.name" t-field="o.company_id.parent_id.name" /> -->
+                                     <span t-if="o.location_id.company_id.name" t-field="o.location_id.company_id.name" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                    <b><span>Address</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <span t-if="o.location_id.company_id.street"
+                                        t-field="o.location_id.company_id.street" />, <span
+                                        t-if="o.location_id.company_id.street2"
+                                        t-field="o.location_id.company_id.street2" />
+                                    <br />
+                                    <span
+                                        t-if="o.location_id.company_id.city" t-field="o.location_id.company_id.city" />
+                                    <span
+                                        t-if="o.location_id.company_id.zip" t-field="o.location_id.company_id.zip" />
+                                    <span
+                                        t-if="o.location_id.company_id.country_id"
+                                        t-field="o.location_id.company_id.country_id" />
+                                    <br />
+                                </div>
+                            </div>
+                            
+                        </td>
+                        <td style="font-size:11px;width:50%;font-family: Century Gothic;border-right:1px solid black;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>GSTIN</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.company_id.partner_id.vat" t-field="o.company_id.partner_id.vat" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                    <b><span>Purchase Person Mobile</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.company_id.partner_id.mobile" t-field="o.company_id.partner_id.mobile" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>Email</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.company_id.partner_id.email" t-field="o.company_id.partner_id.email"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="border:1px solid black;width:50%;font-size:11px;font-family: Century Gothic;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>Bill To </span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <span t-if="o.partner_id.name"
+                                        t-field="o.partner_id.name" />
+                                    <br />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Address </span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <span t-if="o.partner_id.street"
+                                        t-field="o.partner_id.street" />, <span
+                                        t-if="o.partner_id.street2"
+                                        t-field="o.partner_id.street2" />
+                                    <br />
+                                    <span
+                                        t-if="o.partner_id.city" t-field="o.partner_id.city" />
+                                    <span
+                                        t-if="o.partner_id.zip" t-field="o.partner_id.zip" />
+                                    <span
+                                        t-if="o.partner_id.country_id"
+                                        t-field="o.partner_id.country_id" />
+                                    <br />
+                                </div>
+                            </div>                        
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>PAN</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.l10n_in_pan">
+                                        <span t-field="o.partner_id.l10n_in_pan" />
+                                        <br />
+                                    </t>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>GSTIN</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.vat">
+                                        <span t-field="o.partner_id.vat" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>GSTIN Type</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.l10n_in_gst_treatment">
+                                        <span t-field="o.partner_id.l10n_in_gst_treatment" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                <b>    <span>Mobile</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.mobile">
+                                        <span t-field="o.partner_id.mobile" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Email</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.email">
+                                        <span t-field="o.partner_id.email" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Contact Person</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                        </td>
+                        <td
+                            style="text-align:left;border:1px solid black;border-left:1px solid white;width:50%;font-size:11px;font-family: Century Gothic;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>Ship To </span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <span t-if="o.partner_id.name"
+                                        t-field="o.partner_id.name" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Address </span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <span t-if="o.partner_id.street"
+                                        t-field="o.partner_id.street" />, <span
+                                        t-if="o.partner_id.street2"
+                                        t-field="o.partner_id.street2" />
+                                    <br />
+                                    <span
+                                        t-if="o.partner_id.city"
+                                        t-field="o.partner_id.city" />
+                                    <span
+                                        t-if="o.partner_id.zip"
+                                        t-field="o.partner_id.zip" />
+                                    <span
+                                        t-if="o.partner_id.country_id"
+                                        t-field="o.partner_id.country_id" />
+                                    <br />
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>PAN</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.l10n_in_pan">
+                                        <span t-field="o.partner_id.l10n_in_pan"/>
+                                        <br />
+                                    </t>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>GSTIN</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.vat">
+                                        <span t-field="o.partner_id.vat" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>GSTIN Type</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.l10n_in_gst_treatment">
+                                        <span t-field="o.partner_id.l10n_in_gst_treatment"/>
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Mobile</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.mobile">
+                                        <span t-field="o.partner_id.mobile"/>
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Email</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.email">
+                                        <span t-field="o.partner_id.email" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Contact Person</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+
+                                </div>
+                                <div class="col-6" style="text-align:left;width:60%">
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone" />
+                                        <br />
+                                    </t>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right:1px solid black;font-size:11px;width:50%;font-family: Century Gothic;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>DC Details</span></b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>DC Number</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.name" t-field="o.name" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                   <b> <span>DC Date</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.date_done" t-field="o.date_done" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                   <b> <span>Sale Order Ref</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.sale_id.name" t-field="o.sale_id.name" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                   <b> <span>Payment Term</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.sale_id.payment_term_id.name" t-field="o.sale_id.payment_term_id.name"/>
+                                    <br />
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-size:11px;width:50%;font-family: Century Gothic;border-right:1px solid black;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Vehicle No</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.y_vehicle_no" t-field="o.y_vehicle_no" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"
+                                    style="text-align:left;width:30%;font-size:11px;">
+                                   <b> <span>E-waybill No</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.y_e_waybill_no" t-field="o.y_e_waybill_no" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Sale Order Date</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.sale_id.date_order" t-field="o.sale_id.date_order" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Place Of Supply</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.y_res_state_id.name" t-field="o.y_res_state_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                   <b> <span>Nature Of Supply</span></b>
+                                    <br />
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;width:60%;">
+                                    <span t-if="o.y_nature_of_supply" t-field="o.y_nature_of_supply"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right:1px solid black;border-top:1px solid black;font-size:11px;width:50%;font-family: Century Gothic;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>Dispatch From</span></b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Warehouse</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.location_id.warehouse_id.name" t-field="o.location_id.warehouse_id.name"/>
+                                     <br />
+                                    <t t-if="o.location_id.warehouse_id">
+                                    <span t-if="o.location_id.warehouse_id.company_id.street" t-field="o.location_id.warehouse_id.company_id.street"/> <br />
+                                    <span t-if="o.location_id.warehouse_id.company_id.street2" t-field="o.location_id.warehouse_id.company_id.street2"/> <br />
+                                    <span t-if="o.location_id.warehouse_id.company_id.city" t-field="o.location_id.warehouse_id.company_id.city"/>
+                                    <span t-if="o.location_id.warehouse_id.company_id.state_id">
+                                    ,
+                                    </span>
+                                    <span t-if="o.location_id.warehouse_id.company_id.state_id" t-field="o.location_id.warehouse_id.company_id.state_id.name"/>
+                                    
+                                    </t>
+                                   
+                                </div>
+                            </div>
+                        </td>
+                        <td style="font-size:11px;border-top:1px solid black;width:50%;font-family: Century Gothic;border-right:1px solid black;"
+                            colspan="8">
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                    <b><span>State</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.location_id.warehouse_id.partner_id.state_id.name" t-field="o.location_id.warehouse_id.partner_id.state_id.name" />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3" style="text-align:left;width:30%">
+                                  <b>  <span>Pin Code</span></b>
+                                </div>
+                                <div class="col-1" style="text-align:left;width:10%;">
+                                    <span>:</span>
+                                    <br />
+                                </div>
+                                <div class="col-6"
+                                    style="text-align:left;font-size:11px;width:60%;">
+                                    <span t-if="o.location_id.warehouse_id.partner_id.zip" t-field="o.location_id.warehouse_id.partner_id.zip" />
+                                    <br />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name"
+                t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout" />
+                <t t-raw="0" />
+            </div>
+
+            <div class="footer o_standard_footer">
+                <div class="col-12" style="text-align:center;padding:1px;margin-top:none !important;font-color:gray;border-top:1px solid black;">
+                    <p style="color:black;font-size:11px;text-align:center;" class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    of
+                    <span class="topage"/></p>
+                </div>
+            </div>
+           <!--  <div class="footer o_standard_footer" style="page-break-after: always; height: auto !important;">
+                <div class="last-page">
+                    <table class="table table-borderless"> 
+                        <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;font-family: Century Gothic;">
+
+                            <div style="width:60%;padding-left:1%">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <b>
+                                <span style="font-size:11px" t-field="o.company_id.name" />
+                                </b>
+                            </div>
+
+                            <div style="width:10%">
+                                
+                            </div>
+
+                            <div
+                                style="width:30%;font-family: Century Gothic;text-align:center;padding-right:10px;border-left:1px solid black">
+                                <b>
+                                <span style="font-size:11px;">For</span>
+                                <span style="font-size:11px" t-field="o.company_id.name" />
+                                </b>
+                                <br />
+                                <br />
+                                <br />
+                                <span style="font-size:11px;text-align:center;">
+                                    Authorised Signatory
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row" style="border-bottom:1px white solid;border-top:1px black solid;border-left:1px black solid;border-right:1px black solid;font-family: Century Gothic;border-bottom:1px black solid;">
+                            <div class="text-left" style="width:100%;">
+                                <span style="font-size:11px;font-family: Century Gothic;">* All disputes are subjected to vijaywada Jurisdiction.</span>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+
+                <div class="row" style="font-family: Century Gothic;">
+                    <div class="text-center" style="width:100%;">
+                        <p
+                            style="float:center;color:black;font-size:12px;font-family: Century Gothic;"
+                            class="text-muted"> Page: <span class="page" /> / <span
+                                class="topage" />
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+        </template>
+    </data>
+</odoo>

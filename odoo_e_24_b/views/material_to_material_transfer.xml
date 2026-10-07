@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="operation_type_form_view" model="ir.ui.view">
+    <field name="name">stock.picking.type.form.view.</field>
+    <field name="model">stock.picking.type</field>
+    <field name="inherit_id" ref="stock.view_picking_type_form"/>
+    <field name="arch" type="xml">
+        <field name="company_id" position="after">
+          <field name="y_material_to_material_transfer" widget="boolean_toggle" string="Material To Material Transfer"/>
+        </field>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="alternative_gl_tree">
+    <field name="name">Tree View For Material Transfer</field>
+    <field name="model">material.to.material.transfer</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="y_name"/>
+        <field name="y_effective_date"/>
+      
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="material_to_material_transfer_form_view">
+    <field name="name">material.to.material.transfer.form</field>
+    <field name="model">material.to.material.transfer</field>
+    <field name="arch" type="xml">  
+      <form>
+        <header>
+            <button name="action_confirm" type="object" string="Confirm"
+                  invisible ="y_state not in ('draft')"/>
+            <field name="y_state" widget="statusbar" statusbar_visible="draft,posted"/>        
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <field name="y_picking_count" widget="statinfo" string="Delivery"/>
+            <button type="object" name="view_picking_values_tree" class="oe_stat_button" icon="fa-truck" invisible = "y_picking_count == 0" >
+            </button>
+          </div>
+          <div class="oe_title">
+              <h1>
+                  <field name="y_name" readonly="1"/>
+              </h1>
+          </div>
+          <group>
+            <group>
+              <field name="y_effective_date"/>
+              <field name="analytic_distribution" widget="analytic_distribution"
+                string="Analytic Account"
+                    />
+            </group>
+            <group>
+              <field name="create_date" />
+              <field name="create_uid"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Material From">
+              <field name="y_material_to_material_transfer_from_line_ids" readonly = "y_state not in ('draft')">
+                <tree editable="bottom">
+                    <field name="y_product_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="y_product_qty" />
+                    <field name="y_source_location_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                    <field name="y_material_to_material_from_transfer_id" invisible="1"/>
+                    <field name="y_product_uom_id" invisible="1"/>
+                    <field name="y_lot_id"/>
+                    <field name="y_onhand_qty"/>
+                </tree>        
+              </field>
+            </page>
+            <page string="Material To">
+              <field name="y_material_to_material_transfer_to_line_ids" readonly = "y_state not in ('draft')">
+                <tree editable="bottom">
+                  <field name="y_product_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                  <field name="y_product_qty" />
+                  <field name="y_destination_location_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                  <field name="y_material_to_material_to_transfer_id" invisible="1 " />
+                  <field name="y_lot_id"/>
+
+                  <field name="y_product_uom_id" invisible="1"/>
+                  <field name="y_onhand_qty"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+            <!-- <field name="message_follower_ids"/> -->
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_material_to_matyerial" model="ir.actions.act_window">
+      <field name="name">Material To Material Transfer</field>
+      <field name="res_model">material.to.material.transfer</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      name="Material To Material Transfer" id="action_material_menu"
+      parent="stock.menu_stock_warehouse_mgmt"
+      action="action_material_to_matyerial" sequence="110"/>
+
+</odoo>

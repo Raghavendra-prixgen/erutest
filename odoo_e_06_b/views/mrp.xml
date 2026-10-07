@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_view_inherit_analytic_base" model="ir.ui.view">
+        <field name="name">mrp.production.view.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <xpath expr="//field[@name='analytic_distribution']" position="move"/>
+            </xpath> 
+            <xpath expr="//field[@name='analytic_distribution']" position="attributes">
+                <attribute name="string">Analytic Account</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

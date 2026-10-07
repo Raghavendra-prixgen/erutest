@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <record id="view_picking_type_inherit_form" model="ir.ui.view">
+      <field name="name">stock.picking.type</field>
+      <field name="model">stock.picking.type</field>
+      <field name="inherit_id" ref="mrp.view_picking_type_form_inherit_mrp"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='use_create_components_lots']" position="after">
+              <field name="y_custom_sequence"/>
+              <field name="y_sn_sequence" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_picking_type_form_inherit_1" model="ir.ui.view">
+      <field name="name">stock.picking.type</field>
+      <field name="model">stock.picking.type</field>
+      <field name="inherit_id" ref="stock.view_picking_type_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='use_create_lots']" position="after">
+              <field name="y_custom_sequence" invisible="use_create_lots != True or use_existing_lots != False"/>
+              <field name="y_sn_sequence" invisible="use_create_lots != True or use_existing_lots != False"/>
+              
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

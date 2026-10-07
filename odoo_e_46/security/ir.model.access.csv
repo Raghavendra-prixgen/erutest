@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+account_aged_receivable_report_handler_custom,account.aged.receivable.report.handler.custom,model_account_aged_receivable_report_handler_custom,,1,1,1,1
+
+account_partner_ledger_report_handler_custom,account.partner.ledger.report.handler.custom,model_account_partner_ledger_report_handler_custom,,1,1,1,1
+
+account_aged_payable_report_handler_custom,account.aged.payable.report.handler.custom,model_account_aged_payable_report_handler_custom,,1,1,1,1
+
+

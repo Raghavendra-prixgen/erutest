@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_product_form_device_type_inherits" model="ir.ui.view">
+    <field name="name">view_product_warranty_inherit</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="after">
+        <field name="device_type_ids" widget="many2many_tags"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_product_form_device_type_warrantys" model="ir.ui.view">
+    <field name="name">view_product_warranty_template</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="after">
+        <field name="device_type_ids" widget="many2many_tags"/>
+      </xpath>
+    </field>
+  </record>
+
+   
+
+    <record id="res_config_settings_view_form_access_token" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.access.token</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//widget[@name='res_config_dev_tool']" position="before">
+                
+                    <div id="access_token_api_settings">
+                    <h2>Eruvaka Access token</h2>
+               
+                    <div class="row mt16 o_settings_container" name="access_token_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="eruvaka_access_token" title="Eruvaka Access token">
+                        <div class="o_setting_right_pane" id="access_token_api_settings">
+                            <div>
+                              <label for="user_id"/>
+                            </div>
+                            <div>
+                              <field name="user_id" force_save="1"/>
+                            </div>
+
+                            <div>
+                              <label for="password"/>
+                            </div>
+                            <div>
+                              <field name="password"/>
+                            </div>
+
+                            <div>
+                                <label for="eruvaka_access_token"/>
+                            </div>
+                            <div>                               
+                                <field name = "eruvaka_access_token"/>
+                            </div>
+                            <div>
+                                <label for="generate_token"/>
+                            </div>
+                            <div>
+                                <button class="oe_stat_button" string="Connect" type="object" name="generate_token" />
+                            </div>
+
+                            <!-- <div>
+                                <field name = "generate_token"/>
+                            </div> -->
+
+                           <!--  <div>
+                                <field name = "eruvaka_access_token"/>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </field>
+    </record>
+
+
+
+
+   <record model="ir.ui.view" id="claim_request_order_tree_view">
+    <field name="name">claim.request.tree.view</field>
+    <field name="model">claim.request</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="claim_id"/>
+        <field name="customer_name"/>
+        <field name="device_type"/>
+        <field name="device_id"/>
+        <field name="motor_id"/>
+        <field name="issue"/>
+        <field name="customer_name"/>
+        <field name="failure_part_no"/>
+        <field name="failure_part_name"/>
+        <field name="failure_date"/>
+        <field name="approved_date"/>
+        <field name="approved_by"/>
+        <field name="claim_date"/>
+
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="api_logs_order_tree_view">
+    <field name="name">api.logs.tree.view</field>
+    <field name="model">api.logs</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="api_name"/>
+        <field name="payload"/>
+        <field name="response"/>
+        <field name="odoo_ref"/>
+        <field name="created_by"/>
+        <field name="created_on"/>
+       
+
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="api_logs_order_form_view">
+    <field name="name">api_logs.form.view</field>
+    <field name="model">api.logs</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+                <field name="api_name"/>
+                <field name="payload"/>
+                <field name="response"/>
+               
+            </group>
+            <group>
+                <field name="odoo_ref"/>
+                <field name="created_by"/>
+                <field name="created_on"/>
+                
+            </group>
+          </group>
+          
+        </sheet>
+      
+      </form>
+    </field>
+  </record>
+
+
+  <record model="ir.ui.view" id="claim_request_order_form_view">
+    <field name="name">claim.request.order.form.view</field>
+    <field name="model">claim.request</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+            <button name="action_approve"  string="Approve" type="object"  invisible="claim_status != 'draft'" class="btn-primary" />
+
+            <button name="action_reject"  string="Reject" type="object"  invisible="claim_status != 'draft'" class="btn-primary" />
+
+          <field name="claim_status" widget="statusbar" statusbar_visible="draft,approved,rejected,closed"/>
+        </header>
+        <sheet>
+          
+          <div class="oe_edit_only">
+            <label for="claim_id" class="oe_inline" />
+          </div>
+          <h1>
+            <field name="claim_id" class="oe_inline" readonly="1"/>
+          </h1>
+          <group>
+            <group>
+                <field name="customer_name"/>
+                <!-- <field name="device_type_ids" widget="many2many_tags"/> -->
+                <field name="device_type"/>
+                <field name="device_id"/>
+                <field name="motor_id"/>
+                <field name="issue"/>
+                <field name="customer_name"/>
+            </group>
+            <group>
+                <field name="failure_part_no"/>
+                <field name="failure_part_name"/>
+                <field name="failure_date"/>
+                <field name="approved_date"/>
+                <field name="approved_by"/>
+                <field name="claim_date"/>
+                <field name="warrenty_exists"/>
+                <field name="api_bearer_token"/>
+            </group>
+          </group>
+          
+        </sheet>
+      <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers" />
+        <field name="message_ids" widget="mail_thread" />
+      </div>
+      </form>
+    </field>
+  </record>
+
+
+  <record model="ir.ui.view" id="api_connection_order_tree_view">
+    <field name="name">api.connection.tree.view</field>
+    <field name="model">api.connection</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="eruvaka_database_url"/>
+        <field name="eruvaka_username"/>
+        <field name="eruvaka_password"/>
+        <field name="eruvaka_access_token"/>
+        
+      </tree>
+    </field>
+  </record>
+
+  
+
+
+  <record model="ir.ui.view" id="api_connection_order_form_view">
+    <field name="name">api.connection.order.form.view</field>
+    <field name="model">api.connection</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button name="get_connection" type="object" string="Connect"/>
+        </header>
+        <sheet>
+          <group>
+                <field name="eruvaka_database_url"/>
+                <field name="eruvaka_username"/>
+                <field name="eruvaka_password"/>
+                <field name="eruvaka_access_token"/>
+                <field name="y_eruvaka_device_id" />
+                <!-- <field name="y_eruvaka_close_claim" invisible="1"/> -->
+                <field name="y_eruvaka_approve_claim" />
+                
+
+
+
+            </group>
+        </sheet>
+      <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers" />
+        <field name="message_ids" widget="mail_thread" />
+      </div>
+      </form>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="device_type_order_tree_view">
+    <field name="name">device.type.tree.view</field>
+    <field name="model">device.type</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="device_primary_id"/>
+        
+      </tree>
+    </field>
+  </record>
+
+
+  <record model="ir.ui.view" id="device_type_order_form_view">
+    <field name="name">device.type.order.form.view</field>
+    <field name="model">device.type</field>
+    <field name="arch" type="xml">
+      <form>
+        
+        <sheet>
+          <group>
+          <group>
+                <field name="name"/>
+                
+            </group>
+
+            <group>
+                <field name="device_primary_id"/>
+                
+            </group>
+            </group>
+
+        </sheet>
+      
+      </form>
+    </field>
+  </record>
+
+    
+
+
+    <record model="ir.actions.act_window" id="action_product_warranty_claim_request">
+        <field name="name">Claim Request</field>
+        <field name="res_model">claim.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_api_logs">
+        <field name="name">Api Logs</field>
+        <field name="res_model">api.logs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_product_warranty_api_connection">
+        <field name="name">API Connection</field>
+        <field name="res_model">api.connection</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_device_type">
+        <field name="name">Device Type</field>
+        <field name="res_model">device.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+
+    <!-- <menuitem
+        id="menu_product_warranty_claim_request"
+        name="Product Warranty"
+        parent="quality_control.menu_quality_root"
+        action="odoo_pondlogs_intergation.action_product_warranty_claim_request"
+        sequence="18"/> -->
+
+
+      <menuitem
+        id="menu_product_warranty_claim_request"
+        name="Product Warranty"
+        parent="quality_control.quality_control_menu_product"
+        action="odoo_pondlogs_intergation.action_product_warranty_claim_request"
+        sequence="11"/>
+
+    <menuitem
+        id="menu_quality_config_api_connection"
+        name="API Connection"
+        action="odoo_pondlogs_intergation.action_product_warranty_api_connection"
+        parent="quality_control.menu_quality_configuration"
+        sequence="15"/>
+
+    <menuitem
+        id="menu_quality_config_device_type"
+        name="Device Type"
+        action="odoo_pondlogs_intergation.action_device_type"
+        parent="quality_control.menu_quality_configuration"
+        sequence="15"/>
+
+    <menuitem
+        id="menu_api_logs"
+        name="Api Logs"
+        parent="quality_control.menu_quality_root"
+        action="odoo_pondlogs_intergation.action_api_logs"
+        sequence="19"/>
+
+
+        <!-- quality_control_menu_product_variant -->
+
+</odoo>

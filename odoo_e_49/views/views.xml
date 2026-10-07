@@ -1,0 +1,90 @@
+<odoo>
+	<data>
+		<record id="tree_view_inventory_balance_detailed_summmary" model="ir.ui.view">
+			<field name="name">inventory.balance.summmary.tree.view</field>
+			<field name="model">inv.bal.sum.report.view</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="default_code" optional="show" />
+					<field name="product_id" />
+					<field name="categ_id" optional="show" />
+					<field name="uom_id" optional="show" />
+					<field name="company_id" optional="show" />
+					<field name="opening_stock" optional="show" />
+					<field name="opening_value" sum="Total Value" optional="show"/>
+					<field name="purchase_qty" decoration-success="1"  optional="show"/>
+					<field name="purchase_value" decoration-success="1"  optional="show"/>
+					<field name="purchase_return_qty" decoration-danger="1" optional="show"/>
+					<field name="purchase_return_value" decoration-danger="1" optional="show"/>
+					<field name="sale_qty" decoration-danger="1" optional="show"/>
+					<field name="sale_value" decoration-danger="1" optional="show"/>
+					<field name="sale_return_qty" decoration-success="1"  optional="show"/>
+					<field name="sale_return_value" decoration-success="1"  optional="show"/>
+					<field name="production_qty" decoration-success="1"  optional="show"/>
+					<field name="production_value" decoration-success="1"  optional="show"/>
+					<field name="consumption_qty" decoration-danger="1" optional="show"/>
+					<field name="consumption_value" decoration-danger="1" optional="show"/>
+					<field name="positive_adjustment_qty" decoration-success="1"  optional="show"/>
+					<field name="positive_adjustment_value" decoration-success="1"  optional="show"/>
+					<field name="negative_adjustment_qty" decoration-danger="1" optional="show"/>
+					<field name="negative_adjustment_value" decoration-danger="1" optional="show"/>
+					<field name="closing_stock" optional="show" />
+					<field name="closing_value" sum="Total Value" optional="show" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="inventory_balance_summmary_search_view" model="ir.ui.view">
+      <field name="name">inventory balance summmary search view</field>
+      <field name="model">inv.bal.sum.report.view</field>
+      <field name="arch" type="xml">
+        <search string="Search Inventory Summary">
+          <field name="default_code"/>
+          <field name="company_id"/>
+
+        </search>
+      </field>
+    </record>
+
+
+	<record id="inv_bal_summary_wiz_view_form" model="ir.ui.view">
+      <field name="name">inv.bal.sum.wiz.view.form</field>
+      <field name="model">inv.bal.sum.wiz</field>
+      <field name="arch" type="xml">
+        <form string="Inventory Balance Summary">
+          <sheet>
+            <group>
+              <group>
+                <field name="y_open_date" required="1" widget="date"/>
+                <field name="y_company_ids"  required="1" options="{'no_create': True,'no_open': True,'no_create_edit':True}" widget="many2many_tags"/>
+                <!-- <field name="y_categ_id"  widget="many2many_tags" /> -->
+              
+              </group>
+              <group>
+                  <field name="y_close_date" required="1" widget="date"/>
+                  <!-- <field name="y_product_group_id_1"/>
+                  <field name="y_product_group_id_2"/>
+                  <field name="y_product_group_id_3"/> -->
+              </group>
+            </group>
+            <footer>
+			<button name="action_open_detailed_report" type="object"
+						class="oe_highlight" string="View Detailed Summary" />            
+			</footer>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+	 <record id="inv_bal_sum_wiz_action" model="ir.actions.act_window">
+	      <field name="name">Inventory Summary</field>
+	      <field name="res_model">inv.bal.sum.wiz</field>
+	      <field name="view_mode">form</field>
+	      <field name="target">new</field>
+	    </record>
+
+		<menuitem id="inv_bal_sum_menu_act" name="Inventory Summary" parent="stock.menu_warehouse_report" action="inv_bal_sum_wiz_action"/>
+
+	</data>
+</odoo>

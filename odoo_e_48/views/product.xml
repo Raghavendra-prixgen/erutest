@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="log_for_rules_account_transfer_model">
+        <field name="name">log.for.account.transfer.model</field>
+        <field name="model">account.transfer.model</field>
+        <field name="inherit_id" ref="account_auto_transfer.view_transfer_model_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+        
+        <record model="ir.ui.view" id="product_category_form_view_inherited_mandtory">
+            <field name="name">product_category_view_inherited</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//form/sheet" position="before">
+                <header>
+
+                    <button name="approve_product_category" invisible="y_release != False"  type="object" string="Approve" class="oe_highlight"/>
+                </header>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_lot_aproval_form_view_inherited_mandtory">
+            <field name="name">stock_lot_view_inherited</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="y_is_lot_approved" widget="boolean_toggle" readonly="1"/>
+                </field>
+
+                <xpath expr="//form/sheet" position="before">
+                <header>
+
+                    <button name="approve_lot" invisible="y_is_lot_approved != False"  type="object" string="Approve" class="oe_highlight"/>
+                </header>
+
+                </xpath>
+             
+            </field>
+        </record>
+
+
+
+
+
+
+        <record model="ir.ui.view" id="mrp_bom_form_view_inherited_mandtory">
+            <field name="name">mrp_bom_view_inherited</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="y_is_bom_approved" widget="boolean_toggle" readonly="1"/>
+                </field>
+
+                <xpath expr="//form/sheet" position="before">
+                <header>
+
+                    <button name="approve_bom" invisible="y_is_bom_approved != False"  type="object" string="Approve" class="oe_highlight"/>
+                </header>
+
+                </xpath>
+             
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="product_product_form_view_inherited_mandtory">
+            <field name="name">product_view_inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="y_is_product_approved" widget="boolean_toggle"/>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                <header>
+
+                    <button name="approve_product" invisible="y_is_product_approved != False" type="object" string="Approve" class="oe_highlight"/>
+                </header>
+
+                </xpath>
+
+                <xpath expr="//field[@name='l10n_in_hsn_code']" position="attributes">
+                    <attribute name="required">sale_ok</attribute>
+
+                </xpath>
+             
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="sale_order_hsn_code_form_view_inhrited">
+            <field name="name">sale_order_form_view_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//form/sheet//field[@name='order_line']//tree//field[@name='name']" position="after">
+                    <field name="y_l10n_in_hsn_code"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="sale_required_move_form_view_inherit">
+            <field name="name">sale_move_form_view_inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='y_port_loading_id']" position="attributes">
+                <attribute name="required">l10n_in_gst_treatment == 'overseas'</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='y_port_discharge_id']" position="attributes">
+                <attribute name="required">l10n_in_gst_treatment == 'overseas'</attribute>
+                </xpath>
+               
+            </field>
+        </record>
+
+
+
+
+
+
+
+        <record model="ir.ui.view" id="account__requiredmove_form_view_inherit">
+            <field name="name">account_move_form_view_inherited</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                
+                 <xpath expr="//field[@name='y_port_loading_id']" position="attributes">
+                <attribute name="required">l10n_in_gst_treatment == 'overseas' and move_type == 'out_invoice'</attribute>
+                </xpath>
+
+
+
+                <xpath expr="//field[@name='y_port_discharge_id']" position="attributes">
+                <attribute name="required">l10n_in_gst_treatment == 'overseas' and move_type == 'out_invoice'</attribute>
+                </xpath>
+               
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="purchase_order_form_view_inhrited">
+            <field name="name">purchase_order_form_view_inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='y_purchase_request_number']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        
+
+    </data>
+</odoo>

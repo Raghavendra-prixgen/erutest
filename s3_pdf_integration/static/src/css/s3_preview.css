@@ -1,0 +1,33 @@
+/* Add to your s3_preview.css file */
+
+/* Make PDF attachments stand out */
+.o_attachment[data-mimetype*="pdf"] {
+    border: 1px solid #e3f2fd !important;
+    background-color: #f8f9fa !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.o_attachment[data-mimetype*="pdf"]:hover {
+    background-color: #e3f2fd !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+/* Add cloud icon to S3 stored PDFs */
+.o_attachment[data-mimetype*="pdf"]::after {
+    content: "☁️";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 12px;
+    background: white;
+    border-radius: 50%;
+    padding: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Ensure attachments have relative positioning for the icon */
+.o_attachment[data-mimetype*="pdf"] {
+    position: relative !important;
+}

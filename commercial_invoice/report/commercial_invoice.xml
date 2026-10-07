@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Paper Format Definition -->
+    <record id="commercial_invoice_page_format" model="report.paperformat">
+        <field name="name">Commercial Invoice Report</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">152</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">146</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- Report Action Definition -->
+    <record id="commercial_invoice_list" model="ir.actions.report">
+        <field name="name">Commercial Invoice Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">commercial_invoice.commercial_invoice_report_format</field>
+        <field name="report_file">commercial_invoice.commercial_invoice_report_format</field>
+        <field name="binding_model_id" ref="model_account_move" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="commercial_invoice.commercial_invoice_page_format" />
+    </record>
+
+    <!-- QWeb Template Definition -->
+    <template id="commercial_invoice_report_format">
+        <t t-call="web.html_container">
+            <t t-call="commercial_invoice.external_layout_for_commercial">
+                <t t-foreach="docs" t-as="doc">
+                   
+                    <table class="table m-0 p-0 table-borderless table-sm" style="width:100%;border:1px solid black;font-size:11px;font-family: Century Gothic;">
+                            <tr style="border-bottom:1px solid black;">
+                                <th style="border-right:1px solid black;width:9%"><strong>Sl.No</strong></th>
+                                <th style="border-right:1px solid black;width:10%"><strong>Code</strong></th>
+                                <th style="border-right:1px solid black;width:27%" class="text-left"><strong>Product </strong></th>
+                                <th style="border-right:1px solid black;width:8%" class="text-left"><strong>Quantity</strong></th>
+                                <th style="border-right:1px solid black;width:8%" class="text-left"><strong>UOM</strong></th>
+                                <th style="border-right:1px solid black;width:6%" class="text-left"><strong>Currency</strong></th>
+                                <th style="border-right:1px solid black;width:10%" class="text-left"><strong>Price</strong></th>
+                                <th style="border-right:1px solid black;width:10%" class="text-left"><strong>Dis%</strong></th>
+                                <th style="border-right:1px solid black;width:100px;" class="text-left"><strong>Subtotal</strong></th>
+
+                            </tr>
+
+                            <t t-set="sl" t-value="1" />
+                            <t t-set="toaltax" t-value="0" />
+                            <t t-set="taxable" t-value="0" />
+                            <t t-set="subtotal" t-value="0" />
+                            <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                <tr style="border-bottom:1px solid black;border-top:none">
+                                    <td style="border-right:1px solid black;width:9%;text-align:center">
+                                        <span t-esc="sl" />
+                                        <t t-set="sl" t-value="sl+1" />
+                                    </td>
+                                    <td style="border-right:1px solid black;width:10%">
+                                        <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;width:27%">
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;width:8%;text-align:center">
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;width:8%;text-align:center">
+                                    <span t-field="line.product_uom_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;width:6%;text-align:center">
+                                        <span t-field="line.currency_id.name"/> 
+
+                                    </td>
+                                    <td style="border-right:1px solid black;width:10%;text-align:right">
+                                        <span t-field="line.price_unit"/> 
+
+                                    </td>
+                                    <td style="border-right:1px solid black;width:10%;text-align:right">
+                                        <span t-field="line.discount"/> 
+                                    </td>
+                                    <td style="border-right:1px solid black;width:100px;text-align:right;">
+                                        <span t-field="line.price_subtotal"/> 
+                                        <t t-set="subtotal" t-value="line.price_subtotal+subtotal" />
+
+                                    </td>
+                                </tr>
+                                </t>
+
+                                
+                            </table>
+                        <table class="table m-0 p-0" style="width:100;font-size:11px;page-break-inside:avoid;">
+                            <tr style='font-family: Century Gothic;'>
+                                <td style="border-right:none;border-left:1px solid black;border-top:1px solid black;width:88%;text-align: center;font-size:11px;">
+
+                                    <strong>Grand Total (in <t t-esc="doc.currency_id.name"></t>) : </strong>
+
+                                
+                                </td>
+                                <td style="border-left:none;border-right:1px solid black;width:12%;text-align: center;font-size:11px;border-top:1px solid black;">
+
+                                    <strong ><t t-esc="doc.currency_id.symbol"/>&#160;&#160;<span t-esc="doc.amount_total" t-options="{'widget': 'float', 'precision': 2}"/></strong>
+                                </td>    
+    
+                            </tr>
+                        </table>
+
+
+
+                 
+
+                    <table class="table m-0 p-0" style=" width: 100%; border: 1px solid black;page-break-inside:avoid;font-family: Century Gothic;">
+                        <tr>
+                            <td style="width: 50%;padding-left:3px;font-size:11px;font-family: Century Gothic;">
+
+                                <span style="font-size:11px;"><strong>Total Invoice Value in Words: </strong> <span style="font-size:11px;" t-field="doc.amount_total_words" /></span><br />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="page-break-after:always"></div>
+                    <table class="table-borderless table-sm" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="m-0 p-0" style="width:100%;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:none;padding-bottom:-1px;"/> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="width:100%;border-bottom:1px solid black;">
+                                
+                                <td style="text-align:left;width:100%;border-left:1px solid black;border-right:1px solid black;border-top:none;">
+
+                                        <span  style="text-align:left;font-size:12px;width:100%;"><strong>T &amp; C :</strong></span>
+                                        <span style="text-align:left;font-size:11px;width:100%;" t-esc="doc.narration"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table-borderless table-sm" style="font-size: 11px; width: 100%; border: 1px solid black; padding-left: 10px;">
+                        <tr>
+                            <td style="width: 30%;padding-left:3px;font-size:11px;">
+                            <span><div class="row" ><div style="width:37%;"><span>LUT ARN NO </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.lut_no"><span t-field="doc.company_id.partner_id.lut_no"></span></t></div></div></span>
+                            <span><div class="row"><div style="width:37%;"><span>Register Date </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.y_reg_date"><span t-field="doc.company_id.partner_id.y_reg_date"></span></t></div></div></span>
+                            <span><div class="row"><div style="width:37%;"><span>Valid Till </span></div><div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.lut_valid_till"><span t-field="doc.company_id.partner_id.lut_valid_till"></span></t></div></div></span>
+                        </td>
+                            <td colspan="2" style="font-size: 11px; width: 70%; padding-right:3px; border: 1px solid black;text-align:right;">
+                                <span>E.&amp;O.E </span><span t-field="doc.e_o_e"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="font-size: 11px;;width: 47%; border: 1px solid black;padding-left:3px;font-size:11px;"> <b>Note:</b><br />
+                                <span style="padding-right:3px;padding-left:3px;" t-field="doc.y_note"></span>
+                            </td>
+                            <td rowspan="2" style="font-size: 11px; width: 30%; border: 1px solid black; padding-left:3px;font-size:11px;">
+                                  <span><div class="row"><div style="width:37%;"><strong>Bank Details</strong></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">Name</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.name"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.name"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">Account No</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].acc_number"><span t-field="doc.company_id.partner_id.bank_ids[0].acc_number"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">SWIFT Code</div><div style="width:3%;">:</div><div style="width:60%;"> <t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.bic"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.bic"></span></t></div></div></span>
+                                  <span><div class="row"><div style="width:37%;">IFSC Code</div> <div style="width:3%;">:</div><div style="width:60%;"><t t-if="doc.company_id.partner_id.bank_ids[0].bank_id.bic"><span t-field="doc.company_id.partner_id.bank_ids[0].bank_id.bic"></span></t></div></div></span>
+                            </td>
+                            <td style="width: 23%;padding-left:3px;height:90px;text-align: center;font-size:11px;">
+                                <b><span>For</span></b><br />
+                                <span t-field="doc.company_id.name"></span>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 23%; border-top:1px solid black;padding-left:3px;text-align: center;font-size:11px;">
+                                <span>Authorized Signatory</span><br />
+                            </td>
+                        </tr>
+                       
+                    </table>
+                    <table class="table table-borderless m-0 p-0">
+                        <td style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-size:11px;font-family: Century Gothic;width:100%;" >
+                            <div class="text-left" style="width:100%;padding-left:2px;">
+                                <span style="font-size:11px;font-family: Century Gothic;">* This is a
+                                    computer generated document and authenticated by Eruvaka
+                                    Technologies Pvt. Ltd.Hence, it can be considered valid even if not signed
+                                    manually.</span>
+                            </div>
+                                
+                        </td>
+                    </table>   
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>

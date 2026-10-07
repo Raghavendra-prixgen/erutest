@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="prix_mrp_unbuild_form_view_inherited" model="ir.ui.view">
+            <field name="name">mrp.unbuild.form.view.inherited</field>
+            <field name="model">mrp.unbuild</field>
+            <field name="inherit_id" ref="mrp.mrp_unbuild_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bom_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='mo_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+            </field>                   
+        </record>
+
+
+        <record id="prix_manufacturing_order_form_order_type" model="ir.ui.view">
+            <field name="name">view.manufacturing.form.order.type</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath> -->
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bom_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet//field[@name='move_raw_ids']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet//field[@name='move_byproduct_ids']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='miscellaneous']//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+            </field>                   
+        </record>
+
+        <record id="prix_manufacturing_production_workorder_form_order_type" model="ir.ui.view">
+            <field name="name">view.mrp.workorder.tree.order.type</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+            <field name="arch" type="xml"> 
+                <xpath expr="//field[@name='workcenter_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+            </field>                   
+        </record>
+<!-- 
+        <record id="production_schedule_form_view" model="ir.ui.view">
+            <field name="name">mrp.mps.production.schedule.form.view</field>
+            <field name="model">mrp.production.schedule</field>
+            <field name="inherit_id" ref="mrp_mps.mrp_mps_production_schedule_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="replace">
+                    <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}" options="{'no_create':True,'no_edit':True}"/>
+                    
+                </xpath>
+            </field>
+        </record>
+ -->
+
+        
+
+        <record id="prix_mrp_routing_workcenter_form_view_inherited" model="ir.ui.view">
+            <field name="name">mrp.routing.workcenter.tree.view.inherited</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bom_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='workcenter_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+            </field>                   
+        </record>
+
+        <record id="prix_mrp_bom_form_view" model="ir.ui.view">
+            <field name="name">prix.mrp.bom.form.view</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <!-- <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath> -->
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet//field[@name='byproduct_ids']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet//field[@name='bom_line_ids']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+
+                <!-- <xpath expr="//form/sheet/group/group[1]/div/field[@name='product_qty']" position="after">
+                    <field name="sale_orders_id" />
+                </xpath> -->
+                <field name="product_id" position="after" >
+                    <field name="sale_orders_id" domain="[('state', 'in', ('sale', 'done'))]"/>
+
+                </field>
+
+            </field>                   
+        </record>
+
+    </data>
+</odoo>

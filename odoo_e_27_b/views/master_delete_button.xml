@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="form_res_company_form_view_delete_button" model="ir.ui.view">
+        <field name="name">res.company.form.view.delete.button</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+     <record id="tree_view_res_company_delete_button" model="ir.ui.view">
+        <field name="name">res.company.tree.delete.button</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    
+    <record id="product_supplierinfo_form_view_delete_button" model="ir.ui.view">
+        <field name="name">product.supplierinfo.view</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="view_purchase_requisition_type_delete_button" model="ir.ui.view">
+        <field name="name">purchase.requisition.type.form.delete.button</field>
+        <field name="model">purchase.requisition.type</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record> -->
+
+    <!-- <record id="tree_view_purchase_requisition_type_delete_button" model="ir.ui.view">
+        <field name="name">purchase.requisition.type.tree.delete.button</field>
+        <field name="model">purchase.requisition.type</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_type_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record> -->
+
+
+
+    <record id="view_purchase_attribute_tree_button_delete" model="ir.ui.view">
+        <field name="name">product.attribute.tree.inherit.delete</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.attribute_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_attribute_form_button_delete" model="ir.ui.view">
+        <field name="name">product.attribute.form.inherit.delete</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+ 
+
+
+    <record id="tree_product_category_list_view_view_delete_button" model="ir.ui.view">
+        <field name="name">product.product.category.tree.view</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="form_product_category_list_view_view_delete_button" model="ir.ui.view">
+        <field name="name">product.product.category.tree.view</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+   
+
+    <record model="ir.ui.view" id="form_rules_uom_category_delete_button">
+        <field name="name">delete.button.form.rules.uom.category</field>
+        <field name="model">uom.category</field>
+        <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="tree_rules_uom_category_delete_button">
+        <field name="name">delete.button.tree.rules.uom.category</field>
+        <field name="model">uom.category</field>
+        <field name="inherit_id" ref="uom.product_uom_categ_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+ 
+   
+
+
+
+</odoo>

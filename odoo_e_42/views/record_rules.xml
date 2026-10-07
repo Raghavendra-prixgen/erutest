@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_sale_order_own_documents" model="ir.rule">
+        <field name="name">Sale Order: Own Documents</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <record id="rule_sale_order_all_documents" model="ir.rule">
+        <field name="name">Sale Order: All Documents</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+         <!-- <field name="groups" eval="[(4, ref('base.group_system'))]"/>  -->
+    </record>
+    
+    <record id="rule_sale_order_1st_lvl_approval" model="ir.rule">
+        <field name="name">Sale Order: 1st Lvl Approval</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            '&amp;','&amp;', '|',
+            ('y_approver_visible', '=', True),
+            
+            ('user_id', '=', user.id),
+            ('y_sale_lvl_amt_approval_line.y_lvl1_user_ids', 'in', [user.id]),
+            '|',
+            ('y_sale_lvl_amt_approval_line.y_is_1st_user_completed', '=', False),
+            ('y_sale_lvl_amt_approval_line.y_is_1st_user_completed', '=', True)
+        ]</field>
+        <field name="groups" eval="[(4, ref('odoo_e_42.1st_lvl_approve'))]"/>
+    </record>
+    
+    
+    <!-- Record Rule for 2nd Level Approval -->
+    <record id="rule_sale_order_2nd_lvl_approval" model="ir.rule">
+        <field name="name">Sale Order: 2nd Lvl Approval</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            '&amp;', '&amp;','|',
+            ('y_approver_visible', '=', True),  
+          
+            ('user_id', '=', user.id), 
+            ('y_sale_lvl_amt_approval_line.y_lvl2_user_ids', 'in', [user.id]),  
+            '&amp;',
+            ('y_sale_lvl_amt_approval_line.y_is_1st_user_completed', '=', True), 
+            '|',
+            ('y_sale_lvl_amt_approval_line.y_is_2nd_user_completed', '=', False), 
+            ('y_sale_lvl_amt_approval_line.y_is_2nd_user_completed', '=', True),  
+        ]</field>
+        <field name="groups" eval="[(4, ref('odoo_e_42.2nd_lvl_approve'))]"/>
+    </record>
+    
+    <!-- Record Rule for 3rd Level Approval -->
+    <record id="rule_sale_order_3rd_lvl_approval" model="ir.rule">
+        <field name="name">Sale Order: 3rd Lvl Approval</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            '&amp;', '&amp;','|',
+            ('y_approver_visible', '=', True),  
+          
+            ('user_id', '=', user.id), 
+            ('y_sale_lvl_amt_approval_line.y_lvl3_user_ids', 'in', [user.id]),  
+            '&amp;',
+            ('y_sale_lvl_amt_approval_line.y_is_1st_user_completed', '=', True), 
+            '&amp;',
+            ('y_sale_lvl_amt_approval_line.y_is_2nd_user_completed', '=', True), 
+            '|',
+            ('y_sale_lvl_amt_approval_line.y_is_3rd_user_completed', '=', False), 
+            ('y_sale_lvl_amt_approval_line.y_is_3rd_user_completed', '=', True),  
+        ]</field>
+        <field name="groups" eval="[(4, ref('odoo_e_42.3rd_lvl_approve'))]"/>
+    </record>
+    
+    
+</odoo>

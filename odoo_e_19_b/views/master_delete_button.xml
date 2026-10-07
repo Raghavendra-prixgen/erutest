@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="form_view_mrp_routing_workcenter_delete_button" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.form.delete.button</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_mrp_routing_workcenter_delete_button" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.tree.delete.button</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="form_view_mrp_workcenter_delete_button" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form.delete.button</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="tree_view_mrp_workcenter_delete_button" model="ir.ui.view">
+        <field name="name">mrp.workcenter.tree.delete.button</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+
+    <!-- <record id="search_view_workcenter_category_delete_button" model="ir.ui.view">
+        <field name="name">workcenter.category.search.delete.button</field>
+        <field name="model">workcenter.category</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+            
+        </field>
+    </record>
+ -->
+    
+
+
+</odoo>

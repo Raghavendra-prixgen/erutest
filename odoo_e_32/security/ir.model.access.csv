@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+odoo_e_32.access_sale_document_notification,access_sale_document_notification,odoo_e_32.model_sale_document_notification,base.group_user,1,1,1,1

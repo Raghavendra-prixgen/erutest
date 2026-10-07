@@ -1,0 +1,169 @@
+<odoo>
+  <data>
+    <!-- <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+      <field name="domain">[('y_origin_order_id', '=', False),('state','in',('sent', 'draft','cancel'))]</field>
+    </record>
+ -->
+    <!-- <record id="sale.action_orders" model="ir.actions.act_window">
+      <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+    </record> -->
+
+    <!-- <record model="ir.actions.server" id="action_revise_so">
+      <field name="name">Revise Document</field>
+      <field name="model_id" ref="sale.model_sale_order"/>
+      <field name="binding_model_id" ref="sale.model_sale_order" />
+      <field name="state">code</field>
+      <field name="code">
+          if records:
+            action = records.create_revisions()
+      </field>
+    </record>
+ -->
+    <!-- sale.order inherit form view -->
+    <record id="view_order_tree" model="ir.ui.view">
+      <field name="name">sale.order.inherit.view.form</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_tree"/>
+      <field name="arch" type="xml">
+        <field name="state" position="attributes">
+          <attribute name="invisible">0</attribute>
+        </field>
+      </field>
+    </record>
+
+    
+    
+    <record id="view_order_form_inherit" model="ir.ui.view">
+      <field name="name">sale.order.inherit.view.form</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <!-- <field name="user_id" position="before">
+          <field name="y_quotation_number" string="Quotation Number" readonly="True"/>
+        </field> -->
+        <field name="validity_date" position="before">
+          <!-- <field name="to_approve_states" invisible="1"/>comment................ -->
+          <field name="y_doc_type_id" options="{'no_create': True, 'no_open': True}" required="state == 'sale'" readonly="state == 'sale'" />
+          <!-- attrs="{'readonly': [('to_approve_states', 'in', ('approved','reject','to_approve_state2','to_approve_state3'))],'required': [('state', '=', 'sale')]}"  -->
+        </field>
+        <!-- <field name="partner_id" position="before">
+          <field name="y_origin_order_id" readonly="True"  invisible="y_origin_order_id == False"/>
+          <field name="y_revision_order_ids" widget="many2many_tags" readonly="True" invisible="True"/>
+        </field>
+ -->
+
+        <!-- <div name="button_box" position="inside">
+          <button name="view_previous_versions" type="object" class="oe_stat_button"
+          attrs="{'invisible':[('y_revision_count','=',0)]}" icon="fa-rotate-left">
+            <field name="y_revision_count" widget="stat_info" readonly="True"/>
+            <div class="o_field_widget o_stat_info">
+              <span class="o_stat_text">Quotation</span>
+              <span class="o_stat_text">/Revisions</span>
+            </div>
+          </button>
+        </div> -->
+        <!-- <div class="oe_title" position="before">
+          <div class="oe_button_box">
+            <button name="restore_revision" type="object" class="oe_highlight" string="Restore" icon="fa-refresh" attrs="{'invisible':[('y_origin_order_id','=',False)]}"/>
+          </div>
+        </div> -->
+
+
+
+
+        <!-- #comment................................... -->
+        <!-- <xpath expr="//div[@name='button_box']" position="attributes">
+          <attribute name="invisible">y_origin_order_id != False</attribute>
+        </xpath>
+        <header position="attributes">
+          <attribute name="invisible">y_origin_order_id != False</attribute>
+        </header> -->
+     
+        <!-- <div name="button_box" position="attributes">
+          <attribute name="attrs">{'invisible':[('y_origin_order_id','!=',False)]}</attribute>
+        </div>
+        <header position="attributes">
+          <attribute name="attrs">{'invisible':[('y_origin_order_id','!=',False)]}</attribute>
+        </header> -->
+        <!-- #comment................................... -->
+
+
+
+     
+      </field>
+    </record>
+
+    <record id="sale_doc_type_view_form" model="ir.ui.view">
+      <field name="name">sale.doc.type.view.form</field>
+      <field name="model">sale.doc.type</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <group>
+
+              <field name="y_name" required="True"/>
+              <field name="y_description" string="Description"/>
+            </group>
+            <group>
+
+              <field name="y_sequence_id" required="True" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+              <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" groups="base.group_multi_company"/>
+              <!-- <field name="is_approval_required" widget="boolean_toggle" string="Approval Required"/>#comment......... -->
+            </group>
+
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+        </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="sale_doc_teype_view_tree" model="ir.ui.view">
+      <field name="name">sale.doc.type.view.tree</field>
+      <field name="model">sale.doc.type</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="y_name" required="True"/>
+          <field name="y_description" string="Description"/>
+          <field name="y_sequence_id" required="True" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+          <field name="y_company_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" groups="base.group_multi_company"/>
+          <!-- <field name="is_approval_required" widget="boolean_toggle" string="Approval Required"/>#comment.......... -->
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.rule" id="document_record_restricted_company_rule">
+        <field name="name">Document Restricted Record: multi-company</field>
+        <field name="model_id" ref="model_sale_doc_type"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('y_company_id', '=', False), ('y_company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="sale_doc_type_view_search_delete_button" model="ir.ui.view">
+      <field name="name">sale.doc.type.search.view</field>
+      <field name="model">sale.doc.type</field>
+      <field name="arch" type="xml">
+        <search>
+            <field name="y_name"/>
+            <filter name="active" string="Active" domain="[('active', '!=',False)]"/>
+            <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+        </search>          
+      </field>
+    </record>
+
+    <record id="sale_doc_type_action" model="ir.actions.act_window">
+      <field name="name">Document Type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">sale.doc.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sale_doc_type_menu_act" name="Document Type" parent="sale.menu_sale_config" action="sale_doc_type_action" sequence="100"/>
+  </data>
+</odoo>

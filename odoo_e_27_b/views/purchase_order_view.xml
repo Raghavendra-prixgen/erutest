@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="purchase_order_form_gross_amount" model="ir.ui.view">
+        <field name="name">purchase order gross amount</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="tax_totals" position="before">
+                <field name="y_gross_amount" style='margin-right:5px;padding-right:5px' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="y_service_charges" widget="monetary" style='margin-right:5px;padding-right:5px' options="{'currency_field': 'currency_id'}"/> 
+            </field>
+            <field name="tax_totals" position="attributes">
+                <attribute name="style">padding-right:5px</attribute>
+            </field>
+            <xpath expr="//page/field[@name='order_line']/tree/control" position="inside">
+                <button name="action_open_purchase_charges" class="oe_link" type="object" string="Add Charges" context="{'order_id': parent.id}" invisible="state  in  ('purchase', 'done','cancel')" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_form_with_charges" model="ir.ui.view">
+            <field name="name">purchase.order.form.view.with_charges</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                        <attribute name="domain">[('id', 'in', y_product_ids)]</attribute>
+                    </xpath> -->
+                    <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                        <field name ='y_is_prchase_charge' column_invisible="True"/>
+                        <field name ='y_product_ids' column_invisible="True"/>
+                    </xpath>
+                </data>
+            </field>
+    </record>
+	
+<record id="view_purchase_order_inherit_search_new" model="ir.ui.view">
+        <field name="name">view_purchase_order_inherit_search_new</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <field name="y_quotation_number"/>
+                <field name="y_purchase_request_number"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="view_purchase_order_view_search_quotation_number" model="ir.ui.view">
+    <field name="name">view_purchase_order_view_search_quotation_number</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+    <field name="arch" type="xml">
+        <search>
+            <field name="y_quotation_number"/>
+            <field name="y_purchase_request_number"/>
+        </search>
+    </field>
+    </record>
+
+
+
+
+</odoo>

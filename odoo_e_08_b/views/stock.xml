@@ -1,0 +1,42 @@
+<odoo>
+  <record id="view_picking_form_inherit_branch_to_branch" model="ir.ui.view">
+    <field name="name">stock.picking.view.form.branch.to.branch</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form" />
+    <field name="arch" type="xml">
+      <field name="location_dest_id" position="after">
+        <field name="y_btb_id" invisible="1" />
+
+        <field name="y_btb_picking_out_id" invisible="1" />
+        <field name="y_btb_picking_in_id" invisible="1" />
+
+      </field>
+      <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+        position="attributes">
+        <attribute name="readonly">(state != 'draft' and not additional) or parent.y_btb_id != False</attribute>
+      </xpath>
+      <!--   <xpath
+      expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+      position="attributes">
+        <attribute name="readonly">not is_initial_demand_editable != True or show_operations != False and
+      is_locked != False or parent.y_btb_id != False</attribute>
+      </xpath>
+  -->
+      <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+        position="attributes">
+        <attribute name="readonly">is_initial_demand_editable != True and is_locked != False or parent.y_btb_id != False</attribute>
+      </xpath>
+      <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']"
+        position="attributes">
+        <attribute name="readonly">(state != 'draft' and not additional) or parent.y_btb_id != False</attribute>
+      </xpath>
+      <xpath expr="//form/sheet/group/group[1]/field[@name='location_id'][2]" position="attributes">
+        <attribute name="readonly">y_btb_id != False</attribute>
+      </xpath>
+      <xpath expr="//form/sheet/group/group[1]/field[@name='location_dest_id'][2]"
+        position="attributes">
+        <attribute name="readonly">y_btb_id != False</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>

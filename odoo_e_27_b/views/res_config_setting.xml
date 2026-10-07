@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="res_config_settings_view_form_advance_req" model="ir.ui.view">
+      <field name="name">res.config.settings.view.form.inherit.adv.req</field>
+      <field name="model">res.config.settings</field>
+      <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+      <field name="arch" type="xml">
+        <xpath expr="//setting[@id='auto_receipt_reminder']" position="after">
+          <div class="col-12 col-lg-6 o_setting_box" id="advance_settings">
+              <div class="o_setting_left_pane">
+                  <field name="y_group_advance_request_id"/>
+              </div>
+              <div class="o_setting_right_pane">
+                <label for="y_group_advance_request_id"/>
+                <span class="fa fa-lg fa-building-o" title="Discount." aria-label="Values set here are company-specific." />
+                <div class="text-muted">
+                    Advance Request
+                </div>
+              </div>
+          </div>
+        </xpath>        
+      </field>
+    </record>
+
+
+
+
+    <record id="product_group_view_tree" model="ir.ui.view">
+      <field name="name">product_groups.view.tree</field>
+      <field name="model">product.groups</field>
+      <field name="arch" type="xml">
+      <tree string="">
+      <field name="y_product_group"/>
+      
+      
+      </tree>
+      </field>
+    </record>
+
+
+    
+
+
+
+
+
+    <record id="product_group_action" model="ir.actions.act_window">
+      <field name="name">Purchase Group</field>
+      <field name="res_model">product.groups</field>
+      <field name="view_mode">tree,form</field>
+      </record>
+      
+      
+      
+      <menuitem id="product_group_type_menu"
+      name="Purchase Group"
+      action="product_group_action"
+      parent="purchase.menu_purchase_config"
+      sequence="7"/>
+
+    </data>
+</odoo>

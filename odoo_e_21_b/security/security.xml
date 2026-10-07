@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model="res.groups" id="group_access_models">
+			<field name="name">Master Access Control</field>
+		</record>
+
+		 <record id="master_access_control" model="res.groups">
+        <field name="name">Quick Edit/Create</field>
+    </record>
+	</data>
+</odoo>

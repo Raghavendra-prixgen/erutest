@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record model="ir.ui.view" id="l10n_in_product_template_hsn_code_inherited">
+        <field name="name">l10n_in.product.template.form.hsn_code.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="l10n_in.product_template_hsn_code"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_in_hsn_code']" position="replace">
+                <label for="l10n_in_hsn_code"/>
+                <div>
+                    <field name="l10n_in_hsn_code" class="oe_inline"/>
+                    <button type="object" name="button_update_hsn_sac_code" title="Update HSN/SAC" icon="fa-list"/>
+                </div>
+            </xpath>
+			
+        </field>
+    </record>
+
+    <record id="view_hsn_san_list_tree_update_hsn_code" model="ir.ui.view">
+		<field name="name">hsn.san.list.tree.hsn.code</field>
+		<field name="model">hsn.san.list</field>
+		<field name="arch" type="xml">
+		    <tree string="HSN List" >
+		    	<header>
+	                <button name="update_hsn_sac_code" type="object" string="Confirm"/> 
+	            </header> 
+	            <!-- <field name="product_id"/> -->
+		        <field name="y_name"/>
+		        <field name="y_short_description"/>
+		        <field name="y_long_description"/>
+		        <field name="y_customer_tax_ids" widget="many2many_tags"/>
+		        <field name="y_vendor_tax_ids" widget="many2many_tags"/>
+				
+		    </tree>
+		</field>
+	</record>
+
+	<record id="view_hsn_san_list_tree" model="ir.ui.view">
+		<field name="name">hsn.san.list.tree</field>
+		<field name="model">hsn.san.list</field>
+		<field name="arch" type="xml">
+		    <tree string="HSN List" >
+		        <field name="y_name"/>
+		        <field name="y_short_description"/>
+		        <field name="y_long_description"/>
+		        <field name="y_customer_tax_ids" widget="many2many_tags"/>
+		        <field name="y_vendor_tax_ids" widget="many2many_tags"/>
+		    </tree>
+		</field>
+	</record>
+
+
+	<record id="view_hsn_san_list_form" model="ir.ui.view">
+		<field name="name">hsn.san.list.form</field>
+		<field name="model">hsn.san.list</field>
+		<field name="arch" type="xml">
+		  	<form string="HSN List">
+			  	<sheet>
+				  	<group>
+					  	<group>
+					  		<field name="y_name" string="HSN/SAC Code"/>
+					        <field name="y_short_description" string="Short Description"/>
+					        <field name="y_long_description" string="Long Description"/>
+					  	</group>
+					  	<group>
+					  		<field name="y_customer_tax_ids" string="Customer Taxes" widget="many2many_tags"/>
+					        <field name="y_vendor_tax_ids" string="Vendor Taxes" widget="many2many_tags"/>
+					  	</group>
+				  	</group>
+				</sheet>
+		  	</form>
+		</field>
+	</record>
+	
+
+	<record id="action_hsn_san_list_form" model="ir.actions.act_window">
+		<field name="name">HSN List</field>
+		<field name="res_model">hsn.san.list</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_hsn_san_list_tree"/>
+	</record>
+
+    <menuitem action="action_hsn_san_list_form" 
+    	id="menu_action_view_hsn_san_list" 
+    	parent="account.account_account_menu"/>
+</odoo>

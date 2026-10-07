@@ -1,0 +1,40 @@
+<odoo>
+	<record model="ir.ui.view" id="purchase_tolerance_inventry">
+        <field name="name">purchase sourcing in product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>    
+        <field name="arch" type="xml">
+          <group name="bill" position="after">
+            <group>
+              <field name="y_product_sourcing"/>
+            </group>
+          </group>
+        </field>                   
+    </record>
+      
+    <record id="view_purchase_requisition_type_form_purchase_base" model="ir.ui.view">
+      <field name="name">purchase.requisition.type.form.for.purchase.base</field>
+      <field name="model">purchase.requisition.type</field>
+      <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_type_form"/>
+      <field name="arch" type="xml">
+          <field name="exclusive" position="after">
+              <field name="y_sequence_id" options="{'no_create': 1, 'no_edit': 1, 'no_open': 1}" string="Sequence"/>
+              <field name="company_id" options="{'no_create': 1, 'no_edit': 1, 'no_open': 1}"/>
+          </field>
+          <field name="quantity_copy" position="after">
+              <field name="y_agreement_types"/>
+              <field name="y_order_quantities" widget="radio" invisible="y_agreement_types != 'purchase_request'"/>
+
+          </field>
+      </field>
+  </record>
+
+  <record model="ir.rule" id="purchase_requisition_type_record_restricted_company_rule">
+      <field name="name">Purchase Requisition Type Restricted Record: multi-company</field>
+      <field name="model_id" ref="model_purchase_requisition_type"/>
+      <field name="global" eval="True"/>
+      <field name="domain_force">
+          ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+      </field>
+  </record>
+</odoo>

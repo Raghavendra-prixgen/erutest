@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="1st_lvl_approve" model="res.groups">
+        <field name="name">Sale 1st lvl Approval</field>
+    </record>
+    <record id="2nd_lvl_approve" model="res.groups">
+        <field name="name">Sale 2nd lvl Approval</field>
+    </record>
+    <record id="3rd_lvl_approve" model="res.groups">
+        <field name="name">Sale 3rd lvl Approval</field>
+    </record>
+    
+    <!-- <record id="purchase_own_documents" model="res.groups">
+        <field name="name">Purchase Own Documents</field>
+    </record> -->
+
+</odoo>

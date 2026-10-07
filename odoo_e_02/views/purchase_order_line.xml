@@ -1,0 +1,135 @@
+<odoo>
+    <data>
+
+        <record id="stock.action_picking_tree_incoming" model="ir.actions.act_window">
+            <field name="view_mode">tree,pivot,kanban,form,calendar,activity</field>
+        </record>
+
+        <record id="cron_update_po_ageing" model="ir.cron">
+            <field name="name">Update Purchase Ageing</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_update_po_ageing()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="view_picking_search_inherit_delayed" model="ir.ui.view">
+    <field name="name">stock.picking.search.delayed</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+    <field name="arch" type="xml">
+
+        <xpath expr="//search" position="inside">
+            <filter name="delayed_pickings"
+                    string="Delayed Pickings"
+                    domain="[('scheduled_date','&lt;', context_today()), ('state','not in',('done','cancel'))]"/>
+        </xpath>
+
+    </field>
+</record>
+
+
+    <record model="ir.ui.view" id="purchase_order_view_tree_ageing">
+            <field name="name">purchase.order.ageing</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="y_ageing" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+
+
+
+        <record model="ir.ui.view" id="search_purchase_order_line_button">
+            <field name="name">purchase.order.line.search.inherited</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_search"/>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="y_pending_qty" invisible="1"/>
+                    <filter name="archived" string="Open Orders" domain="[('y_pending_qty', '>', 0)]"/>
+                    <searchpanel>
+                        <field name="partner_id"/>
+                        <field name="order_id"/>
+                        <field name="product_id"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="sh_pol_purchase_order_line_tree_view_inherit" model="ir.ui.view">
+            <field name="name">Purchase Order Line Tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" action="purchase_order_view" type="object">
+                    <!-- <field name="y_client_order_ref"/> -->
+                    <field name="order_id" string="Order"/>
+                    <!-- <field name="y_is_revision" optional="show"/> -->
+                    <field name="product_id"/>
+                    <field name="name" optional="hide"/>
+                    <field name="partner_id"/>
+                    <!-- <field name="analytic_distribution" optional="hide" widget="analytic_distribution"/> -->
+                    <field name="y_product_categ" optional="hide"/>
+                    <field name="date_order" string="Order confirm Date" widget="date" optional="show"/>
+                    <field name="y_po_effective_date" widget="date" optional="hide"/>
+                    <field name="date_approve" widget="date" string="Approve Date" optional="hide"/>
+                    <field name="date_planned" widget="date"/>
+                    <field name="y_ageing"/>
+                    <!-- <field name="z_age_days" string="Age"/> -->
+                    <field name="product_qty" string="Quantity"/>
+                    <field name="qty_received"/>
+                    <field name="qty_invoiced"/>
+                    <!-- <field name="analytic_groupby_account_ids" widget="many2many_tags" /> -->
+                    <field name="y_pending_qty" string="Pending Quantity"/>
+                    <field name="y_pending_value" string="Pending Value" sum="Total"/>
+                    <field name="price_unit"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="taxes_id" widget="many2many_tags" optional="hide"/>
+                    <field name="price_subtotal" sum="Total" string="Untaxed Amount"/>
+                    <field name="y_status"/>
+                    <field name="y_receipt_status"/>
+                    <field name="y_is_short_close" optional="hide"/>
+                    <field name="y_invoice_status"/>
+                    <field name="state" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="sh_action_purchase_order_lines" model="ir.actions.act_window">
+            <field name="name">Purchase Order Status</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,pivot</field>
+            <field name="target">current</field>
+            <field name="domain">[('state','in',('purchase','done'))]</field>
+            <field name="view_id" ref="sh_pol_purchase_order_line_tree_view_inherit"/>
+        </record>
+
+
+        <record model="ir.actions.server" id="action_short_close_pol">
+            <field name="name">Short Close</field>
+            <field name="model_id" ref="purchase.model_purchase_order_line"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order_line"/>
+            <field name="binding_view_types">tree</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.short_close_form_wizard_pol()
+            </field>
+          </record>
+
+        <menuitem id="sh_pol_order_line" name="Purchase Order Status" action="sh_action_purchase_order_lines"
+                  parent="purchase.purchase_report"/>
+
+        <menuitem id="sh_purchase_report" name="Purchase Analysis" parent="purchase.purchase_report" sequence="99"
+                  groups="purchase.group_purchase_manager" action="purchase.action_purchase_order_report_all"/>
+
+    </data>
+</odoo>

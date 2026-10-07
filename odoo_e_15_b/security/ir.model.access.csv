@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_india_msme,access_account_india_msme_report,model_india_msme_wiz,,1,1,1,1
+

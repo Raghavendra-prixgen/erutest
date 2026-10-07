@@ -1,0 +1,60 @@
+<odoo>
+    <record id="quality_point_view_form_inherit_sample_plan" model="ir.ui.view">
+        <field name="name">quality.point.view.form.inherit.sample.plan</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality_control.quality_point_view_form_inherit_quality_control"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='measure_frequency_value']" position="attributes">
+                <attribute name="invisible">measure_frequency_type in ['all', 'sample']</attribute>
+            </xpath>
+            <xpath expr="//div[@class='o_row']" position="attributes">
+                    <attribute name="invisible">measure_frequency_type in ['all', 'sample']</attribute>
+                </xpath>
+            <field name="test_type_id" position="before">
+                <field name="y_sample_id" invisible="measure_frequency_type != 'sample'" required="measure_frequency_type != 'sample'"/>
+            </field>
+        </field>
+    </record>
+
+    
+
+    <record id="quality_technique_type_view_form" model="ir.ui.view">
+        <field name="name">quality.technique.type.view.form</field>
+        <field name="model">quality.technique.type</field>
+        <field name="arch" type="xml">
+            <form >
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="quality_technique_type_tree_view" model="ir.ui.view">
+        <field name="name">quality.technique.type.tree.view</field>
+        <field name="model">quality.technique.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="quality_technique_type_action" model="ir.actions.act_window">
+        <field name="name">Quality Technique Type</field>
+        <field name="res_model">quality.technique.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="quality_technique_type_menu"
+        name="Quality Technique Type"
+        parent="quality_control.menu_quality_configuration" action="quality_technique_type_action"
+        sequence="50"/>
+</odoo>
